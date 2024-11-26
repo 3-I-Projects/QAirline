@@ -1,6 +1,13 @@
 from django.db import models
 
-# Create your models here.
+SEAT_CHOICES = [
+    ('0', 'First Class'), 
+    ('1', 'Business Class'), 
+    ('2', 'Premium Class'), 
+    ('3', 'Economy Class')
+]
+
+
 class Flight(models.Model):
     plane = models.ForeignKey('Plane', on_delete=models.CASCADE, related_name='flights')
     origin_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='departing_flights')
@@ -14,15 +21,16 @@ class Flight(models.Model):
         return f'Flight {self.plane.registration_number} from {self.origin_airport} to {self.destination_airport}'
 
 class Seat(models.Model):
-    plane = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='seats')
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='seats')
     row = models.CharField(max_length=3)
     column = models.CharField(max_length=3)
     is_available = models.BooleanField()
-    seat_class = models.CharField(max_length=20)
+    # seat_class = models.CharField(max_length=20)
+    seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='4')
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'{self.row}{self.column}'
+        return f'{SEAT_CHOICES[int(self.seat_class)][1]} seat {self.row}{self.column} for flight id {self.flight.id}'
 
 class Airport(models.Model):
     code = models.CharField(max_length=3)

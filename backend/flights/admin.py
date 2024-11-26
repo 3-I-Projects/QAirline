@@ -6,3 +6,7 @@ admin.site.register(Flight)
 admin.site.register(Plane)
 admin.site.register(Seat)
 admin.site.register(Airport)
+
+# @admin.register(Seat)
+# class seatAdmin(admin.ModelAdmin):
+#     actions = ['delete_selected']

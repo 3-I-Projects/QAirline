@@ -10,3 +10,13 @@ class PlaneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plane
         fields = '__all__'
+
+class FlightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flight
+        fields = '__all__'
+    
+class SeatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Seat
+        fields = '__all__'
