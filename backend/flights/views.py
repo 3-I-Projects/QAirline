@@ -28,7 +28,7 @@ def airports(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def edit_airport(request, pk):
+def airport(request, pk):
     try:
         airport = Airport.objects.get(pk=pk)
     except Airport.DoesNotExist:
@@ -63,7 +63,7 @@ def planes(request):
     
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def edit_plane(request, pk):
+def plane(request, pk):
     try:
         plane = Plane.objects.get(pk=pk)
     except Plane.DoesNotExist:
@@ -96,7 +96,6 @@ def flights(request):
             # serializer.save()
             flight = serializer.save()
             print(flight)
-            flight_id = flight.id
             plane = flight.plane
             row = 1
             col = 'A'
@@ -114,4 +113,37 @@ def flights(request):
                     col = 'A'
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response('flights')
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def flight(request, pk):
+    try:
+        flight = Flight.objects.get(pk=pk)
+    except Flight.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = FlightSerializer(flight)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = FlightSerializer(flight, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        flight.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def available_seats(request, flight_id):
+    try:
+        flight = Flight.objects.get(pk=flight_id)
+        seats = flight.seats.filter(is_available=True)
+        serializer = SeatSerializer(seats, many=True)
+        return Response(serializer.data)
+    except Flight.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    
