@@ -21,6 +21,12 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('flights/', include('flights.urls')),
+    path('users/', include('users.urls')),
+
+
+    
+
     path('administration/', include('administration.urls')),
     
     # own
