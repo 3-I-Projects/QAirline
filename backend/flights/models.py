@@ -23,12 +23,12 @@ class Seat(models.Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='seats')
     row = models.CharField(max_length=3)
     column = models.CharField(max_length=3)
-    is_available = models.BooleanField()
+    is_available = models.BooleanField(default=True)
     seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='4')
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'{self.get_seat_class_display()} seat {self.row}{self.column} for flight id {self.flight.id}'
+        return f'{self.get_seat_class_display()} seat {self.row}{self.column} for flight {self.flight.id} with id {self.id}'
 
 class Airport(models.Model):
     code = models.CharField(max_length=3)

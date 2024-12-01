@@ -96,14 +96,13 @@ def flights(request):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid():
             print(serializer.validated_data)
-            # serializer.save()
             flight = serializer.save()
             print(flight)
             plane = flight.plane
             row = 1
             col = 'A'
             for i in range(plane.first_class_capacity):
-                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30)
+                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30) # fix this magic number
                 col = chr(ord(col) + 1)
                 if col == 'G':
                     row += 1
@@ -161,5 +160,5 @@ def find_flight(request):
 
     flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__code=from_airport) & Q(destination_airport__code=to_airport))
     serializer = FlightSerializer(flights, many=True)
-    
+
     return Response(serializer.data)
