@@ -11,3 +11,6 @@ class Customer(models.Model):
     email = models.EmailField()
     gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')])
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customers')
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'

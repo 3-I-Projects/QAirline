@@ -23,14 +23,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('flights/', include('flights.urls')),
     path('users/', include('users.urls')),
-
+    path('tickets/', include('tickets.urls')),
 
     
 
-    path('administration/', include('administration.urls')),
+    # path('administration/', include('administration.urls')),
     
     # own
-    path('playground/', include('playground.urls')),
+    # path('playground/', include('playground.urls')),
 
     # third party
     path('__debug__/', include(debug_toolbar.urls))
