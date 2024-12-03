@@ -43,8 +43,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    # third party
     'debug_toolbar',
+
+    # own
     'playground',
+    'posts',
 ]
 
 REST_FRAMEWORK = {
@@ -52,7 +56,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
 }
 
 MIDDLEWARE = [

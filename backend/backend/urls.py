@@ -16,22 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import debug_toolbar
 from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('flights/', include('flights.urls')),
     path('users/', include('users.urls')),
-
-
-    
-
-    path('administration/', include('administration.urls')),
     
     # own
     path('playground/', include('playground.urls')),
+    path('posts/', include('posts.urls')),
 
     # third party
-    path('__debug__/', include(debug_toolbar.urls))
+    path('__debug__/', include('debug_toolbar.urls')),
+    path('api_auth/', include('rest_framework.urls')),
 ]
