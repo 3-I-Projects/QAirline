@@ -1,5 +1,8 @@
+import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import Q
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -93,14 +96,13 @@ def flights(request):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid():
             print(serializer.validated_data)
-            # serializer.save()
             flight = serializer.save()
             print(flight)
             plane = flight.plane
             row = 1
             col = 'A'
             for i in range(plane.first_class_capacity):
-                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30)
+                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30) # fix this magic number
                 col = chr(ord(col) + 1)
                 if col == 'G':
                     row += 1
@@ -146,4 +148,17 @@ def available_seats(request, flight_id):
     except Flight.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-    
+
+@api_view(['POST'])
+def find_flight(request):
+    from_date = request.data['from_date'].split('-')
+    from_date = datetime.datetime(int(from_date[0]), int(from_date[1]), int(from_date[2]))
+    to_date = request.data['to_date'].split('-')
+    to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
+    from_airport = request.data['from_airport']
+    to_airport = request.data['to_airport']
+
+    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__code=from_airport) & Q(destination_airport__code=to_airport))
+    serializer = FlightSerializer(flights, many=True)
+
+    return Response(serializer.data)

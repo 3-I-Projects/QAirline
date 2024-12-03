@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('flights/', include('flights.urls')),
     path('users/', include('users.urls')),
+    path('tickets/', include('tickets.urls')),
     
     # own
     path('playground/', include('playground.urls')),
