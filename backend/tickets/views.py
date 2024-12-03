@@ -1,12 +1,27 @@
 from django.shortcuts import render
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import mixins
+from rest_framework import generics
 
 from flights.models import Flight, Seat
 from users.models import Customer
-from .models import Ticket
-from .serializers import TicketSerializer
+from tickets.models import Ticket
+from tickets.serializers import TicketSerializer
+
+class TicketList(generics.ListCreateAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # return self.create(request, *args, **kwargs)
+        return Response('hi')
+        
 
 @api_view(['POST'])
 def book(request):

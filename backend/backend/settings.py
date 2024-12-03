@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     # own
-    'playground',
+    # 'playground',
     'posts',
 ]
 
@@ -57,9 +57,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    # ],
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'

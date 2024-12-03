@@ -25,7 +25,7 @@ urlpatterns = [
     path('tickets/', include('tickets.urls')),
     
     # own
-    path('playground/', include('playground.urls')),
+    # path('playground/', include('playground.urls')),
     path('posts/', include('posts.urls')),
 
     # third party

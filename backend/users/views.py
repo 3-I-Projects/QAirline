@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import mixins
+from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
@@ -13,6 +16,17 @@ from .serializers import *
 # user store for booked tickets
 def bookings(request):
     return
+
+class CustomerList(generics.ListCreateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+        
 
 # testing authentication route
 @api_view(['GET'])

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
 
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -16,37 +17,47 @@ from .models import *
 def index(request):
     return Response('hello world')
 
-@api_view(['GET', 'POST'])
-def airports(request):
-    if request.method == 'GET':
+class AirportList(APIView):
+    """
+    List all airports, or create a new airport.
+    """
+    def get(self, request, format=None):
         airports = Airport.objects.all()
         serializer = AirportSerializer(airports, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = AirportSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class AirportDetail(APIView):
+    """
+    Retrieve, update or delete a airport instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Airport.objects.get(pk=pk)
+        except Airport.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def airport(request, pk):
-    try:
-        airport = Airport.objects.get(pk=pk)
-    except Airport.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
+    def get(self, request, pk, format=None):
+        airport = self.get_object(pk)
         serializer = AirportSerializer(airport)
         return Response(serializer.data)
-    elif request.method == 'PUT':
+
+    def put(self, request, pk, format=None):
+        airport = self.get_object(pk)
         serializer = AirportSerializer(airport, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        airport = self.get_object(pk)
         airport.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
