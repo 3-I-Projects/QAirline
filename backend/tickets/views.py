@@ -20,31 +20,29 @@ class TicketList(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         # return self.create(request, *args, **kwargs)
-        return Response('hi')
-        
+        seat = request.data['seat']
+        seat = Seat.objects.get(pk=seat)
+        if not seat.is_available:
+            return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
+        seat.is_available = False
+        seat.save()
+        user = request.user
+        customer = request.data['customer']
+        customer = Customer.objects.get(pk=customer)
+        flight = request.data['flight']
+        flight = Flight.objects.get(pk=flight)
+        price = seat.price + flight.base_price
+        ticket = Ticket(booked_by=user, customer=customer, flight=flight, seat=seat, price=price)
+        ticket.save()
+        serializer = TicketSerializer(ticket)
+        return Response(serializer.data)
 
-@api_view(['POST'])
-def book(request):
-    seat = request.data['seat']
-    seat = Seat.objects.get(pk=seat)
-    if not seat.is_available:
-        return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
-    seat.is_available = False
-    seat.save()
-    user = request.user
-    customer = request.data['customer']
-    customer = Customer.objects.get(pk=customer)
-    flight = request.data['flight']
-    flight = Flight.objects.get(pk=flight)
-    price = seat.price + flight.base_price
-    ticket = Ticket(booked_by=user, customer=customer, flight=flight, seat=seat, price=price)
-    ticket.save()
-    # print(customer)
-    # print(flight)
-    # print(seat)
-    # print(user)
-    serializer = TicketSerializer(ticket)
-    return Response(serializer.data)
+class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+
+    # def delete(self, request, *args, **kwargs):
+    #     return self.delete(request, *args, **kwargs)
 
 @api_view(['DELETE'])
 def cancel(request):

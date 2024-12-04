@@ -5,7 +5,7 @@ class Flight(models.Model):
     origin_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='departing_flights')
     destination_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='arriving_flights')
     departure_time = models.DateTimeField()
-    delay = models.IntegerField()
+    delay = models.IntegerField(default=0)
     arrival_time = models.DateTimeField()
     base_price = models.DecimalField(max_digits=10, decimal_places=2)
 
