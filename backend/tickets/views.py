@@ -1,3 +1,5 @@
+import datetime
+from django.utils import timezone
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view
@@ -10,6 +12,8 @@ from flights.models import Flight, Seat
 from users.models import Customer
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
+
+CANCEL_TIME_AMOUNT = datetime.timedelta(days=1)
 
 class TicketList(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
@@ -41,15 +45,20 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
-    # def delete(self, request, *args, **kwargs):
-    #     return self.delete(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        return Response("can't do that")
 
-@api_view(['DELETE'])
-def cancel(request):
-    ticket_id = request.data['id']
-    ticket = Ticket(pk=ticket_id)
-    seat = ticket.seat
-    ordered_time = ticket.ordered_time
-    print(seat)
-    # ticket.delete()
-    return Response('hi')
+    def patch(self, request, pk, *args, **kwargs):
+        # return self.partial_update(request, *args, **kwargs)
+        return Response(f"can't do that with {pk}")
+
+    def delete(self, request, pk, *args, **kwargs):
+        ticket = Ticket.objects.get(pk=pk)
+        seat = ticket.seat
+        ordered_time = ticket.ordered_time
+        cancel_threshold = ordered_time + CANCEL_TIME_AMOUNT
+        if timezone.now() > cancel_threshold:
+            return Response("can't do that anymore idiot")
+        seat.is_available = True
+        seat.save()
+        return self.destroy(request, *args, **kwargs)
