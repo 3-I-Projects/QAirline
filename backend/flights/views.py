@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework import generics
 
 from .serializers import *
 from .models import *
@@ -17,10 +18,13 @@ from .models import *
 def index(request):
     return Response('hello world')
 
-class AirportList(APIView):
+class AirportList(generics.ListCreateAPIView):
     """
     List all airports, or create a new airport.
     """
+    queryset = Airport.objects.all()
+    serializer_class = AirportSerializer
+
     def get(self, request, format=None):
         airports = Airport.objects.all()
         serializer = AirportSerializer(airports, many=True)
@@ -37,6 +41,9 @@ class AirportDetail(APIView):
     """
     Retrieve, update or delete a airport instance.
     """
+    queryset = Airport.objects.all()
+    serializer_class = AirportSerializer
+
     def get_object(self, pk):
         try:
             return Airport.objects.get(pk=pk)
@@ -96,14 +103,17 @@ def plane(request, pk):
         plane.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class FlightList(generics.ListCreateAPIView):
+    """
+    List all flights, or create a new flight.
+    """
+    queryset = Flight.objects.all()
+    serializer_class = FlightSerializer
 
-@api_view(['GET', 'POST'])
-def flights(request):
-    if request.method == 'GET':
-        flights = Flight.objects.all()
-        serializer = FlightSerializer(flights, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid():
             print(serializer.validated_data)
@@ -127,24 +137,35 @@ def flights(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        
+class FlightDetail(generics.ListCreateAPIView):
+    """
+    Retrieve, update or delete a flight instance.
+    """
+    queryset = Flight.objects.all()
+    serializer_class = FlightSerializer
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def flight(request, pk):
-    try:
-        flight = Flight.objects.get(pk=pk)
-    except Flight.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
+    def get_object(self, pk):
+        try:
+            return Flight.objects.get(pk=pk)
+        except Flight.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        flight = self.get_object(pk)
         serializer = FlightSerializer(flight)
         return Response(serializer.data)
-    elif request.method == 'PUT':
+
+    def put(self, request, pk, format=None):
+        flight = self.get_object(pk)
         serializer = FlightSerializer(flight, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        flight = self.get_object(pk)
         flight.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
