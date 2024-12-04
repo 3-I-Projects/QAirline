@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,7 +24,6 @@ urlpatterns = [
     path('tickets/', include('tickets.urls')),
     
     # own
-    # path('playground/', include('playground.urls')),
     path('posts/', include('posts.urls')),
 
     # third party
