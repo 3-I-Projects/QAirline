@@ -1,0 +1,53 @@
+/* Home.css */
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+    position: relative; /* Để định vị menu bên trong container */
+  }
+  
+  .home-container h1 {
+    font-size: 36px;
+    color: #333;
+  }
+  
+  .home-container p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Định dạng cho menu ở góc trên bên phải */
+  .menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .home-button {
+    padding: 10px 20px;
+    background-color: #ff9900;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+  }
+  
+  .home-button:hover {
+    background-color: #e68a00;
+  }
+  
+  /* Style riêng cho nút đăng xuất */
+  .logout-button {
+    background-color: #e68a00; /* Màu sắc khác cho nút đăng xuất */
+  }
+  
+  .logout-button:hover {
+    background-color: #cc7a00; /* Đổi màu khi hover */
+  }
+  
