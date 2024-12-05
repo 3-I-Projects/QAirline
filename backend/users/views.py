@@ -53,10 +53,10 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def index(request):
-    print(request.auth)
-    user = Token.objects.get(pk=request.auth).user
-    print(user)
-    return Response({'message': f'hello {user}'})
+    # print(request.auth)
+    # user = Token.objects.get(pk=request.auth).user
+    # print(user)
+    return Response({'message': f'hello'})
 
 @api_view(['POST'])
 def login(request):
