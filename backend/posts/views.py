@@ -1,87 +1,105 @@
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 
-from django.http import Http404
-from .models import *
-from .serializers import *
+from posts.models import *
+from posts.serializers import *
+from posts.permissions import *
 
 
-# Create your views here.
-class AnnouncementCategoryViewSet(viewsets.ModelViewSet):
+class UserList(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+
+class AnnouncementCategoryList(generics.ListCreateAPIView):
     queryset = AnnouncementCategory.objects.all()
     serializer_class = AnnouncementCategorySerializer
 
 
-# class AnnouncementViewSet(viewsets.ModelViewSet):
-#     queryset = Announcement.objects.all()
-#     serializer_class = AnnouncementSerializer
+class AnnouncementCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AnnouncementCategory.objects.all()
+    serializer_class = AnnouncementCategorySerializer
 
-class AnnouncementList(APIView):
-    def get(self, request, format=None):
-        announcements = Announcement.objects.all()
-        serializer = AnnouncementSerializer(announcements, many=True)
-        return Response(serializer.data)
+
+class AnnouncementList(generics.ListCreateAPIView):
+    queryset = Announcement.objects.all()
+    serializer_class = AnnouncementSerializer
+
+    # authenticated requests get read-write access, unauthenticated requests get read-only access.
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # associate the author with the announcement
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
     
-    def post(self, request, format=None):
-        serializer = AnnouncementSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
-class AnnouncementDetail(APIView):
-    def get_object(self, pk):
-        try:
-             return Announcement.objects.get(pk=pk)
-        except Announcement.DoesNotExist:
-            raise Http404
-    
-    def get(self, request, pk, format=None):
-        announcement = self.get_object(pk)
-        serializer = AnnouncementSerializer(announcement)
-        return Response(serializer.data)
+class AnnouncementDetail(generics.RetrieveUpdateDestroyAPIView):                        
+    queryset = Announcement.objects.all()
+    serializer_class = AnnouncementSerializer
 
-    def put(self, request, pk, format=None):
-        announcement = self.get_object(pk)
-        serializer = AnnouncementSerializer(announcement, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        announcement = self.get_object(pk)
-        announcement.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class DiscountCategoryViewSet(viewsets.ModelViewSet):
+class DiscountCategoryList(generics.ListCreateAPIView):
     queryset = DiscountCategory.objects.all()
     serializer_class = DiscountCategorySerializer
 
 
-class DiscountViewSet(viewsets.ModelViewSet):
+class DiscountCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DiscountCategory.objects.all()
+    serializer_class = DiscountCategorySerializer
+
+
+class DiscountList(generics.ListCreateAPIView):
     queryset = Discount.objects.all()
     serializer_class = DiscountSerializer
 
 
-class InformationCategoryViewSet(viewsets.ModelViewSet):
+class DiscountDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Discount.objects.all()
+    serializer_class = DiscountSerializer
+
+
+class InformationCategoryList(generics.ListCreateAPIView):
     queryset = InformationCategory.objects.all()
     serializer_class = InformationCategorySerializer
 
 
-class InformationViewSet(viewsets.ModelViewSet):
+
+class InformationCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = InformationCategory.objects.all()
+    serializer_class = InformationCategorySerializer
+
+
+class InformationList(generics.ListCreateAPIView):
     queryset = Information.objects.all()
     serializer_class = InformationSerializer
 
 
-class NewsCategoryViewSet(viewsets.ModelViewSet):
+class InformationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Information.objects.all()
+    serializer_class = InformationSerializer
+
+
+class NewsCategoryList(generics.ListCreateAPIView):
     queryset = NewsCategory.objects.all()
     serializer_class = NewsCategorySerializer
 
 
-class NewsViewSet(viewsets.ModelViewSet):
+class NewsCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NewsCategory.objects.all()
+    serializer_class = NewsCategorySerializer
+
+
+class NewsList(generics.ListCreateAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+
+
+class NewsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer

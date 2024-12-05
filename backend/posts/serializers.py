@@ -1,5 +1,21 @@
 from .models import *
 from rest_framework import serializers
+from users.models import CustomUser
+
+
+class UserSerializer(serializers.ModelSerializer):
+    announcements = serializers.PrimaryKeyRelatedField(many=True, queryset=Announcement.objects.all())
+
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'announcements']
+
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username']
+
 
 class AnnouncementCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,9 +24,15 @@ class AnnouncementCategorySerializer(serializers.ModelSerializer):
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+    # author = AuthorSerializer(read_only=True)
+
+    # tag = AnnouncementCategorySerializer(many=True)
+
     class Meta:
         model = Announcement
         fields = '__all__'
+
 
 class DiscountCategorySerializer(serializers.ModelSerializer):
     class Meta:
