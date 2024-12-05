@@ -16,4 +16,8 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = '__all__'
-        read_only_fields = ['created_by']
+        # read_only_fields = ['created_by']
+        
+    def update(self, instance, validated_data):
+        validated_data.pop('created_by', None)
+        return super().update(instance, validated_data)

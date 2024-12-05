@@ -26,7 +26,15 @@ class CustomerList(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return Response(request.data['created_by'])
+        user_id = request.user.id if request.user.is_authenticated else None
+        data = request.data.copy()
+        data['created_by'] = user_id
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        print(serializer.data)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return self.create(request, *args, **kwargs)
 
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):

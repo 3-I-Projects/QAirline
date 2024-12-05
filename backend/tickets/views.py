@@ -23,7 +23,7 @@ class TicketList(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs): # shouldve used serializer more here
         seat = request.data['seat']
         seat = Seat.objects.get(pk=seat)
         if not seat.is_available:
@@ -35,7 +35,7 @@ class TicketList(generics.ListCreateAPIView):
         price = seat.price + flight.base_price
         user = request.user if request.user.is_authenticated else None
         ticket = Ticket(booked_by=user, customer=customer, flight=flight, seat=seat, price=price)
-        serializer = TicketSerializer(ticket)
+        serializer = self.get_serializer(ticket)
         serializer.save()
         seat.is_available = False
         seat.save()
