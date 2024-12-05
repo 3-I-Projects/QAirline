@@ -14,9 +14,9 @@ class Flight(models.Model):
 
 class Seat(models.Model):
     SEAT_CHOICES = [
-        ('0', 'First Class'), 
-        ('1', 'Business Class'), 
-        ('2', 'Premium Class'), 
+        ('0', 'First Class'),
+        ('1', 'Business Class'),
+        ('2', 'Premium Class'),
         ('3', 'Economy Class')
     ]
 
