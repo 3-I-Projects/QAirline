@@ -11,7 +11,8 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
-from .serializers import *
+from .serializers import CustomUserSerializer, CustomerSerializer
+from .models import CustomUser, Customer
 
 # user store for booked tickets
 def bookings(request):
@@ -25,8 +26,20 @@ class CustomerList(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-        
+        return Response(request.data['created_by'])
+        # return self.create(request, *args, **kwargs)
+
+class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class UserList(generics.ListCreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
 
 # testing authentication route
 @api_view(['GET'])

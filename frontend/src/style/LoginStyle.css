@@ -1,0 +1,131 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.login-container {
+  width: 400px;
+  background: #656461;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.login-card {
+  padding: 30px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.login-card.sign-up-active {
+  transform: translateX(0);
+}
+
+.login-header .title {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.login-header .description {
+  font-size: 16px;
+  color: #ff9900;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left; 
+}
+
+.input-label {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  box-sizing: border-box; 
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #ff9900;
+}
+
+.action-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9900;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #e68a00;
+}
+
+.login-footer {
+  margin-top: 20px;
+}
+
+.login-footer p {
+  color: #fff;
+  font-size: 14px;
+}
+
+.toggle-link {
+  color: #ff9900;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggle-link:hover {
+  color: #e68a00;
+}
+
+.forgot-password {
+  display: inline-block;
+  color: #ff9900;
+  margin-top: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  color: #e68a00;
+}
+
+@media (max-width: 500px) {
+  .login-container {
+    width: 90%;
+  }
+}
