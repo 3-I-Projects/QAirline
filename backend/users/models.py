@@ -5,7 +5,7 @@ class CustomUser(AbstractUser):
     # add additional fields in here
     # date_of_birth = models.DateField(null=True, blank=True)
     # hobby = models.TextField(null=True, blank=True)
-    announcements = models.ManyToManyField('posts.Announcement', related_name='announcements')
+    # announcements = models.ManyToManyField('posts.Announcement', related_name='announcements')
     
     def __str__(self):
         return self.username

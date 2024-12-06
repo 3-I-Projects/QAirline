@@ -32,7 +32,6 @@ class CustomerList(generics.ListCreateAPIView):
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        print(serializer.data)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return self.create(request, *args, **kwargs)
