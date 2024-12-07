@@ -8,7 +8,7 @@ class Ticket(models.Model):
     class Meta:
         verbose_name_plural = "ticketzzzzzz"
 
-    booked_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='booked_tickets')
+    booked_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='booked_tickets', null=True, default=None)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_tickets')
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name='bookings')
     seat = models.OneToOneField(Seat, on_delete=models.CASCADE, related_name='booked_ticket')
