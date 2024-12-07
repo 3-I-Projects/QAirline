@@ -1,44 +1,46 @@
+@import './Global.css';
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  font-family: var(--font-family);
+  background: #f0f0f0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
+  color: #333;
 }
 
 .login-container {
   width: 400px;
-  background: #656461;
+  background: #ffffff74;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .login-card {
-  padding: 30px;
   width: 100%;
   text-align: center;
-  transition: transform 0.5s ease-in-out;
-}
-
-.login-card.sign-up-active {
-  transform: translateX(0);
+  padding: 40px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .login-header .title {
-  font-size: 24px;
-  color: #fff;
+  font-size: 28px;
+  color: #333;
   margin-bottom: 10px;
 }
 
 .login-header .description {
   font-size: 16px;
-  color: #ff9900;
+  color: #777;
   margin-bottom: 20px;
 }
 
@@ -51,12 +53,12 @@ body {
 
 .form-group {
   margin-bottom: 20px;
-  text-align: left; 
+  text-align: left;
 }
 
 .input-label {
   font-size: 14px;
-  color: #fff;
+  color: #ffffff;
   margin-bottom: 5px;
 }
 
@@ -64,25 +66,26 @@ body {
   width: 100%;
   padding: 12px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  color: #333;
   font-size: 14px;
   background-color: #fff;
-  box-sizing: border-box; 
+  transition: border-color 0.3s;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: #ff9900;
+  border-color: var(--primary-color);
 }
 
 .action-button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #ff9900;
+  background-color: var(--primary-color);
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -90,7 +93,7 @@ body {
 }
 
 .action-button:hover {
-  background-color: #e68a00;
+  background-color: var(--secondary-color);
 }
 
 .login-footer {
@@ -98,34 +101,39 @@ body {
 }
 
 .login-footer p {
-  color: #fff;
+  color: #333;
   font-size: 14px;
 }
 
 .toggle-link {
-  color: #ff9900;
+  color: var(--primary-color);
   cursor: pointer;
   text-decoration: underline;
 }
 
 .toggle-link:hover {
-  color: #e68a00;
+  color: var(--secondary-color);
 }
 
 .forgot-password {
   display: inline-block;
-  color: #ff9900;
+  color: var(--primary-color);
   margin-top: 10px;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .forgot-password:hover {
-  color: #e68a00;
+  color: var(--secondary-color);
 }
 
 @media (max-width: 500px) {
   .login-container {
     width: 90%;
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 25px;
   }
 }
