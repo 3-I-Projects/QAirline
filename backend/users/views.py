@@ -11,8 +11,9 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
-from .serializers import CustomUserSerializer, CustomerSerializer
-from .models import CustomUser, Customer
+from users.serializers import CustomUserSerializer, CustomerSerializer
+from users.models import CustomUser, Customer
+from users.permissions import IsOwner
 
 # user store for booked tickets
 def bookings(request):
@@ -43,10 +44,40 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserList(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = [] # IsAdmin or something here @GoatYogurt
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # testing authentication route
 @api_view(['GET'])
