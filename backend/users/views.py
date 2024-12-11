@@ -11,8 +11,9 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
-from .serializers import CustomUserSerializer, CustomerSerializer
-from .models import CustomUser, Customer
+from users.serializers import CustomUserSerializer, CustomerSerializer
+from users.models import CustomUser, Customer
+from users.permissions import IsOwner
 
 # user store for booked tickets
 def bookings(request):
@@ -26,7 +27,14 @@ class CustomerList(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return Response(request.data['created_by'])
+        user_id = request.user.id if request.user.is_authenticated else None
+        data = request.data.copy()
+        data['created_by'] = user_id
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return self.create(request, *args, **kwargs)
 
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -36,28 +44,58 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserList(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = [] # IsAdmin or something here @GoatYogurt
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # testing authentication route
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def index(request):
-    print(request.auth)
-    user = Token.objects.get(pk=request.auth).user
-    print(user)
-    return Response({'message': f'hello {user}'})
+    # print(request.auth)
+    # user = Token.objects.get(pk=request.auth).user
+    # print(user)
+    return Response({'message': f'hello'})
 
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data['username'])
+    user = get_object_or_404(CustomUser, username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({'error': 'not found'}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     # print(created)
-    serializer = UserSerializer(instance=user)
+    serializer = CustomUserSerializer(instance=user)
     return Response({'token': token.key, 'user': serializer.data})
 
 @api_view(['POST'])
@@ -87,7 +125,7 @@ def logout(request):
 
 @api_view(['POST'])
 def register(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = CustomUserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])

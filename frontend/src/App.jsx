@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home.jsx';
-import Login from './Login.jsx';
+import SignIn from './Login/SignIn'; 
+import SignUp from './Login/SignUp'; 
+import Home from './Home'; 
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} /> 
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} /> {/* Trang mặc định khi mở web */}
       </Routes>
     </Router>
   );

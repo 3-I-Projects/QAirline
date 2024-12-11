@@ -7,11 +7,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import permissions
 
 from flights.models import Flight, Seat
 from users.models import Customer
+from users.serializers import CustomUserSerializer
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
+from tickets.permissions import IsOwnerOrReadOnly
 
 CANCEL_TIME_AMOUNT = datetime.timedelta(days=1)
 
@@ -22,35 +25,44 @@ class TicketList(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        # return self.create(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs): # shouldve used serializer more here
         seat = request.data['seat']
         seat = Seat.objects.get(pk=seat)
         if not seat.is_available:
             return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
-        seat.is_available = False
-        seat.save()
-        user = request.user
         customer = request.data['customer']
         customer = Customer.objects.get(pk=customer)
         flight = request.data['flight']
         flight = Flight.objects.get(pk=flight)
         price = seat.price + flight.base_price
+        user = request.user if request.user.is_authenticated else None
         ticket = Ticket(booked_by=user, customer=customer, flight=flight, seat=seat, price=price)
+        serializer = self.get_serializer(ticket)
         ticket.save()
-        serializer = TicketSerializer(ticket)
-        return Response(serializer.data)
+        seat.is_available = False
+        seat.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def perform_create(self, serializer):
+    #     seat = serializer.validated_data['seat']
+    #     if not seat.is_available:
+    #         return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
+    #     seat.is_available = False
+    #     seat.save()
+    #     serializer.save(booked_by=self.request.user, price=seat.price + serializer.validated_data['flight'].base_price)
+
 
 class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-    def put(self, request, *args, **kwargs):
-        return Response("can't do that")
+    # def put(self, request, *args, **kwargs):
+    #     return Response("can't do that")
 
-    def patch(self, request, pk, *args, **kwargs):
-        # return self.partial_update(request, *args, **kwargs)
-        return Response(f"can't do that with {pk}")
+    # def patch(self, request, pk, *args, **kwargs):
+    #     # return self.partial_update(request, *args, **kwargs)
+    #     return Response(f"can't do that with {pk}")
 
     def delete(self, request, pk, *args, **kwargs):
         ticket = Ticket.objects.get(pk=pk)
