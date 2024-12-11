@@ -1,47 +1,33 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from posts.models import *
 from posts.serializers import *
 from posts.permissions import *
 
 
-class UserList(generics.ListAPIView):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
-
-
-class AnnouncementCategoryList(generics.ListCreateAPIView):
+class AnnouncementCategoryViewSet(viewsets.ModelViewSet):
     queryset = AnnouncementCategory.objects.all()
     serializer_class = AnnouncementCategorySerializer
 
 
-class AnnouncementCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = AnnouncementCategory.objects.all()
-    serializer_class = AnnouncementCategorySerializer
-
-
-class AnnouncementList(generics.ListCreateAPIView):
+class AnnouncementViewSet(viewsets.ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
 
     # authenticated requests get read-write access, unauthenticated requests get read-only access.
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     # associate the author with the announcement
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-    
-
-class AnnouncementDetail(generics.RetrieveUpdateDestroyAPIView):                        
-    queryset = Announcement.objects.all()
-    serializer_class = AnnouncementSerializer
-
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class DiscountCategoryList(generics.ListCreateAPIView):
