@@ -64,13 +64,13 @@ Request:
 Response: return an array of flights like the above that fits the criteria
 
 ### Tickets (/tickets) 
-example POST request:
+example POST request:  
 {
     "customer": 10,
     "flight": 5,
     "seat": 23
-}
-response
+}  
+response  
 [
     {
         "id": 3,
@@ -83,7 +83,7 @@ response
     },
 ]
 ### Customer (/users/customers) show customers info
-example POST request:
+example POST request:  
 {
     "first_name": "das",
     "last_name": "cxz",
@@ -92,8 +92,8 @@ example POST request:
     "phone_number": "2432432",
     "email": "2@gmail.com",
     "gender": "M"
-}
-Response:
+}  
+Response:  
 [
     {
         "id": 1,
@@ -133,12 +133,12 @@ Response:
     "password": "password"
 }
 ### Login (/api/token) POST route to obtain token for user
-example request:
+example request:  
 {
     "username": "test",
     "password": "password"
-}
-response:
+}  
+response:  
 {
     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MTc5ZbbzMywiaWF0IjoxNzM0MDE2MDMzLCJqdGkiOiI2ZjgxOTJmZGJmZmE0YTBmYjliY2VkNmRkYjdhYWEwYyIsInVzZXJfaWQiOjR9.TRN8UyRBGYpXE9_vm9WWCqvupfVTKNcXeO2ujQepcS4",
     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MDE5NjMzLCJpYXQiOjE3MzQwMTYwMzMsImp0aSI3N4M5YzNlYWM3ZDI0ZDQ2MzI5NzllYzI1YWM1ODllNWUzIiwidXNlcl9pZCI6NH0.1fzPXKx1Re8KnJvf2PJ8BTZfNH2asem5_9xO6m43BbY"
