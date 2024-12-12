@@ -4,7 +4,7 @@
 
 naming based on this: https://restfulapi.net/resource-naming/
 The routes below can also be posted to with the same data excluding the id field
-### Airport (/flights/airports) lists airport collection or /flights/airports/{id} for specific airport
+### Airport (/flights/airports) lists airport collection or /flights/airports/{id} for specific airport\
 [
     {
         "id": 1,
