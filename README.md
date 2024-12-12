@@ -4,7 +4,7 @@
 
 naming based on this: https://restfulapi.net/resource-naming/
 The routes below can also be posted to with the same data excluding the id field
-### Airport (/flights/airports) lists airport collection or /flights/airports/{id} for specific airport\
+### Airport (/flights/airports) lists airport collection or /flights/airports/{id} for specific airport  
 [
     {
         "id": 1,
@@ -54,13 +54,13 @@ The routes below can also be posted to with the same data excluding the id field
     },
 ]
 ### find flight (/flights/find) POST route
-Request:
+Request:  
 {
     "from_date": "2024-12-01",
     "to_date": "2024-12-12",
     "from_airport": 1,
     "to_airport": 2
-}
+}  
 Response: return an array of flights like the above that fits the criteria
 
 ### Tickets (/tickets) 
