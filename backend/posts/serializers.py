@@ -5,16 +5,20 @@ from users.models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
     announcements = serializers.PrimaryKeyRelatedField(many=True, queryset=Announcement.objects.all())
+    # announcements = serializers.HyperlinkedIdentityField(many=True, view_name='announcement-detail', read_only=True)
 
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'announcements']
 
+    def to_representation(self, instance):
+        return instance.username
+
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username']
+        fields = ['username', 'announcements']
 
 
 class AnnouncementCategorySerializer(serializers.ModelSerializer):
