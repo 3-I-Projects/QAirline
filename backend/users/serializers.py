@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Customer, CustomUser
 from tickets.models import Ticket
-from django.contrib.auth.models import User
 
 class CustomUserSerializer(serializers.ModelSerializer):
     booked_tickets = serializers.PrimaryKeyRelatedField(queryset=Ticket.objects.all(), many=True)
