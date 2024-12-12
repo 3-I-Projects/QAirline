@@ -12,7 +12,7 @@ from rest_framework import permissions
 
 from users.serializers import CustomUserSerializer, CustomerSerializer
 from users.models import CustomUser, Customer
-from users.permissions import IsOwner
+from users.permissions import IsAdminOrOwner
 
 # user store for booked tickets
 def bookings(request):
@@ -48,7 +48,7 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
 
 
