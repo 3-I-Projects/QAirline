@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -171,9 +172,9 @@ class FlightDetail(generics.ListCreateAPIView):
 
 
 @api_view(['GET'])
-def available_seats(request, flight_id):
+def available_seats(request, pk):
     try:
-        flight = Flight.objects.get(pk=flight_id)
+        flight = Flight.objects.get(pk=pk)
         seats = flight.seats.filter(is_available=True)
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
@@ -185,12 +186,14 @@ def available_seats(request, flight_id):
 def find_flight(request):
     from_date = request.data['from_date'].split('-')
     from_date = datetime.datetime(int(from_date[0]), int(from_date[1]), int(from_date[2]))
+    from_date = timezone.make_aware(from_date, timezone.get_current_timezone())
     to_date = request.data['to_date'].split('-')
     to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
+    to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
     from_airport = request.data['from_airport']
     to_airport = request.data['to_airport']
 
-    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__code=from_airport) & Q(destination_airport__code=to_airport))
+    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))
     serializer = FlightSerializer(flights, many=True)
 
     return Response(serializer.data)
