@@ -6,14 +6,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
 
 from users.serializers import CustomUserSerializer, CustomerSerializer
 from users.models import CustomUser, Customer
-from users.permissions import IsOwner
+from users.permissions import IsAdminOrOwner
 
 # user store for booked tickets
 def bookings(request):
@@ -49,7 +48,7 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
 
 

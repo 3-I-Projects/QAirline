@@ -16,7 +16,7 @@ const Menu = () => {
     }
   }, []);
 
-  // Xử lý đăng xuất
+  // Xử lý đăng xuất e
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userName');
@@ -77,6 +77,6 @@ const Menu = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Menu;

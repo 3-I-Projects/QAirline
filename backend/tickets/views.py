@@ -15,6 +15,7 @@ from users.serializers import CustomUserSerializer
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
 from tickets.permissions import IsOwnerOrReadOnly
+from users.permissions import IsAdminOrOwner
 
 CANCEL_TIME_AMOUNT = datetime.timedelta(days=1)
 
@@ -55,7 +56,7 @@ class TicketList(generics.ListCreateAPIView):
 class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
     # def put(self, request, *args, **kwargs):
     #     return Response("can't do that")

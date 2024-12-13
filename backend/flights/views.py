@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -68,40 +69,13 @@ class AirportDetail(APIView):
         airport.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+class PlaneList(generics.ListCreateAPIView):
+    queryset = Plane.objects.all()
+    serializer_class = PlaneSerializer
 
-@api_view(['GET', 'POST'])
-def planes(request):
-    if request.method == 'GET':
-        planes = Plane.objects.all()
-        serializer = PlaneSerializer(planes, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        serializer = PlaneSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def plane(request, pk):
-    try:
-        plane = Plane.objects.get(pk=pk)
-    except Plane.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
-        serializer = PlaneSerializer(plane)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = PlaneSerializer(plane, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        plane.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class PlaneDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Plane.objects.all()
+    serializer_class = PlaneSerializer
 
 class FlightList(generics.ListCreateAPIView):
     """
@@ -171,9 +145,9 @@ class FlightDetail(generics.ListCreateAPIView):
 
 
 @api_view(['GET'])
-def available_seats(request, flight_id):
+def available_seats(request, pk):
     try:
-        flight = Flight.objects.get(pk=flight_id)
+        flight = Flight.objects.get(pk=pk)
         seats = flight.seats.filter(is_available=True)
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
@@ -185,12 +159,63 @@ def available_seats(request, flight_id):
 def find_flight(request):
     from_date = request.data['from_date'].split('-')
     from_date = datetime.datetime(int(from_date[0]), int(from_date[1]), int(from_date[2]))
+    from_date = timezone.make_aware(from_date, timezone.get_current_timezone())
     to_date = request.data['to_date'].split('-')
     to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
+    to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
     from_airport = request.data['from_airport']
     to_airport = request.data['to_airport']
 
-    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__code=from_airport) & Q(destination_airport__code=to_airport))
+    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))
     serializer = FlightSerializer(flights, many=True)
 
     return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @api_view(['GET', 'POST'])
+# def planes(request):
+#     if request.method == 'GET':
+#         planes = Plane.objects.all()
+#         serializer = PlaneSerializer(planes, many=True)
+#         return Response(serializer.data)
+#     elif request.method == 'POST':
+#         serializer = PlaneSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def plane(request, pk):
+#     try:
+#         plane = Plane.objects.get(pk=pk)
+#     except Plane.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+#     if request.method == 'GET':
+#         serializer = PlaneSerializer(plane)
+#         return Response(serializer.data)
+#     elif request.method == 'PUT':
+#         serializer = PlaneSerializer(plane, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'DELETE':
+#         plane.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
