@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+
 import SignIn from './Login/SignIn';
 import SignUp from './Login/SignUp';
 import Home from './Home';
@@ -10,25 +11,39 @@ import Header from './components/Header';
 import PrivateRoute from './utils/PrivateRoute';
 import AvailableFlights from './AvailableFlights';
 
+function AdminLayout() {
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <Router>
         <AuthProvider>
-          <Header />
           <Routes>
             {/* Các route công khai */}
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+<<<<<<< HEAD
             <Route path='/flights' element={<AvailableFlights />} />
+=======
+            <Route path="/home" element={<Home />} />
+>>>>>>> 573803086d9fd1ad7102e3e79dd706625c7089bd
 
-            {/* Nhóm route Admin */}
-            <Route path="/admin">
-              <Route index element={<Login />} />
-              <Route path="dashboard" element={<PrivateRoute />}>
-                <Route index element={<Dashboard />} />
-              </Route>
+            {/* <Route path='/admin' element={<Login />} exact />
+            <Route element={<PrivateRoute />} path='/admin/dashboard'>
+              <Route index element={<Dashboard />} exact />
+            </Route> */}
+
+            <Route path='/admin' element={<AdminLayout />} exact >
+              <Route index element={<Login />} exact />
+              <Route path='dashboard' element={<Dashboard />} exact />
             </Route>
           </Routes>
         </AuthProvider>

@@ -15,7 +15,7 @@ const Header = () => {
         <span> | </span>
         <Link to='http://localhost:8000/admin'>Backend Admin</Link>
 
-        <p>Hello, {username}</p>
+        <p>Hello, nigga {username}</p>
     </div>
   )
 }

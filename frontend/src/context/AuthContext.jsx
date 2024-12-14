@@ -1,5 +1,6 @@
-import { createContext, useState, useContext, Children } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, useState, useContext, Children } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -22,14 +23,17 @@ export const AuthProvider = ({children}) => {
             });
 
             const res = await response.json();
+
             if (res) {
+                if (jwtDecode(res.access).is_admin === true) {
                 console.log(res);
-                
-                // setUser(res.data.user);
                 setAccessToken(res.access);
                 localStorage.setItem('accessToken', res.access);
                 navigate('/admin/dashboard');
                 return;
+                } else {
+                    alert('You are not authorized to access this page');
+                }
             }
         } catch (err) {
             console.log(err);
@@ -37,9 +41,9 @@ export const AuthProvider = ({children}) => {
     }
 
     const logoutAction = () => {
-        setUser(null);
+        // setUser(null);
         setAccessToken('');
-        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
         navigate('/admin');
     }
 
