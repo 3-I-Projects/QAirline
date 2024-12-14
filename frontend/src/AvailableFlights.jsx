@@ -1,41 +1,33 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import './style/AvailableFlights.css';
+import FlightCard from './FlightCard.jsx';
 
 const AvailableFlights = () => {
   const location = useLocation();
-  const { flights } = location.state || { flights: [] }; // Lấy thông tin từ state truyền sang
+  const { flights } = location.state || { flights: [] };
 
   return (
     <div>
-      <h2>Các chuyến bay khả dụng</h2>
-      {flights.length > 0 ? (
-        <table border="1" style={{ width: '100%', textAlign: 'left' }}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Thời gian khởi hành</th>
-              <th>Thời gian đến</th>
-              <th>Giá vé cơ bản</th>
-              <th>Điểm đi</th>
-              <th>Điểm đến</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flights.map((flight) => (
-              <tr key={flight.id}>
-                <td>{flight.id}</td>
-                <td>{new Date(flight.departure_time).toLocaleString()}</td>
-                <td>{new Date(flight.arrival_time).toLocaleString()}</td>
-                <td>{flight.base_price} USD</td>
-                <td>{flight.origin_airport}</td>
-                <td>{flight.destination_airport}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Không có chuyến bay nào khả dụng.</p>
-      )}
+      <header className="header">
+        <h2>Menu</h2>
+      </header>
+
+      {/* Placeholder cho biểu đồ */}
+      <div className="chart-placeholder">
+        Biểu đồ sẽ hiển thị ở đây sau này
+      </div>
+
+      <div className="flight-list-container">
+        <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
+        {flights.length > 0 ? (
+          flights.map((flight) => (
+            <FlightCard key={flight.id} flight={flight} />
+          ))
+        ) : (
+          <p>Không có chuyến bay nào khả dụng.</p>
+        )}
+      </div>
     </div>
   );
 };

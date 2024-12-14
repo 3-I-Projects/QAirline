@@ -30,11 +30,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-<<<<<<< HEAD
             <Route path='/flights' element={<AvailableFlights />} />
-=======
             <Route path="/home" element={<Home />} />
->>>>>>> 573803086d9fd1ad7102e3e79dd706625c7089bd
 
             {/* <Route path='/admin' element={<Login />} exact />
             <Route element={<PrivateRoute />} path='/admin/dashboard'>
