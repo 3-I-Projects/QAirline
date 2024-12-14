@@ -100,7 +100,8 @@ const handleBookingSubmit = async () => {
     }
 
     const data = await response.json();
-
+    navigate('/flights', { state: { flights: data } });
+    
     // Xử lý kết quả từ API
     if (data && data.length > 0) {
       alert(`Tìm thấy ${data.length} chuyến bay!`);

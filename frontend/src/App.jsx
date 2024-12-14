@@ -8,6 +8,7 @@ import Login from './pages/Admin/Login';
 import Dashboard from './pages/Admin/Dashboard';
 import Header from './components/Header';
 import PrivateRoute from './utils/PrivateRoute';
+import AvailableFlights from './AvailableFlights';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path='/flights' element={<AvailableFlights />} />
 
             {/* Nhóm route Admin */}
             <Route path="/admin">
