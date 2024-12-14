@@ -13,8 +13,7 @@ The routes below can also be posted to with the same data excluding the id field
         "name": "Noi Bai International Airport"
     },
 ]
-
-### Plane (/flights/planes), the same as the above
+### Plane (/flights/planes), the same as the above (ADMIN)  
 [
     {
         "id": 1,
@@ -28,7 +27,7 @@ The routes below can also be posted to with the same data excluding the id field
         "current_airport": 1
     }
 ]
-### Flight (/flights/flights), same as above, delay will default to 0 if no value is supplied
+### Flight (/flights/flights), same as above, delay will default to 0 if no value is supplied  
 [
     {
         "id": 1,
@@ -41,7 +40,7 @@ The routes below can also be posted to with the same data excluding the id field
         "destination_airport": 2
     },
 ]
-### available seats (/flights/flights/{id}/seats) GET route returns the available seats
+### available seats (/flights/flights/{id}/seats) GET route returns the available seats  
 [
     {
         "id": 3,
@@ -53,7 +52,7 @@ The routes below can also be posted to with the same data excluding the id field
         "flight": 1
     },
 ]
-### find flight (/flights/find) POST route
+### find flight (/flights/find) POST route  
 Request:  
 {
     "from_date": "2024-12-01",
@@ -63,7 +62,7 @@ Request:
 }  
 Response: return an array of flights like the above that fits the criteria
 
-### Tickets (/tickets) 
+### Tickets (/tickets)  (ADMIN OR OWNER)
 example POST request:  
 {
     "customer": 10,
@@ -82,7 +81,10 @@ response
         "seat": 23
     },
 ]
-### Customer (/users/customers) show customers info
+
+### Cancel ticket (/tickets/{id}) send DELETE request and has to be owner of the ticket (ADMIN OR OWNER)  
+
+### Customer (/users/customers) show customers info (ADMIN OR OWNER)  
 example POST request:  
 {
     "first_name": "das",
@@ -107,7 +109,7 @@ Response:
         "created_by": 1
     },
 ]
-### User (/users/users) shows users info
+### User (/users/users) shows users info (ADMIN OR OWNER)  
 [
     {
         "id": 1,

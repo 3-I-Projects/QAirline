@@ -94,7 +94,7 @@ h3 {
   outline: none;
 }
 
-/* Radio buttonss for trip type */
+/* Radio buttons for trip type */
 .trip-type {
   display: flex;
   gap: 20px;
@@ -111,8 +111,8 @@ h3 {
   margin-right: 5px;
 }
 
-/* buttons */
-buttons {
+/* button */
+.feature-card button {
   padding: 10px 15px;
   border: none;
   border-radius: 4px; 
@@ -120,22 +120,22 @@ buttons {
   font-size: 14px;
 }
 
-.find-flights-buttons,
-.search-buttons,
-.check-in-buttons {
+.find-flights-button,
+.search-button,
+.check-in-button {
   background-color: var(--primary-color);
   color: #ffffff;
   font-weight: bold;
   margin-top: 10  px;
 }
 
-.find-flights-buttons:hover,
-.search-buttons:hover,
-.check-in-buttons:hover {
+.find-flights-button:hover,
+.search-button:hover,
+.check-in-button:hover {
   background-color: var(--secondary-color);
 }
 
-buttons:focus {
+button:focus {
   outline: none;
 }
 
@@ -151,7 +151,7 @@ buttons:focus {
     font-size: 12px;
   }
 
-  buttons {
+  button {
     font-size: 12px;
   }
 }
