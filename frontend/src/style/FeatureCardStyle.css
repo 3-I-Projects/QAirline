@@ -115,7 +115,7 @@ h3 {
 buttons {
   padding: 10px 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 4px; 
   cursor: pointer;
   font-size: 14px;
 }

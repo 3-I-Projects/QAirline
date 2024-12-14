@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style/FeatureCardStyle.css';
 
 function FeatureCard() {
   const [activeTab, setActiveTab] = useState('MUA VÉ');
+  const navigate = useNavigate();
 
   // State cho thông tin
   const [bookingInfo, setBookingInfo] = useState({
@@ -51,27 +53,85 @@ function FeatureCard() {
     return true;
   };
 
+  const mockAPI = async ({ from, to, departureDate, returnDate, passengers, tripType }) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (from && to && departureDate && passengers) {
+          resolve({
+            flights: [
+              {
+                id: '1',
+                from,
+                to,
+                departure: departureDate + 'T08:00:00',
+                return: returnDate ? returnDate + 'T18:00:00' : null,
+                passengers,
+              },
+              {
+                id: '2',
+                from,
+                to,
+                departure: departureDate + 'T14:00:00',
+                return: returnDate ? returnDate + 'T20:00:00' : null,
+                passengers,
+              },
+            ],
+          });
+        } else {
+          resolve({ flights: [] });
+        }
+      }, 1000); // Giả lập thời gian chờ 1 giây
+    });
+  };
+  
+
   // Gửi thông tin đặt vé
-  const handleBookingSubmit = () => {
-    const { from, to, departureDate, returnDate, passengers } = bookingInfo;
+  const handleBookingSubmit = async () => { 
+    const { from, to, departureDate, returnDate, passengers, tripType } = bookingInfo;
+  
     const fieldsToValidate = {
       "Nơi đi": from,
       "Nơi đến": to,
       "Ngày đi": departureDate,
       "Số hành khách": passengers,
     };
-
-    // Nếu là khứ hồi, kiểm tra cả ngày về
-    if (bookingInfo.tripType === 'khứ hồi') {
+  
+    if (tripType === 'khứ hồi') {
+      if (!returnDate) {
+        alert("Vui lòng nhập ngày về cho chuyến khứ hồi.");
+        return;
+      }
       fieldsToValidate["Ngày về"] = returnDate;
     }
-
-    if (validateFields(fieldsToValidate)) {
-      console.log('Thông tin đặt vé:', bookingInfo);
-      alert('Thông tin đặt vé đã được gửi!');
+  
+    if (!validateFields(fieldsToValidate)) return;
+  
+    try {
+      // Thay vì gọi fetch, gọi mock API
+      const data = await mockAPI({
+        from,
+        to,
+        departureDate,
+        returnDate,
+        passengers,
+        tripType,
+      });
+  
+      console.log('Fake API response:', data);
+  
+      if (data && data.flights && data.flights.length > 0) {
+        alert('Đã tìm thấy chuyến bay!');
+        navigate('/flights', { state: { from, to, departureDate, returnDate, passengers, flights: data.flights } });
+      } else {
+        alert('Không tìm thấy chuyến bay phù hợp.');
+      }
+    } catch (error) {
+      console.error('Có lỗi xảy ra:', error);
+      alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
     }
   };
-
+  
+  
   // Gửi thông tin quản lý đặt chỗ
   const handleReservationSubmit = () => {
     const { reservationCode, lastName } = reservationInfo;
@@ -209,6 +269,7 @@ function FeatureCard() {
                 TÌM CHUYẾN BAY
               </buttons>
             </div>
+            
           </div>
         )}
 
