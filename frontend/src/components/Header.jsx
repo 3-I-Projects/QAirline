@@ -5,7 +5,10 @@ import { jwtDecode } from 'jwt-decode';
 
 const Header = () => {
   const auth = useAuth();
-  const username =  (auth.accessToken) ? jwtDecode(auth.accessToken).username : 'guest';
+  let username = 'guest';
+  if (auth.accessToken) {
+    username = jwtDecode(auth.accessToken).username;
+  }
   return (
     <div>
         <Link to='/'>Normal Homepage</Link>
@@ -17,4 +20,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;

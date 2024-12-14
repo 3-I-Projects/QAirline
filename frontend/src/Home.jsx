@@ -5,7 +5,6 @@ import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
 import UserForm from './UserForm.jsx';
-import AvailableFlights from './AvailableFlights.jsx';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,7 +48,6 @@ function Home() {
       <div className="content">
         <FeatureCard />
         <UserForm />
-        <AvailableFlights />
       </div>
     </div>
   );

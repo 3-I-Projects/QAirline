@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style/FeatureCardStyle.css';
 
 function FeatureCard() {
   const [activeTab, setActiveTab] = useState('MUA VÉ');
+  const navigate = useNavigate();
 
   // State cho thông tin
   const [bookingInfo, setBookingInfo] = useState({
@@ -14,16 +16,16 @@ function FeatureCard() {
     passengers: 1,
   });
 
-  const [reservationInfo, setReservationInfo] = useState({
-    reservationCode: '',
-    lastName: '',
-  });
+  // const [reservationInfo, setReservationInfo] = useState({
+  //   reservationCode: '',
+  //   lastName: '',
+  // });
 
-  const [checkInInfo, setCheckInInfo] = useState({
-    pnrCode: '',
-    ticketNumber: '',
-    lastName: '',
-  });
+  // const [checkInInfo, setCheckInInfo] = useState({
+  //   pnrCode: '',
+  //   ticketNumber: '',
+  //   lastName: '',
+  // });
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -51,78 +53,122 @@ function FeatureCard() {
     return true;
   };
 
-  // Gửi thông tin đặt vé
-  const handleBookingSubmit = () => {
-    const { from, to, departureDate, returnDate, passengers } = bookingInfo;
-    const fieldsToValidate = {
-      "Nơi đi": from,
-      "Nơi đến": to,
-      "Ngày đi": departureDate,
-      "Số hành khách": passengers,
-    };
+// Mapping mã sân bay từ tên (ví dụ "SGN", "HAN") sang số ID tương ứng
+const mapAirportToID = (airportCode) => {
+  const airportMap = {
+    "Hà Nội": 1, 
+    "Sài Gòn": 2, 
+    DAN: 3, // Sân bay Đà Nẵng
+  };
+  return airportMap[airportCode] || 0; // Default nếu không tìm thấy
+};
 
-    // Nếu là khứ hồi, kiểm tra cả ngày về
-    if (bookingInfo.tripType === 'khứ hồi') {
-      fieldsToValidate["Ngày về"] = returnDate;
-    }
+// Gửi thông tin đặt vé
+const handleBookingSubmit = async () => {
+  const { from, to, departureDate, returnDate, passengers } = bookingInfo;
 
-    if (validateFields(fieldsToValidate)) {
-      console.log('Thông tin đặt vé:', bookingInfo);
-      alert('Thông tin đặt vé đã được gửi!');
-    }
+  // Kiểm tra tính hợp lệ của dữ liệu đầu vào
+  const fieldsToValidate = {
+    "Nơi đi": from,
+    "Nơi đến": to,
+    "Ngày đi": departureDate,
+    "Ngày về": returnDate, // Thêm ngày về
+    "Số hành khách": passengers,
   };
 
+  if (!validateFields(fieldsToValidate)) return;
+
+  try {
+    // Chuẩn bị dữ liệu khớp với yêu cầu API
+    const bodyData = {
+      from_date: departureDate, // Ngày đi
+      to_date: returnDate,      // Ngày về
+      from_airport: mapAirportToID(from),
+      to_airport: mapAirportToID(to),
+    };
+
+    // Gửi request đến API
+    const response = await fetch('http://localhost:8000/flights/find', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bodyData),
+    });
+
+    if (!response.ok) {
+      alert(`Lỗi từ máy chủ: ${response.statusText}`);
+      return;
+    }
+
+    const data = await response.json();
+
+    // Xử lý kết quả từ API
+    if (data && data.length > 0) {
+      alert(`Tìm thấy ${data.length} chuyến bay!`);
+      navigate('/flights', { state: { flights: data } });
+    } else {
+      alert('Không tìm thấy chuyến bay phù hợp.');
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error);
+    alert('Có lỗi xảy ra! Vui lòng thử lại.');
+  }
+};
+
+
+  
+  
+  
   // Gửi thông tin quản lý đặt chỗ
-  const handleReservationSubmit = () => {
-    const { reservationCode, lastName } = reservationInfo;
-    const fieldsToValidate = {
-      "Mã đặt chỗ/Số vé điện tử": reservationCode,
-      "Họ": lastName,
-    };
+  // const handleReservationSubmit = () => {
+  //   const { reservationCode, lastName } = reservationInfo;
+  //   const fieldsToValidate = {
+  //     "Mã đặt chỗ/Số vé điện tử": reservationCode,
+  //     "Họ": lastName,
+  //   };
 
-    if (validateFields(fieldsToValidate)) {
-      console.log('Thông tin quản lý đặt chỗ:', reservationInfo);
-      alert('Thông tin quản lý đặt chỗ đã được gửi!');
-    }
-  };
+  //   if (validateFields(fieldsToValidate)) {
+  //     console.log('Thông tin quản lý đặt chỗ:', reservationInfo);
+  //     alert('Thông tin quản lý đặt chỗ đã được gửi!');
+  //   }
+  // };
 
-  // Gửi thông tin làm thủ tục
-  const handleCheckInSubmit = () => {
-    const { pnrCode, ticketNumber, lastName } = checkInInfo;
-    const fieldsToValidate = {
-      "Mã đặt chỗ (PNR)": pnrCode,
-      "Số vé điện tử": ticketNumber,
-      "Họ": lastName,
-    };
+  // // Gửi thông tin làm thủ tục
+  // const handleCheckInSubmit = () => {
+  //   const { pnrCode, ticketNumber, lastName } = checkInInfo;
+  //   const fieldsToValidate = {
+  //     "Mã đặt chỗ (PNR)": pnrCode,
+  //     "Số vé điện tử": ticketNumber,
+  //     "Họ": lastName,
+  //   };
 
-    if (validateFields(fieldsToValidate)) {
-      console.log('Thông tin làm thủ tục:', checkInInfo);
-      alert('Thông tin làm thủ tục đã được gửi!');
-    }
-  };
+  //   if (validateFields(fieldsToValidate)) {
+  //     console.log('Thông tin làm thủ tục:', checkInInfo);
+  //     alert('Thông tin làm thủ tục đã được gửi!');
+  //   }
+  // };
 
   return (
     <div className="feature-card">
       {/* Tabs */}
       <div className="tabs">
-        <buttons
+        <button
           className={`tab ${activeTab === 'MUA VÉ' ? 'active' : ''}`}
             onClick={() => handleTabChange('MUA VÉ')}
           >
             MUA VÉ
-          </buttons>
-          <buttons
+          </button>
+          <button
             className={`tab ${activeTab === 'QUẢN LÝ ĐẶT CHỖ' ? 'active' : ''}`}
             onClick={() => handleTabChange('QUẢN LÝ ĐẶT CHỖ')}
           >
             QUẢN LÝ ĐẶT CHỖ
-          </buttons>
-          <buttons
+          </button>
+          <button
             className={`tab ${activeTab === 'LÀM THỦ TỤC' ? 'active' : ''}`}
             onClick={() => handleTabChange('LÀM THỦ TỤC')}
           >
             LÀM THỦ TỤC
-          </buttons>
+          </button>
         </div>
 
         {/* Nội dung */}
@@ -205,10 +251,11 @@ function FeatureCard() {
                   placeholder="Nhập số hành khách"
                 />
               </div>
-              <buttons className="find-flights-buttons" onClick={handleBookingSubmit}>
+              <button className="find-flights-button" onClick={handleBookingSubmit}>
                 TÌM CHUYẾN BAY
-              </buttons>
+              </button>
             </div>
+            
           </div>
         )}
 
@@ -237,9 +284,9 @@ function FeatureCard() {
                   placeholder="Nhập họ"
                 />
               </div>
-              <buttons className="search-buttons" onClick={handleReservationSubmit}>
+              <button className="search-button" onClick={handleReservationSubmit}>
                 TÌM KIẾM
-              </buttons>
+              </button>
             </div>
           </div>
         )}
@@ -278,9 +325,9 @@ function FeatureCard() {
                   placeholder="Nhập họ"
                 />
               </div>
-              <buttons className="check-in-buttons" onClick={handleCheckInSubmit}>
+              <button className="check-in-button" onClick={handleCheckInSubmit}>
                 LÀM THỦ TỤC
-              </buttons>
+              </button>
             </div>
           </div>
         )}
