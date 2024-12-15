@@ -11,6 +11,7 @@ import Header from './components/Header';
 import PrivateRoute from './utils/PrivateRoute';
 import UserForm from './components/UserForm';
 import CustomerDetailPage from './pages/Normal/CustomerDetailPage';
+import AvailableFlights from './AvailableFlights';
 
 function AdminLayout() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path='/flights' element={<AvailableFlights />} />
             <Route path="/home" element={<Home />} />
             <Route path="/detail" element={<CustomerDetailPage />} />
 
