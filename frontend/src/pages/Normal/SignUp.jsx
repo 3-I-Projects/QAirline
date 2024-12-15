@@ -2,23 +2,64 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/LoginStyle.css";
+import { useAuth } from '../../context/AuthContext'
 
 function SignUp() {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [input, setInput] = useState({
+    username: '',
+    password: '',
+    email: '',
+  });
+
+  const auth = useAuth();
   const navigate = useNavigate();
 
-  // Xử lý đăng ký
-  const handleSignUp = (e) => {
+  const handleSubmitEvent = async (e) => {
     e.preventDefault();
 
-    // Lưu thông tin vào localStorage và cập nhật trạng thái đăng nhập
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userName', fullName);
+    if (input.username !== '' && input.password !== '' && input.email !== '') {      
+      try {
+        const response = await fetch('http://localhost:8000/users/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(input)
+        });
 
-    alert('Sign Up successful!');
-    navigate('/home');
+        if (!response.ok) {
+          alert('Username already exists! Please go to login page.');
+          return;
+        }
+
+        const res = await response.json();
+
+        if (res) {
+          alert('Sign Up successful!');
+          let inputWithoutEmail = {
+            username: input.username,
+            password: input.password,
+          }
+          
+          auth.loginAction(inputWithoutEmail, 'user');
+          localStorage.setItem('isLoggedIn', 'true');
+          return;
+        } else {
+          alert('Invalid input');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const goToHome = () => {
@@ -35,16 +76,16 @@ function SignUp() {
         </div>
 
         {/* Form */}
-        <form className="login-form" onSubmit={handleSignUp}>
+        <form className="login-form" onSubmit={handleSubmitEvent}>
           <div className="form-group">
-            <label htmlFor="full-name" className="input-label">Full Name</label>
+            <label htmlFor="username" className="input-label">Username</label>
             <input
               id="full-name"
               type="text"
-              placeholder="Enter your full name"
+              placeholder="Enter your username"
               className="input-field"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              name="username"
+              onChange={handleInput}
               required
             />
           </div>
@@ -56,8 +97,8 @@ function SignUp() {
               type="email"
               placeholder="Enter your email"
               className="input-field"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              onChange={handleInput}
               required
             />
           </div>
@@ -69,8 +110,8 @@ function SignUp() {
               type="password"
               placeholder="Create a password"
               className="input-field"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              onChange={handleInput}
               required
             />
           </div>
