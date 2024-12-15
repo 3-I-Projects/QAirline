@@ -56,7 +56,13 @@ class TicketList(generics.ListCreateAPIView):
 class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
+
+    def get_permissions(self):
+        if self.request.method == 'PUT':
+            self.permission_classes = []
+        else:
+            self.permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
+        return super().get_permissions()
 
     def put(self, request, *args, **kwargs):
         # if request.status == 'Paid':
