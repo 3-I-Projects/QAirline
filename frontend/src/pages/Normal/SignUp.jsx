@@ -1,7 +1,7 @@
 // SignUp.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../style/LoginStyle.css';
+import "../../style/LoginStyle.css";
 
 function SignUp() {
   const [fullName, setFullName] = useState('');

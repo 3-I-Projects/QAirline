@@ -1,10 +1,10 @@
 // SignIn.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../style/LoginStyle.css';
+import '../../style/LoginStyle.css';
 
 function SignIn() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Điều hướng
 
@@ -13,7 +13,7 @@ function SignIn() {
     e.preventDefault();
 
     // Logic kiểm tra thông tin đăng nhập (giả sử thành công)
-    if (email === 'a@gmail.com' && password === 'a') {
+    if (username === 'a' && password === 'a') {
       localStorage.setItem('isLoggedIn', 'true');
       alert('Login successful!');
       navigate('/home'); // Điều hướng đến trang Home
@@ -42,11 +42,11 @@ function SignIn() {
             <label htmlFor="login-email" className="input-label">Email</label>
             <input
               id="login-email"
-              type="email"
+              type="text"
               placeholder="Enter your email"
               className="input-field"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
