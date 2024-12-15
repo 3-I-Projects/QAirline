@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import './style/FeatureCardStyle.css';
 
 function FeatureCard() {
@@ -9,11 +11,11 @@ function FeatureCard() {
   // State cho thông tin
   const [bookingInfo, setBookingInfo] = useState({
     from: '',
-    to: '',
+    to: '', 
     departureDate: '',
     returnDate: '',
     tripType: 'khứ hồi',
-    passengers: 1,
+    passengers: '',
   });
 
   // const [reservationInfo, setReservationInfo] = useState({
@@ -53,41 +55,99 @@ function FeatureCard() {
     return true;
   };
 
-// Mapping mã sân bay từ tên (ví dụ "SGN", "HAN") sang số ID tương ứng
-const mapAirportToID = (airportCode) => {
-  const airportMap = {
-    "Hà Nội": 1, 
-    "Sài Gòn": 2, 
-    DAN: 3, // Sân bay Đà Nẵng
-  };
-  return airportMap[airportCode] || 0; // Default nếu không tìm thấy
+  let airportData = []; // Biến lưu thông tin sân bay
+
+// Fetch thông tin sân bay từ API
+const fetchAirports = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/flights/airports');
+    if (!response.ok) {
+      toast.error('Không thể lấy thông tin sân bay từ máy chủ!');
+      return false;
+    }
+
+    const data = await response.json();
+    console.log("Fetched airport data:", data); // Debug thông tin fetch
+    airportData = data; 
+    return true;
+  } catch (error) {
+    console.error('Lỗi khi lấy thông tin sân bay:', error);
+    toast.error('Lỗi khi lấy thông tin sân bay!');
+    return false;
+  }
+};
+
+// Hàm chuẩn hóa chuỗi để loại bỏ dấu tiếng Việt và chuyển về chữ thường
+const removeDiacritics = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu
+    .toLowerCase(); // Chuyển về chữ thường
+};
+
+// Map tên sân bay thành ID thông qua dữ liệu từ API
+const mapAirportToID = (airportCityOrName) => {
+  if (!airportData || airportData.length === 0) {
+    console.error("Airport data chưa được load.");
+    return 0;
+  }
+
+  const normalizedSearch = removeDiacritics(airportCityOrName);
+
+  console.log("Searching for:", normalizedSearch);
+
+  const airport = airportData.find(
+    (item) =>
+      removeDiacritics(item.name) === normalizedSearch ||
+      removeDiacritics(item.city) === normalizedSearch
+  );
+
+  console.log("Found airport:", airport);
+
+  return airport ? airport.id : 0; 
 };
 
 // Gửi thông tin đặt vé
 const handleBookingSubmit = async () => {
   const { from, to, departureDate, returnDate, passengers } = bookingInfo;
 
-  // Kiểm tra tính hợp lệ của dữ liệu đầu vào
   const fieldsToValidate = {
     "Nơi đi": from,
     "Nơi đến": to,
     "Ngày đi": departureDate,
-    "Ngày về": returnDate, // Thêm ngày về
+    "Ngày về": returnDate,
     "Số hành khách": passengers,
   };
 
   if (!validateFields(fieldsToValidate)) return;
 
+  // Fetch dữ liệu sân bay trước khi tìm chuyến bay
+  const airportsFetched = await fetchAirports();
+  if (!airportsFetched) return;
+
+  console.log("Dữ liệu sân bay sau khi fetch:", airportData);
+
+  const fromAirportID = mapAirportToID(from);
+  const toAirportID = mapAirportToID(to);
+
+  console.log("From Airport ID:", fromAirportID);
+  console.log("To Airport ID:", toAirportID);
+
+  if (fromAirportID === 0 || toAirportID === 0) {
+    toast.error("Không tìm thấy thông tin sân bay phù hợp.");
+    return;
+  }
+
   try {
-    // Chuẩn bị dữ liệu khớp với yêu cầu API
     const bodyData = {
-      from_date: departureDate, // Ngày đi
-      to_date: returnDate,      // Ngày về
-      from_airport: mapAirportToID(from),
-      to_airport: mapAirportToID(to),
+      from_date: departureDate,
+      to_date: returnDate,
+      from_airport: fromAirportID,
+      to_airport: toAirportID,
     };
 
-    // Gửi request đến API
+    console.log("Body data gửi tới server:", bodyData);
+
     const response = await fetch('http://localhost:8000/flights/find', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -95,30 +155,28 @@ const handleBookingSubmit = async () => {
     });
 
     if (!response.ok) {
-      alert(`Lỗi từ máy chủ: ${response.statusText}`);
+      toast.error('Có lỗi xảy ra!');
       return;
     }
 
     const data = await response.json();
-    navigate('/flights', { state: { flights: data } });
-    
-    // Xử lý kết quả từ API
+    console.log("Dữ liệu trả về từ API:", data);
+
     if (data && data.length > 0) {
-      alert(`Tìm thấy ${data.length} chuyến bay!`);
+      toast.success(`Tìm thấy ${data.length} chuyến bay!`);
       navigate('/flights', { state: { flights: data } });
     } else {
-      alert('Không tìm thấy chuyến bay phù hợp.');
+      toast.error('Không tìm thấy chuyến bay phù hợp.');
     }
   } catch (error) {
     console.error('Có lỗi xảy ra:', error);
-    alert('Có lỗi xảy ra! Vui lòng thử lại.');
+    toast.error('Có lỗi xảy ra! Vui lòng thử lại.');
   }
 };
 
+  
 
-  
-  
-  
+
   // Gửi thông tin quản lý đặt chỗ
   // const handleReservationSubmit = () => {
   //   const { reservationCode, lastName } = reservationInfo;
@@ -149,31 +207,31 @@ const handleBookingSubmit = async () => {
   // };
 
   return (
-    <div className="feature-card">
+    <><Toaster /><div className="feature-card">
       {/* Tabs */}
       <div className="tabs">
         <button
           className={`tab ${activeTab === 'MUA VÉ' ? 'active' : ''}`}
-            onClick={() => handleTabChange('MUA VÉ')}
-          >
-            MUA VÉ
-          </button>
-          <button
-            className={`tab ${activeTab === 'QUẢN LÝ ĐẶT CHỖ' ? 'active' : ''}`}
-            onClick={() => handleTabChange('QUẢN LÝ ĐẶT CHỖ')}
-          >
-            QUẢN LÝ ĐẶT CHỖ
-          </button>
-          <button
-            className={`tab ${activeTab === 'LÀM THỦ TỤC' ? 'active' : ''}`}
-            onClick={() => handleTabChange('LÀM THỦ TỤC')}
-          >
-            LÀM THỦ TỤC
-          </button>
-        </div>
+          onClick={() => handleTabChange('MUA VÉ')}
+        >
+          MUA VÉ
+        </button>
+        <button
+          className={`tab ${activeTab === 'QUẢN LÝ ĐẶT CHỖ' ? 'active' : ''}`}
+          onClick={() => handleTabChange('QUẢN LÝ ĐẶT CHỖ')}
+        >
+          QUẢN LÝ ĐẶT CHỖ
+        </button>
+        <button
+          className={`tab ${activeTab === 'LÀM THỦ TỤC' ? 'active' : ''}`}
+          onClick={() => handleTabChange('LÀM THỦ TỤC')}
+        >
+          LÀM THỦ TỤC
+        </button>
+      </div>
 
-        {/* Nội dung */}
-        <div className="card-content">
+      {/* Nội dung */}
+      <div className="card-content">
         {activeTab === 'MUA VÉ' && (
           <div>
             <h3>Mua vé</h3>
@@ -186,8 +244,7 @@ const handleBookingSubmit = async () => {
                     name="tripType"
                     value="khứ hồi"
                     checked={bookingInfo.tripType === 'khứ hồi'}
-                    onChange={(e) => handleInputChange(e, 'booking')}
-                  />‎ Khứ hồi
+                    onChange={(e) => handleInputChange(e, 'booking')} />‎ Khứ hồi
                 </label>
                 <label>
                   <input
@@ -195,8 +252,7 @@ const handleBookingSubmit = async () => {
                     name="tripType"
                     value="một chiều"
                     checked={bookingInfo.tripType === 'một chiều'}
-                    onChange={(e) => handleInputChange(e, 'booking')}
-                  />‎ Một chiều
+                    onChange={(e) => handleInputChange(e, 'booking')} />‎ Một chiều
                 </label>
               </div>
 
@@ -208,8 +264,7 @@ const handleBookingSubmit = async () => {
                   name="from"
                   value={bookingInfo.from}
                   onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập nơi đi"
-                />
+                  placeholder="Nhập nơi đi" />
               </div>
               <div className="input-item">
                 <label>Đến</label>
@@ -218,8 +273,7 @@ const handleBookingSubmit = async () => {
                   name="to"
                   value={bookingInfo.to}
                   onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập nơi đến"
-                />
+                  placeholder="Nhập nơi đến" />
               </div>
               <div className="input-item">
                 <label>Ngày đi</label>
@@ -227,8 +281,7 @@ const handleBookingSubmit = async () => {
                   type="date"
                   name="departureDate"
                   value={bookingInfo.departureDate}
-                  onChange={(e) => handleInputChange(e, 'booking')}
-                />
+                  onChange={(e) => handleInputChange(e, 'booking')} />
               </div>
               {bookingInfo.tripType === 'khứ hồi' && (
                 <div className="input-item">
@@ -237,8 +290,7 @@ const handleBookingSubmit = async () => {
                     type="date"
                     name="returnDate"
                     value={bookingInfo.returnDate}
-                    onChange={(e) => handleInputChange(e, 'booking')}
-                  />
+                    onChange={(e) => handleInputChange(e, 'booking')} />
                 </div>
               )}
               <div className="input-item">
@@ -249,14 +301,13 @@ const handleBookingSubmit = async () => {
                   min="1"
                   value={bookingInfo.passengers}
                   onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập số hành khách"
-                />
+                  placeholder="Nhập số hành khách" />
               </div>
               <button className="find-flights-button" onClick={handleBookingSubmit}>
                 TÌM CHUYẾN BAY
               </button>
             </div>
-            
+
           </div>
         )}
 
@@ -272,8 +323,7 @@ const handleBookingSubmit = async () => {
                   name="reservationCode"
                   value={reservationInfo.reservationCode}
                   onChange={(e) => handleInputChange(e, 'reservation')}
-                  placeholder="Nhập mã đặt chỗ"
-                />
+                  placeholder="Nhập mã đặt chỗ" />
               </div>
               <div className="input-item">
                 <label>Họ</label>
@@ -282,8 +332,7 @@ const handleBookingSubmit = async () => {
                   name="lastName"
                   value={reservationInfo.lastName}
                   onChange={(e) => handleInputChange(e, 'reservation')}
-                  placeholder="Nhập họ"
-                />
+                  placeholder="Nhập họ" />
               </div>
               <button className="search-button" onClick={handleReservationSubmit}>
                 TÌM KIẾM
@@ -303,8 +352,7 @@ const handleBookingSubmit = async () => {
                   name="pnrCode"
                   value={checkInInfo.pnrCode}
                   onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập mã đặt chỗ"
-                />
+                  placeholder="Nhập mã đặt chỗ" />
               </div>
               <div className="input-item">
                 <label>Số vé điện tử</label>
@@ -313,8 +361,7 @@ const handleBookingSubmit = async () => {
                   name="ticketNumber"
                   value={checkInInfo.ticketNumber}
                   onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập số vé điện tử"
-                />
+                  placeholder="Nhập số vé điện tử" />
               </div>
               <div className="input-item">
                 <label>Họ</label>
@@ -323,8 +370,7 @@ const handleBookingSubmit = async () => {
                   name="lastName"
                   value={checkInInfo.lastName}
                   onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập họ"
-                />
+                  placeholder="Nhập họ" />
               </div>
               <button className="check-in-button" onClick={handleCheckInSubmit}>
                 LÀM THỦ TỤC
@@ -333,7 +379,7 @@ const handleBookingSubmit = async () => {
           </div>
         )}
       </div>
-    </div>
+    </div></>
   );
 }
 

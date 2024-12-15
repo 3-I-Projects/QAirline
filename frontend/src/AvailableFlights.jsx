@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import './style/AvailableFlights.css';
 import FlightCard from './FlightCard.jsx';
 
 const AvailableFlights = () => {
+  const [flights, setFlights] = useState([]);
   const location = useLocation();
-  const { flights } = location.state || { flights: [] };
+  
+  const { flights: apiFlights } = location.state || {};
+
+  useEffect(() => {
+    if (apiFlights) {
+      console.log("Dữ liệu từ API:", apiFlights);
+      setFlights(apiFlights);
+    } else {
+      toast.error("Không có dữ liệu chuyến bay từ API.");
+    }
+  }, [apiFlights]);
 
   return (
     <div>
       <header className="header">
-        <h2>Menu</h2>
+        <p>Menu</p>
       </header>
-
-      {/* Placeholder cho biểu đồ */}
-      <div className="chart-placeholder">
-        Biểu đồ sẽ hiển thị ở đây sau này
+      <div className='chart-placeholder'>
+        <p>Biểu đồ sẽ hiện ở đây (nếu có)</p>
       </div>
-
       <div className="flight-list-container">
         <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
         {flights.length > 0 ? (
