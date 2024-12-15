@@ -1,23 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import UserForm from "../../components/UserForm";
 import toast, { Toaster } from "react-hot-toast";
+import { BookingContext } from "../../context/BookingContext";
 
-const CustomerDetailPage = ({ customerCount = 2 }) => {
-  const test = () => toast("Here is your toast.");
-
-  const [allCustomers, setAllCustomers] = useState(
-    Array(customerCount).fill({
-      id: "",
-      first_name: "",
-      last_name: "",
-      birthday: "",
-      country: "Viet Nam",
-      phone_number: "",
-      email: "",
-      gender: "",
-    })
-  );
-  console.log(allCustomers)
+const CustomerDetailPage = () => {
+  const { count, setCount } = useContext(BookingContext);
+  const test = () => {
+    setCount(count + 1);
+    toast(`Here is your toast ${count}`);
+  };
+  const { allCustomers, setAllCustomers } = useContext(BookingContext);
+  const { customerCount, setCustomerCount } = useContext(BookingContext);
+  
+  console.log(allCustomers);
 
   const [errors, setErrors] = useState(Array(customerCount).fill({}));
 
@@ -78,10 +73,12 @@ const CustomerDetailPage = ({ customerCount = 2 }) => {
         }
 
         const data = await response.json();
-        
+
         setAllCustomers((prevCustomers) => {
           return prevCustomers.map((customer, idx) =>
-            idx === allCustomers.indexOf(formData) ? { ...customer, id: data.id } : customer
+            idx === allCustomers.indexOf(formData)
+              ? { ...customer, id: data.id }
+              : customer
           );
         });
         console.log(allCustomers[allCustomers.indexOf(formData)]);
@@ -91,7 +88,6 @@ const CustomerDetailPage = ({ customerCount = 2 }) => {
       }
     });
   };
-
 
   return (
     <>
