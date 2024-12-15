@@ -5,4 +5,4 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = '__all__'
-        read_only_fields = ['price', 'booked_by']
+        read_only_fields = ['price', 'booked_by', 'status']
