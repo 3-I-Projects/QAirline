@@ -40,7 +40,9 @@ function App() {
 
             <Route path='/admin' element={<AdminLayout />} exact >
               <Route index element={<Login />} exact />
-              <Route path='dashboard' element={<Dashboard />} exact />
+              <Route path='dashboard' element={<PrivateRoute />} exact>
+                <Route index element={<Dashboard />} exact />
+              </Route>
             </Route>
           </Routes>
         </AuthProvider>

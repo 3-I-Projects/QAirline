@@ -1,8 +1,15 @@
 import { React, useState } from 'react'
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
+    // if (localStorage.getItem('accessToken')) {
+    //     const navigate = useNavigate();
+    //     navigate('/admin/dashboard');
+    //     return;
+    // }
+
     const [input, setInput] = useState({
         username: '',
         password: '',
@@ -26,7 +33,7 @@ const Login = () => {
         setInput((prev) => ({
             ...prev,
             [name]: value,
-        }));        
+        }));
     };
 
 

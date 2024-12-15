@@ -11,8 +11,6 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
 
     const loginAction = async (data) => {
-        console.log(JSON.stringify(data));
-        
         try {
             const response = await fetch('http://localhost:8000/api/token/', {
                 method: 'POST',

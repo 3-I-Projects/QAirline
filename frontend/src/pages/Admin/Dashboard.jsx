@@ -7,6 +7,7 @@ const Dashboard = () => {
   return (
       <div>
         <p>Welcome again, motherfucker! You're in admin dashboard.</p>
+        <button>Add a flight</button>
         <button onClick={() => auth.logoutAction()}>Logout</button>
       </div>
   )
