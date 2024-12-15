@@ -147,8 +147,23 @@ class FlightDetail(generics.ListCreateAPIView):
 @api_view(['GET'])
 def available_seats(request, pk):
     try:
+        # print(request.data)
         flight = Flight.objects.get(pk=pk)
-        seats = flight.seats.filter(is_available=True)
+        filled_seats = flight.seats.filter(is_available=False)
+        for seat in filled_seats:
+            if not hasattr(seat, 'booked_ticket'):
+                continue
+            if seat.booked_ticket.status == 'Paid':
+                continue
+
+            time_since_booking = timezone.now() - seat.booked_ticket.ordered_time
+            if time_since_booking > datetime.timedelta(hours=1):  # assuming 1 hour is the threshold
+                seat.is_available = True
+                seat.booked_ticket.status = 'Cancelled'
+                seat.booked_ticket.save()
+                seat.booked_ticket = None
+                seat.save()
+        seats = flight.seats.all()
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
     except Flight.DoesNotExist:

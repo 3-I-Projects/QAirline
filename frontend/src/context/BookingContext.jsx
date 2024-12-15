@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
-export const BookingContext = createContext(null);
+const BookingContext = createContext(null);
+export { BookingContext };
 export default function BookingContextProvider({ children }) {
   const [count, setCount] = useState(0);
   const [customerCount, setCustomerCount] = useState(2);

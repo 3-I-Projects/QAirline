@@ -58,8 +58,15 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TicketSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
-    # def put(self, request, *args, **kwargs):
-    #     return Response("can't do that")
+    def put(self, request, *args, **kwargs):
+        # if request.status == 'Paid':
+        #     print(request.status)
+        ticket = Ticket.objects.get(pk=kwargs['pk'])
+        ticket.status = 'Paid'
+        ticket.save()
+        serializer = self.get_serializer(ticket)
+        return Response(serializer.data)
+        # return Response("can't do that")
 
     # def patch(self, request, pk, *args, **kwargs):
     #     # return self.partial_update(request, *args, **kwargs)
@@ -73,5 +80,10 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
         if timezone.now() > cancel_threshold:
             return Response("can't do that anymore idiot")
         seat.is_available = True
+        seat.booked_ticket = None
         seat.save()
-        return self.destroy(request, *args, **kwargs)
+        ticket.status = 'Cancelled'
+        ticket.save()
+        serializer = self.get_serializer(ticket)
+        # return self.delete(request, *args, **kwargs)
+        return Response(serializer.data)

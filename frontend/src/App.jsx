@@ -18,6 +18,8 @@ import UserForm from "./components/UserForm";
 import CustomerDetailPage from "./pages/Normal/CustomerDetailPage";
 import AvailableFlights from "./AvailableFlights";
 import BookingContextProvider from "./context/BookingContext";
+import SeatPickerPage from "./pages/Normal/SeatPickerPage";
+import PaymentPage from "./pages/Normal/PaymentPage";
 
 function AdminLayout() {
   return (
@@ -42,6 +44,8 @@ function App() {
               <Route path="/flights" element={<AvailableFlights />} />
               <Route path="/home" element={<Home />} />
               <Route path="/detail" element={<CustomerDetailPage />} />
+              <Route path="/seats" element={<SeatPickerPage />} />
+              <Route path="/payment" element={<PaymentPage />} />
 
               {/* <Route path='/admin' element={<Login />} exact />
             <Route element={<PrivateRoute />} path='/admin/dashboard'>

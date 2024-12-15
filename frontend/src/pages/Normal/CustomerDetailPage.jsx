@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import UserForm from "../../components/UserForm";
 import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from "../../context/BookingContext";
+import { useNavigate } from 'react-router-dom';
 
 const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
@@ -10,9 +11,8 @@ const CustomerDetailPage = () => {
     toast(`Here is your toast ${count}`);
   };
   const { allCustomers, setAllCustomers } = useContext(BookingContext);
-  const { customerCount, setCustomerCount } = useContext(BookingContext);
-  
-  console.log(allCustomers);
+  const { customerCount } = useContext(BookingContext);
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState(Array(customerCount).fill({}));
 
@@ -82,7 +82,8 @@ const CustomerDetailPage = () => {
           );
         });
         console.log(allCustomers[allCustomers.indexOf(formData)]);
-        toast.success("Gửi thông tin thành công, id: " + data.id);
+        toast.success("bablablal, id: " + data.id);
+        navigate('/seats');
       } catch (error) {
         toast.error(error.message);
       }
