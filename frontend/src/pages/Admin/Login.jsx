@@ -20,7 +20,7 @@ const Login = () => {
         e.preventDefault();
 
         if (input.username !== '' && input.password !== '') {
-            auth.loginAction(input);
+            auth.loginAction(input, 'admin');
             return;
         }
 

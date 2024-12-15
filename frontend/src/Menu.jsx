@@ -4,24 +4,21 @@ import "./style/MenuStyle.css";
 
 const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
 
   // Kiểm tra xem người dùng đã đăng nhập chưa
   useEffect(() => {
     const userStatus = localStorage.getItem('isLoggedIn');
-    const storedUserName = localStorage.getItem('userName');
     if (userStatus === 'true') {
       setIsLoggedIn(true);
-      setUserName(storedUserName);
     }
   }, []);
 
-  // Xử lý đăng xuất e
+  // Xử lý đăng xuất
   const handleLogout = () => {
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userName');
+    localStorage.removeItem('username');
     setIsLoggedIn(false);
-    setUserName('');
   };
 
   return (
@@ -39,7 +36,7 @@ const Menu = () => {
             <ul className="menu-list">
               {isLoggedIn ? (
                 <>
-                  <li className="menu-item">Xin chào, {userName}</li>
+                  <li className="menu-item">Xin chào, {localStorage.getItem('username')}</li>
                   <li className="menu-item"><Link to="/help" className="menu-link" id="tg">Trợ Giúp</Link></li>
                   <li className="menu-link" onClick={handleLogout} id="dx">Đăng xuất</li>
                 </>

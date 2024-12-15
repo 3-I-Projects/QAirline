@@ -1,25 +1,36 @@
-// SignIn.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../style/LoginStyle.css';
+import { useAuth } from '../../context/AuthContext';
 
 function SignIn() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Điều hướng
+  const [input, setInput] = useState({
+    username: '',
+    password: '',
+  });
 
-  // Xử lý đăng nhập
-  const handleLogin = (e) => {
+  const navigate = useNavigate(); // Điều hướng
+  const auth = useAuth();
+  const handleSubmitEvent = (e) => {
     e.preventDefault();
 
-    // Logic kiểm tra thông tin đăng nhập (giả sử thành công)
-    if (username === 'a' && password === 'a') {
+    if (input.username !== '' && input.password !== '') {
+      auth.loginAction(input, 'user');
       localStorage.setItem('isLoggedIn', 'true');
-      alert('Login successful!');
-      navigate('/home'); // Điều hướng đến trang Home
-    } else {
-      alert('Invalid email or password!');
+      navigate('/home');
+      return;
     }
+
+    alert('invalid input');
+  };
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   // Điều hướng đến trang chủ
@@ -33,20 +44,20 @@ function SignIn() {
         {/* Header */}
         <div className="login-header">
           <h2 className="title">Sign In</h2>
-          <p className="description">Use your email and password to log in.</p>
+          <p className="description">Use your username and password to log in.</p>
         </div>
 
         {/* Form */}
-        <form className="login-form" onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleSubmitEvent}>
           <div className="form-group">
-            <label htmlFor="login-email" className="input-label">Email</label>
+            <label htmlFor="login-username" className="input-label">Username</label>
             <input
-              id="login-email"
+              id="login-username"
               type="text"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
               className="input-field"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name='username'
+              onChange={handleInput}
               required
             />
           </div>
@@ -58,8 +69,8 @@ function SignIn() {
               type="password"
               placeholder="Enter your password"
               className="input-field"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name='password'
+              onChange={handleInput}
               required
             />
           </div>

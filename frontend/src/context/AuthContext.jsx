@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
     const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
     const navigate = useNavigate();
 
-    const loginAction = async (data) => {
+    const loginAction = async (data, mode) => {
         try {
             const response = await fetch('http://localhost:8000/api/token/', {
                 method: 'POST',
@@ -22,16 +22,26 @@ export const AuthProvider = ({children}) => {
 
             const res = await response.json();
 
-            if (res) {
+            if (res && mode === 'admin') {
                 if (jwtDecode(res.access).is_admin === true) {
                 console.log(res);
                 setAccessToken(res.access);
                 localStorage.setItem('accessToken', res.access);
+                localStorage.setItem('username', jwtDecode(res.access).username);
                 navigate('/admin/dashboard');
                 return;
                 } else {
                     alert('You are not authorized to access this page');
                 }
+            } else if (res && mode === 'user') {
+                console.log(res);
+                setAccessToken(res.access);
+                localStorage.setItem('accessToken', res.access);
+                localStorage.setItem('username', jwtDecode(res.access).username);
+                navigate('/home');
+                return;
+            } else {
+                alert('Invalid username or password');
             }
         } catch (err) {
             console.log(err);
