@@ -4,7 +4,7 @@ import './style/Home.css';
 import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
-import UserForm from './UserForm.jsx';
+import UserForm from './components/UserForm.jsx';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
