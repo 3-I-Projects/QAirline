@@ -9,6 +9,8 @@ import Login from './pages/Admin/Login';
 import Dashboard from './pages/Admin/Dashboard';
 import Header from './components/Header';
 import PrivateRoute from './utils/PrivateRoute';
+import UserForm from './components/UserForm';
+import CustomerDetailPage from './pages/Normal/CustomerDetailPage';
 import AvailableFlights from './AvailableFlights';
 
 function AdminLayout() {
@@ -32,6 +34,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path='/flights' element={<AvailableFlights />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/detail" element={<CustomerDetailPage />} />
 
             {/* <Route path='/admin' element={<Login />} exact />
             <Route element={<PrivateRoute />} path='/admin/dashboard'>

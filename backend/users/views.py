@@ -28,7 +28,9 @@ class CustomerList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         user_id = request.user.id if request.user.is_authenticated else None
         data = request.data.copy()
+        print(data)
         data['created_by'] = user_id
+        print(data)
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
