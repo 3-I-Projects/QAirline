@@ -1,8 +1,16 @@
 import { React } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   let username = (localStorage.getItem('username')) ? localStorage.getItem('username'): 'guest';
+  const auth = useAuth();
+	const navigate = useNavigate();
+
+	const logout = () => {
+		auth.logoutAction();
+		navigate('/admin');
+	};
 
   return (
     <div>
@@ -12,7 +20,9 @@ const Header = () => {
       <span> | </span>
       <Link to='/admin'>Admin Homepage</Link>
       <span> | </span>
-      <Link to='/admin/list-airport'>Airports List</Link>
+      <Link to='/admin/airports'>Airports</Link>
+      <span> | </span>
+      <button onClick={logout}>Logout</button>
 
       <p>Hello, nigga {username}</p>
     </div>

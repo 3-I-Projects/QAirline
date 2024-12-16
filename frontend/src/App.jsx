@@ -21,8 +21,8 @@ import SeatPickerPage from "./pages/Normal/SeatPickerPage";
 import PaymentPage from "./pages/Normal/PaymentPage";
 
 import Dashboard from "./pages/Admin/Dashboard";
-import AirportAdd from "./pages/Admin/AirportAdd";
-import AirportList from "./pages/Admin/AirportList";
+import AirportAdd from "./pages/Admin/Airports/AirportAdd";
+import AirportList from "./pages/Admin/Airports/AirportList";
 
 function AdminLayout() {
   return (
@@ -62,8 +62,11 @@ function App() {
                   <Route index element={<Dashboard />} exact />
                 </Route>
 
-                <Route path="add-airport" element={<AirportAdd />} />
-                <Route path="list-airport" element={<AirportList />} />
+                <Route path="airports" element={<PrivateRoute />} exact>
+                  <Route index element={<AirportList />} exact />
+                  <Route path="add" element={<AirportAdd />} />
+                </Route>
+                
               </Route>
             </Routes>
           </BookingContextProvider>

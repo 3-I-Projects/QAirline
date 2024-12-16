@@ -1,27 +1,17 @@
 import { React } from 'react'
-import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const Dashboard = () => {
-	const auth = useAuth();
 	const navigate = useNavigate();
-
-	const logout = () => {
-		auth.logoutAction();
-		navigate('/admin');
-	};
-
 	const goToAddAirport = () => {
-		navigate('/admin/add-airport');
+		navigate('/admin/airports/add');
 	}
 
 	return (
 		<div>
 			<p>Welcome again, motherfucker! You're in admin dashboard.</p>
+			<h2>Quick links:</h2>
 			<button onClick={goToAddAirport}>Add an airport</button>
-			<button onClick={logout}>Logout</button>
 		</div>
 	)
 }

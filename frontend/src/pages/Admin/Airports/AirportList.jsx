@@ -7,6 +7,7 @@ const AirportList = () => {
 		asc: true,
 	});
 
+	// useEffect to fetch airports from backend once when component mounts
 	useEffect(() => {
 		const fetchAirports = async () => {
 			try {
@@ -27,6 +28,7 @@ const AirportList = () => {
 		fetchAirports();
 	}, []);
 
+	// useEffect to rerender airports list when sortField changes
 	useEffect(() => {
 		// sort the airports, [...airports] just makes a copy of the array
 		const sortedAirports = [...airports].sort((a, b) => {
@@ -49,32 +51,46 @@ const AirportList = () => {
 			}
 		});
 		setAirports(sortedAirports);
-	}, [sortField]); // Run this effect whenever sortField or airports changes
+	}, [sortField]);
 
-	const sortAirports = (field, asc) => {
-		console.log(field, asc);
-		console.log(sortField);
+	const handleDeleteAction = async (id) => {
+		try {
+			const response = await fetch('http://localhost:8000/flights/airports/' + id, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			let newAirportList = airports.filter((airport) => airport.id !== id);
+			setAirports(newAirportList);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
+	const changeSortState = (field, asc) => {
 		if (sortField.name === field) {
 			console.log('same field');
-			setSortField({ name: field, asc: !sortField.asc }); // Update sortField state
+			setSortField({ name: field, asc: !sortField.asc });
 		} else {
 			console.log('different field');
-			setSortField({ name: field, asc: true }); // Default sort to ascending for new fields
+			setSortField({ name: field, asc: true });
 		}
-
-		console.log(field, asc);
-		console.log(sortField);
 	};
+
+	const goToUpdateAirport = (id) => {
+		navigate('/admin/airports/update/' + id);
+	}
 
 	return (
 		<div>
-			<h1>Airports List (Sorted by: {sortField.name ? sortField.name + ' ' + sortField.asc : 'unsorted'})</h1>
+			<h2>Airports List (Sorted by: {sortField.name ? sortField.name + ' ascending: ' + sortField.asc : 'unsorted'})</h2>
 			<table>
 				<thead>
 					<tr>
-						<th><button onClick={() => sortAirports('name', sortField.asc)}>Name</button></th>
-						<th><button onClick={() => sortAirports('code', sortField.asc)}>Code</button></th>
+						<th>Name<button onClick={() => changeSortState('name', sortField.asc)}>Sort by name</button></th>
+						<th>Code<button onClick={() => changeSortState('code', sortField.asc)}>Sort by code</button></th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -82,6 +98,11 @@ const AirportList = () => {
 						<tr key={airport.code}>
 							<td>{airport.name}</td>
 							<td>{airport.code}</td>
+							<td>
+								<button onClick={() => handleDeleteAction(airport.id)}>Delete airport</button>
+								<span> | </span>
+								<button>Update airport</button>
+							</td>
 						</tr>
 					))}
 				</tbody>
