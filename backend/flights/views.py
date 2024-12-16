@@ -90,24 +90,26 @@ class FlightList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid():
-            print(serializer.validated_data)
+            # print(serializer.validated_data)
             flight = serializer.save()
-            print(flight)
+            # print(flight)
             plane = flight.plane
             row = 1
             col = 'A'
-            for i in range(plane.first_class_capacity):
-                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30) # fix this magic number
-                col = chr(ord(col) + 1)
-                if col == 'G':
-                    row += 1
-                    col = 'A'
-            for i in range(plane.business_class_capacity):
-                Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=2, price=20)
-                col = chr(ord(col) + 1)
-                if col == 'G':
-                    row += 1
-                    col = 'A'
+            for i in range(plane.first_class_row_count):
+                for i in range(6):
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30) # fix this magic number
+                    col = chr(ord(col) + 1)
+                    if col == 'G':
+                        row += 1
+                        col = 'A'
+            for i in range(plane.business_class_row_count):
+                for i in range(6):
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=2, price=20)
+                    col = chr(ord(col) + 1)
+                    if col == 'G':
+                        row += 1
+                        col = 'A'
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

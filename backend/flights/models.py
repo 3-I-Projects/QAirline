@@ -42,10 +42,10 @@ class Plane(models.Model):
     registration_number = models.CharField(max_length=120)
     manufacturer = models.CharField(max_length=120)
     model = models.CharField(max_length=120)
-    first_class_capacity = models.IntegerField()
-    business_class_capacity = models.IntegerField()
-    premium_class_capacity = models.IntegerField()
-    economy_class_capacity = models.IntegerField()
+    first_class_row_count = models.IntegerField()
+    business_class_row_count = models.IntegerField()
+    premium_class_row_count = models.IntegerField()
+    economy_class_row_count = models.IntegerField()
     current_airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='available_planes')
 
     def __str__(self):
