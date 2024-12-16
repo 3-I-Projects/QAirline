@@ -98,7 +98,7 @@ class FlightList(generics.ListCreateAPIView):
             col = 'A'
             for i in range(plane.first_class_row_count):
                 for i in range(6):
-                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=0, price=30) # fix this magic number
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=0, price=30)
                     col = chr(ord(col) + 1)
                     if col == 'G':
                         row += 1
