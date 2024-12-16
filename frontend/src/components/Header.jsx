@@ -1,21 +1,20 @@
-import React from 'react'
+import { React } from 'react'
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { jwtDecode } from 'jwt-decode';
 
 const Header = () => {
-  const auth = useAuth();
-  let username = 'guest';
-  if (auth.accessToken) {
-    username = jwtDecode(auth.accessToken).username;
-  }
+  let username = (localStorage.getItem('username')) ? localStorage.getItem('username'): 'guest';
+
   return (
     <div>
-        <Link to='/'>Normal Homepage</Link>
-        <span> | </span>
-        <Link to='http://localhost:8000/admin'>Backend Admin</Link>
+      <Link to='/'>Normal Homepage</Link>
+      <span> | </span>
+      <Link to='http://localhost:8000/admin'>Backend Admin</Link>
+      <span> | </span>
+      <Link to='/admin'>Admin Homepage</Link>
+      <span> | </span>
+      <Link to='/admin/list-airport'>Airports List</Link>
 
-        <p>Hello, nigga {username}</p>
+      <p>Hello, nigga {username}</p>
     </div>
   )
 }

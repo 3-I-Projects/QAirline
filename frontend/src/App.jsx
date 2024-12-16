@@ -11,7 +11,6 @@ import SignIn from "./pages/Normal/SignIn";
 import SignUp from "./pages/Normal/SignUp";
 import Home from "./Home";
 import Login from "./pages/Admin/Login";
-import Dashboard from "./pages/Admin/Dashboard";
 import Header from "./components/Header";
 import PrivateRoute from "./utils/PrivateRoute";
 import UserForm from "./components/UserForm";
@@ -20,6 +19,10 @@ import AvailableFlights from "./AvailableFlights";
 import BookingContextProvider from "./context/BookingContext";
 import SeatPickerPage from "./pages/Normal/SeatPickerPage";
 import PaymentPage from "./pages/Normal/PaymentPage";
+
+import Dashboard from "./pages/Admin/Dashboard";
+import AirportAdd from "./pages/Admin/AirportAdd";
+import AirportList from "./pages/Admin/AirportList";
 
 function AdminLayout() {
   return (
@@ -54,9 +57,13 @@ function App() {
 
               <Route path="/admin" element={<AdminLayout />} exact>
                 <Route index element={<Login />} exact />
+
                 <Route path="dashboard" element={<PrivateRoute />} exact>
                   <Route index element={<Dashboard />} exact />
                 </Route>
+
+                <Route path="add-airport" element={<AirportAdd />} />
+                <Route path="list-airport" element={<AirportList />} />
               </Route>
             </Routes>
           </BookingContextProvider>
