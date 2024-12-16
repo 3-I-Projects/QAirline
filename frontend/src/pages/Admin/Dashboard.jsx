@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 	const navigate = useNavigate();
-	const goToAddAirport = () => {
-		navigate('/admin/airports/add');
+	const goToAirports = () => {
+		navigate('/admin/airports');
 	}
 
 	return (
 		<div>
 			<p>Welcome again, motherfucker! You're in admin dashboard.</p>
-			<h2>Quick links:</h2>
-			<button onClick={goToAddAirport}>Add an airport</button>
+			<button onClick={goToAirports}>Airports Management</button>
 		</div>
 	)
 }

@@ -20,8 +20,6 @@ const Header = () => {
       <span> | </span>
       <Link to='/admin'>Admin Homepage</Link>
       <span> | </span>
-      <Link to='/admin/airports'>Airports</Link>
-      <span> | </span>
       <button onClick={logout}>Logout</button>
 
       <p>Hello, nigga {username}</p>

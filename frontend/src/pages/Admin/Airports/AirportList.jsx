@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom';
 
 const AirportList = () => {
 	const [airports, setAirports] = useState([]);
@@ -6,6 +7,7 @@ const AirportList = () => {
 		name: '',
 		asc: true,
 	});
+	const navigate = useNavigate();
 
 	// useEffect to fetch airports from backend once when component mounts
 	useEffect(() => {
@@ -78,30 +80,33 @@ const AirportList = () => {
 		}
 	};
 
-	const goToUpdateAirport = (id) => {
-		navigate('/admin/airports/update/' + id);
+	const goToAddAirport = () => {
+		navigate('/admin/airports/add');
 	}
 
 	return (
 		<div>
 			<h2>Airports List (Sorted by: {sortField.name ? sortField.name + ' ascending: ' + sortField.asc : 'unsorted'})</h2>
+			<button onClick={goToAddAirport}>Add an airport</button>
 			<table>
 				<thead>
 					<tr>
 						<th>Name<button onClick={() => changeSortState('name', sortField.asc)}>Sort by name</button></th>
 						<th>Code<button onClick={() => changeSortState('code', sortField.asc)}>Sort by code</button></th>
-						<th>Action</th>
+						<th>City<button onClick={() => changeSortState('city', sortField.asc)}>Sort by city</button></th>
+						<th>Delete Airport</th>
 					</tr>
 				</thead>
 				<tbody>
 					{airports.map((airport) => (
 						<tr key={airport.code}>
-							<td>{airport.name}</td>
+							<td>
+								<Link to={'/admin/airports/detail'} state={{airport: airport}}>{airport.name}</Link>
+							</td>
 							<td>{airport.code}</td>
+							<td>{airport.city}</td>
 							<td>
 								<button onClick={() => handleDeleteAction(airport.id)}>Delete airport</button>
-								<span> | </span>
-								<button>Update airport</button>
 							</td>
 						</tr>
 					))}
