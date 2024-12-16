@@ -98,14 +98,28 @@ class FlightList(generics.ListCreateAPIView):
             col = 'A'
             for i in range(plane.first_class_row_count):
                 for i in range(6):
-                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=30) # fix this magic number
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=0, price=30) # fix this magic number
                     col = chr(ord(col) + 1)
                     if col == 'G':
                         row += 1
                         col = 'A'
             for i in range(plane.business_class_row_count):
                 for i in range(6):
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=1, price=20)
+                    col = chr(ord(col) + 1)
+                    if col == 'G':
+                        row += 1
+                        col = 'A'
+            for i in range(plane.premium_class_row_count):
+                for i in range(6):
                     Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=2, price=20)
+                    col = chr(ord(col) + 1)
+                    if col == 'G':
+                        row += 1
+                        col = 'A'
+            for i in range(plane.economy_class_row_count):
+                for i in range(6):
+                    Seat.objects.create(flight=flight, row=row, column=col, is_available=True, seat_class=3, price=20)
                     col = chr(ord(col) + 1)
                     if col == 'G':
                         row += 1

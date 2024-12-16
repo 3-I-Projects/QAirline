@@ -24,7 +24,7 @@ class Seat(models.Model):
     row = models.CharField(max_length=3)
     column = models.CharField(max_length=3)
     is_available = models.BooleanField(default=True)
-    seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='4')
+    seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='3')
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
