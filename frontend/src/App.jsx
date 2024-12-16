@@ -23,6 +23,7 @@ import PaymentPage from "./pages/Normal/PaymentPage";
 import Dashboard from "./pages/Admin/Dashboard";
 import AirportAdd from "./pages/Admin/Airports/AirportAdd";
 import AirportList from "./pages/Admin/Airports/AirportList";
+import AirportDetail from "./pages/Admin/Airports/AirportDetail";
 
 function AdminLayout() {
   return (
@@ -65,6 +66,7 @@ function App() {
                 <Route path="airports" element={<PrivateRoute />} exact>
                   <Route index element={<AirportList />} exact />
                   <Route path="add" element={<AirportAdd />} />
+                  <Route path="detail" element={<AirportDetail />} />
                 </Route>
                 
               </Route>
