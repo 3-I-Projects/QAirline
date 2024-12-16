@@ -1,10 +1,9 @@
 :root {
     --primary-color: #e9663f;
     --secondary-color: #ff6435;
-
     --text-color: #ffffff;
     --background-color: #f0f4f8;
-    --border-color: #ddd;
+    --border-color: #e9663f;
     --hover-color: #ff5c2b;
     --font-family: Arial, sans-serif;
   }

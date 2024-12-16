@@ -1,0 +1,146 @@
+/* Import global styles */
+@import './global.css';
+
+.payment-page {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header */
+  .payment-page h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+  
+  .payment-page p {
+    margin-bottom: 25px;
+    color: #333;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+  
+  /* Buttons */
+  .payment-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .payment-buttons button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .payment-buttons button:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+  }
+  
+  /* Payment Form */
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .payment-form .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 350px;
+    text-align: left;
+  }
+  
+  .payment-form label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .payment-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .payment-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  /* Pay Button */
+  .payment-form .submit-button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-form .submit-button:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+
+  }
+  
+  .card-options {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+    gap: 15px; /* Khoảng cách giữa các nút */
+  }
+  
+  .card-btn {
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+  }
+  
+  .card-btn img {
+    width: 60px; /* Kích thước tiêu chuẩn ảnh thẻ */
+    height: auto; /* Giữ tỉ lệ ảnh */
+  }
+  
+  .card-btn:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.1);
+  }
+
+  .card-btn.active {
+    border-color: var(--secondary-color);
+    transform: scale(1.1);
+  }
+  

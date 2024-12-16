@@ -25,6 +25,7 @@ import AirportAdd from "./pages/Admin/Airports/AirportAdd";
 import AirportList from "./pages/Admin/Airports/AirportList";
 import AirportDetail from "./pages/Admin/Airports/AirportDetail";
 
+
 function AdminLayout() {
   return (
     <>
@@ -50,7 +51,6 @@ function App() {
               <Route path="/detail" element={<CustomerDetailPage />} />
               <Route path="/seats" element={<SeatPickerPage />} />
               <Route path="/payment" element={<PaymentPage />} />
-
               {/* <Route path='/admin' element={<Login />} exact />
             <Route element={<PrivateRoute />} path='/admin/dashboard'>
               <Route index element={<Dashboard />} exact />
