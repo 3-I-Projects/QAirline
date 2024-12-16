@@ -4,7 +4,10 @@ import './style/Home.css';
 import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
+<<<<<<< HEAD
+=======
 // import UserForm from './components/UserForm.jsx';
+>>>>>>> e86583ae79f8f325a9d5ebdb9b7ed1454788cfb2
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,7 +50,10 @@ function Home() {
       {/* Nội dung chính phía sau menu */}
       <div className="content">
         <FeatureCard />
+<<<<<<< HEAD
+=======
         {/* <UserForm /> */}
+>>>>>>> e86583ae79f8f325a9d5ebdb9b7ed1454788cfb2
       </div>
     </div>
   );

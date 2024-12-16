@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserForm from "../../components/UserForm";
 import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from "../../context/BookingContext";
 import { useNavigate } from 'react-router-dom';
+import AuthContext from "../../context/AuthContext";
 
 const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
@@ -10,11 +11,18 @@ const CustomerDetailPage = () => {
     setCount(count + 1);
     toast(`Here is your toast ${count}`);
   };
-  const { allCustomers, setAllCustomers } = useContext(BookingContext);
-  const { customerCount } = useContext(BookingContext);
+  const { allCustomers, setAllCustomers, customerCount, setCustomerCount } = useContext(BookingContext);
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [errors, setErrors] = useState(Array(customerCount).fill({}));
+  const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    setErrors(
+      Array(customerCount).fill({})
+    );
+  }, [customerCount]);
+
 
   // Handle input change for a specific form
   const handleChange = (e, index) => {
@@ -62,9 +70,14 @@ const CustomerDetailPage = () => {
 
     allCustomers.map(async (formData) => {
       try {
+        const headers = { "Content-Type": "application/json" };
+        if (accessToken) {
+          headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+
         const response = await fetch("http://localhost:8000/users/customers", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: headers,
           body: JSON.stringify(formData),
         });
 
@@ -92,6 +105,16 @@ const CustomerDetailPage = () => {
 
   return (
     <>
+    <div>
+        <label htmlFor="customerCount">Number of Customers:</label>
+        <input
+            type="number"
+            id="customerCount"
+            value={customerCount}
+            onChange={(e) => setCustomerCount(Number(e.target.value))}
+            min="1"
+        />
+    </div>
       <button onClick={test}>Make me a toast</button>
       {allCustomers.map((formData, index) => (
         <div key={index}>
