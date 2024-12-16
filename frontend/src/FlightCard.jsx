@@ -10,6 +10,7 @@ const FlightCard = ({ flight }) => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="flight-card">
       {/* Phần hiển thị thông tin chính */}
       <div className="flight-summary" onClick={toggleDetails}>
@@ -40,6 +41,12 @@ const FlightCard = ({ flight }) => {
       </div>
 
       {/* Toggle chi tiết chuyến bay */}
+=======
+    <div className="flight-card" onClick={toggleDetails}>
+      <h4>{`Chuyến bay từ ${flight.origin_airport_city} đến ${flight.destination_airport_city}`}</h4>
+      <p>Khởi hành: {new Date(flight.departure_time).toLocaleString()}</p>
+      <p>Đến nơi: {new Date(flight.arrival_time).toLocaleString()}</p>
+>>>>>>> c550f1b70f110432f8698935eb3b2a7b5dad7616
       {showDetails && (
         <div className="flight-details">
           <p>

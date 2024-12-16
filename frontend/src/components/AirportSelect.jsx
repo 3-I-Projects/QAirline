@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const AirportSelect = () => {
+const AirportSelect = ({ value, onChange }) => {
     const [airports, setAirports] = useState([]);
-    const [selectedAirport, setSelectedAirport] = useState('');
 
     useEffect(() => {
         try {
@@ -10,20 +9,16 @@ const AirportSelect = () => {
             .then(response => response.json())
             .then(data => {
                 setAirports(data);
-            })
+            })  
         } catch (error) {
             console.error('Error fetching airports:', error);
         }
     }, []);
 
-    const handleChange = (e) => {
-        setSelectedAirport(e.target.value);
-    };
-
     return (
         <div>
             <label htmlFor="airport-select">Select an Airport:</label>
-            <select id="airport-select" value={selectedAirport} onChange={handleChange}>
+            <select id="airport-select" value={value} onChange={onChange}>
                 <option value="">--Please choose an option--</option>
                 {airports.length > 0 ? (
                     airports.map((airport) => (
