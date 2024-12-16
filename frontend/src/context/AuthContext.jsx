@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
 					setAccessToken(res.access);
 					localStorage.setItem('accessToken', res.access);
 					localStorage.setItem('username', jwtDecode(res.access).username);
+					localStorage.setItem('isLoggedIn', true);
 					navigate('/admin/dashboard');
 					return;
 				} else {
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
 				setAccessToken(res.access);
 				localStorage.setItem('accessToken', res.access);
 				localStorage.setItem('username', jwtDecode(res.access).username);
+				localStorage.setItem('isLoggedIn', true);
 				navigate('/home');
 				return;
 			} else {
@@ -48,6 +50,7 @@ export const AuthProvider = ({ children }) => {
 	const logoutAction = () => {
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('username');
+		localStorage.removeItem('isLoggedIn');
 	}
 
 	return (
