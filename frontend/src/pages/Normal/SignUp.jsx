@@ -67,7 +67,8 @@ function SignUp() {
   };
 
   return (
-    <div className="login-container">
+    <div className="login">
+      <div className="login-container">
       <div className="login-card">
         {/* Header */}
         <div className="login-header">
@@ -131,7 +132,9 @@ function SignUp() {
           </button>
         </div>
       </div>
+      </div>
     </div>
+    
   );
 }
 
