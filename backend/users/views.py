@@ -52,7 +52,12 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_info(request):
+    user = request.user
+    serializer = CustomUserSerializer(user)
+    return Response(serializer.data)
 
 
 
