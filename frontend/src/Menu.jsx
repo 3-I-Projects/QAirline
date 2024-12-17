@@ -60,13 +60,13 @@ const Menu = () => {
           <div className="bottom-menu">
             <ul className="menu-list">
               <li className="menu-item">
-                <Link to="/my-booking" className="menu-link2">Chuyến bay của tôi</Link>
+                <Link to="/my-bookings" className="menu-link2">Chuyến bay của tôi</Link>
               </li>
               <li className="menu-item">
                 <Link to="/trip-info" className="menu-link2">Thông Tin Hành Trình</Link>
               </li>
               <li className="menu-item">
-                <Link to="/flight-services" className="menu-link2">Dịch Vụ Chuyến Bay</Link>
+                <Link to="/user" className="menu-link2">User</Link>
               </li>
             </ul>
           </div>

@@ -9,5 +9,6 @@ urlpatterns = [
     path('users/<int:pk>', views.UserDetail.as_view(), name='user_detail'),
     path('login', views.login, name='login'),    
     path('logout', views.logout, name='logout'),    
-    path('register', views.register, name='register'),    
+    path('register', views.register, name='register'),
+    path('info', views.user_info, name='user_info'),
 ]

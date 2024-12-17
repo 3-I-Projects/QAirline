@@ -6,7 +6,15 @@ const AuthContext = createContext();
 
 export default AuthContext;
 export const AuthProvider = ({ children }) => {
-	const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
+	const [ accessToken, setAccessToken ] = useState(localStorage.getItem('accessToken'));
+	const [ userInfo, setUserInfo ] = useState({
+        email: '',
+        id: 0,
+        username: '',
+        booked_tickets: [],
+        customers: []
+    });
+
 	const navigate = useNavigate();
 
 	const loginAction = async (data, mode) => {
@@ -54,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ accessToken, loginAction, logoutAction }}>
+		<AuthContext.Provider value={{ accessToken, loginAction, logoutAction, userInfo, setUserInfo }}>
 			{children}
 		</AuthContext.Provider>
 	)
