@@ -190,10 +190,11 @@ def available_seats(request, pk):
                 continue
 
             time_since_booking = timezone.now() - seat.booked_ticket.ordered_time
-            if time_since_booking > datetime.timedelta(hours=1):  # assuming 1 hour is the threshold
+            if time_since_booking > datetime.timedelta(minutes=5):  # assuming 1 hour is the threshold
                 seat.is_available = True
-                seat.booked_ticket.status = 'Cancelled'
-                seat.booked_ticket.save()
+                tik = seat.booked_ticket
+                tik.status = 'Cancelled'
+                tik.save()
                 seat.booked_ticket = None
                 seat.save()
         seats = flight.seats.all()

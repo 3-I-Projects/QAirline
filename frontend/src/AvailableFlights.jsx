@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './style/AvailableFlights.css';
 import FlightCard from './FlightCard.jsx';
+import { BookingContext } from './context/BookingContext.jsx';
 
 const AvailableFlights = () => {
   const [flights, setFlights] = useState([]);
   const location = useLocation();
+  const { setFlight } = useContext(BookingContext);
   
   const { flights: apiFlights } = location.state || {};
 
@@ -32,7 +34,7 @@ const AvailableFlights = () => {
         
         {flights.length > 0 ? (
           flights.map((flight) => (
-            <FlightCard key={flight.id} flight={flight} />
+            <FlightCard key={flight.id} flight={flight} setFlight={setFlight}/>
           ))
         ) : (
           <p>Không có chuyến bay nào khả dụng.</p>

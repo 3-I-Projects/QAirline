@@ -21,6 +21,7 @@ import SeatPickerPage from "./pages/Normal/SeatPickerPage";
 import PaymentPage from "./pages/Normal/PaymentPage";
 
 import Dashboard from "./pages/Admin/Dashboard";
+
 import AirportAdd from "./pages/Admin/Airports/AirportAdd";
 import AirportList from "./pages/Admin/Airports/AirportList";
 import AirportDetail from "./pages/Admin/Airports/AirportDetail";
@@ -30,6 +31,12 @@ import PlaneList from "./pages/Admin/Planes/PlaneList";
 import PlaneDetail from "./pages/Admin/Planes/PlaneDetail";
 import UserProfile from "./pages/Normal/UserProfile";
 import MyBookingsPage from "./pages/Normal/MyBookingsPage";
+
+import FlightAdd from "./pages/Admin/Flights/FlightAdd";
+import FlightList from "./pages/Admin/Flights/FlightList";
+import FlightDetail from "./pages/Admin/Flights/FlightDetail";
+
+import PostList from "./pages/Admin/PostList";
 
 function AdminLayout() {
   return (
@@ -78,6 +85,15 @@ function App() {
                   <Route path="detail" element={<PlaneDetail />} />
                 </Route>
 
+                <Route path="flights" element={<PrivateRoute />} exact>
+                  <Route index element={<FlightList />} exact />
+                  <Route path="add" element={<FlightAdd />} />
+                  <Route path="detail" element={<FlightDetail />} />
+                </Route>
+
+                <Route path="posts" element={<PrivateRoute />} exact>
+                  <Route index element={<PostList/>} />
+                </Route>
               </Route>
             </Routes>
           </BookingContextProvider>
