@@ -28,6 +28,7 @@ import AirportDetail from "./pages/Admin/Airports/AirportDetail";
 import PlaneAdd from "./pages/Admin/Planes/PlaneAdd";
 import PlaneList from "./pages/Admin/Planes/PlaneList";
 import PlaneDetail from "./pages/Admin/Planes/PlaneDetail";
+import UserProfile from "./pages/Normal/UserProfile";
 
 function AdminLayout() {
   return (
@@ -54,6 +55,7 @@ function App() {
               <Route path="/detail" element={<CustomerDetailPage />} />
               <Route path="/seats" element={<SeatPickerPage />} />
               <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/user" element={<UserProfile />} />
 
               <Route path="/admin" element={<AdminLayout />} exact>
                 <Route index element={<Login />} exact />
