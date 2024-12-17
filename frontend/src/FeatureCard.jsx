@@ -238,14 +238,16 @@ function FeatureCard() {
                     ‎ Một chiều
                   </label>
                 </div>
-                <AirportSelect
-                  value={fromAirport}
-                  onChange={(e) => setFromAirport(e.target.value)}
-                />
-                <AirportSelect
-                  value={toAirport}
-                  onChange={(e) => setToAirport(e.target.value)}
-                />
+                <div className="input-item">
+                  <AirportSelect
+                    value={fromAirport}
+                    onChange={(e) => setFromAirport(e.target.value)}
+                  />
+                  <AirportSelect
+                    value={toAirport}
+                    onChange={(e) => setToAirport(e.target.value)}
+                  />
+                </div>
                 <div className="input-item">
                   <label>Ngày đi</label>
                   <input
