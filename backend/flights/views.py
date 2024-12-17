@@ -17,6 +17,7 @@ from .models import *
 
 from .permissions import *
 
+from utils.utils import purge_unpaid_tickets
 
 # Create your views here.
 @api_view(['GET'])
@@ -102,6 +103,8 @@ class FlightList(generics.ListCreateAPIView):
     serializer_class = FlightSerializer
 
     def get(self, request, *args, **kwargs):
+        for flight in Flight.objects.all():
+            purge_unpaid_tickets(flight, 5)
         return self.list(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
@@ -182,21 +185,7 @@ def available_seats(request, pk):
     try:
         # print(request.data)
         flight = Flight.objects.get(pk=pk)
-        filled_seats = flight.seats.filter(is_available=False)
-        for seat in filled_seats:
-            if not hasattr(seat, 'booked_ticket'):
-                continue
-            if seat.booked_ticket.status == 'Paid':
-                continue
-
-            time_since_booking = timezone.now() - seat.booked_ticket.ordered_time
-            if time_since_booking > datetime.timedelta(minutes=5):  # assuming 1 hour is the threshold
-                seat.is_available = True
-                tik = seat.booked_ticket
-                tik.status = 'Cancelled'
-                tik.save()
-                seat.booked_ticket = None
-                seat.save()
+        purge_unpaid_tickets(flight, 5)
         seats = flight.seats.all()
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
@@ -216,6 +205,8 @@ def find_flight(request):
     to_airport = request.data['to_airport']
 
     flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))
+    for flight in flights:
+        purge_unpaid_tickets(flight, 1)
     serializer = FlightSerializer(flights, many=True)
 
     return Response(serializer.data)
