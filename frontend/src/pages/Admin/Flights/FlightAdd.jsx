@@ -103,9 +103,9 @@ const FlightAdd = () => {
             <div className='form-group'>
                 <label htmlFor="plane">Plane</label>
                 <select className='form-select' name="plane" id="" defaultValue={'DEFAULT'} onChange={handleInput}>
-                    <option value="DEFAULT" disabled>Select a plane</option>
+                    <option value="DEFAULT" disabled onChange={handleInput}>Select a plane</option>
                     {planes.map((plane) => (
-                        <option key={plane.id}>{plane.registration_number}</option>
+                        <option key={plane.id} value={plane.id}>{plane.registration_number}</option>
                     ))}
                 </select>
             </div>
@@ -113,9 +113,9 @@ const FlightAdd = () => {
             <div className='form-group'>
                 <label htmlFor="origin_airport">Origin airport</label>
                 <select className='form-select' name="origin_airport" id="" defaultValue={'DEFAULT'} onChange={handleInput}>
-                    <option value="DEFAULT" disabled>Select origin airport</option>
+                    <option value="DEFAULT" disabled onChange={handleInput}>Select origin airport</option>
                     {airports.map((airport) => (
-                        <option key={airport.id}>{airport.name}</option>
+                        <option key={airport.id} value={airport.id}>{airport.name}</option>
                     ))}
                 </select>
             </div>
@@ -123,9 +123,9 @@ const FlightAdd = () => {
             <div className='form-group'>
                 <label htmlFor="destination_airport">Destination airport</label>
                 <select className='form-select' name="destination_airport" id="" defaultValue={'DEFAULT'} onChange={handleInput}>
-                    <option value="DEFAULT" disabled>Select destination airport</option>
+                    <option value="DEFAULT" disabled onChange={handleInput}>Select destination airport</option>
                     {airports.map((airport) => (
-                        <option key={airport.id}>{airport.name}</option>
+                        <option key={airport.id} value={airport.id}>{airport.name}</option>
                     ))}
                 </select>
             </div>
@@ -169,6 +169,7 @@ const FlightAdd = () => {
                     required
                 />
             </div>
+            <button type='submit'>Add Flight</button>
         </form>
     )
 }
