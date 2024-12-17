@@ -4,7 +4,7 @@ const BookingContext = createContext(null);
 export { BookingContext };
 export default function BookingContextProvider({ children }) {
   const [count, setCount] = useState(0);
-  const [customerCount, setCustomerCount] = useState(5);
+  const [customerCount, setCustomerCount] = useState(1);
   const [allCustomers, setAllCustomers] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [fromAirport, setFromAirport] = useState(0);
