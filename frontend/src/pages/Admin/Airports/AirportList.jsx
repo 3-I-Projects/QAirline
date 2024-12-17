@@ -9,24 +9,25 @@ const AirportList = () => {
 	});
 	const navigate = useNavigate();
 
+	const fetchAirports = async () => {
+		try {
+			const response = await fetch('http://localhost:8000/flights/airports', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+				},
+			});
+	
+			const res = await response.json();
+			setAirports(res);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	// useEffect to fetch airports from backend once when component mounts
 	useEffect(() => {
-		const fetchAirports = async () => {
-			try {
-				const response = await fetch('http://localhost:8000/flights/airports', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				});
-
-				const res = await response.json();
-				setAirports(res);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
 		fetchAirports();
 	}, []);
 
@@ -61,6 +62,7 @@ const AirportList = () => {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
 				},
 			});
 			let newAirportList = airports.filter((airport) => airport.id !== id);

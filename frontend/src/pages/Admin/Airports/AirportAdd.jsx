@@ -18,7 +18,8 @@ const AirportAdd = () => {
         const response = await fetch('http://localhost:8000/flights/airports', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
           body: JSON.stringify(input)
         });
@@ -32,7 +33,7 @@ const AirportAdd = () => {
 
         if (res) {
           alert('Airport added');
-          navigate('/admin/dashboard');
+          navigate('/admin/airports');
           return;
         } else {
           alert('Invalid input');

@@ -25,6 +25,10 @@ import AirportAdd from "./pages/Admin/Airports/AirportAdd";
 import AirportList from "./pages/Admin/Airports/AirportList";
 import AirportDetail from "./pages/Admin/Airports/AirportDetail";
 
+import PlaneAdd from "./pages/Admin/Planes/PlaneAdd";
+import PlaneList from "./pages/Admin/Planes/PlaneList";
+import PlaneDetail from "./pages/Admin/Planes/PlaneDetail";
+
 function AdminLayout() {
   return (
     <>
@@ -51,11 +55,6 @@ function App() {
               <Route path="/seats" element={<SeatPickerPage />} />
               <Route path="/payment" element={<PaymentPage />} />
 
-              {/* <Route path='/admin' element={<Login />} exact />
-            <Route element={<PrivateRoute />} path='/admin/dashboard'>
-              <Route index element={<Dashboard />} exact />
-            </Route> */}
-
               <Route path="/admin" element={<AdminLayout />} exact>
                 <Route index element={<Login />} exact />
 
@@ -68,7 +67,13 @@ function App() {
                   <Route path="add" element={<AirportAdd />} />
                   <Route path="detail" element={<AirportDetail />} />
                 </Route>
-                
+
+                <Route path="planes" element={<PrivateRoute />} exact>
+                  <Route index element={<PlaneList />} exact />
+                  <Route path="add" element={<PlaneAdd />} />
+                  <Route path="detail" element={<PlaneDetail />} />
+                </Route>
+
               </Route>
             </Routes>
           </BookingContextProvider>

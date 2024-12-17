@@ -19,7 +19,8 @@ const AirportDetail = () => {
         const response = await fetch('http://localhost:8000/flights/airports/' + airport.id, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
           body: JSON.stringify(input)
         });

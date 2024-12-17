@@ -14,6 +14,9 @@ from rest_framework import generics
 from .serializers import *
 from .models import *
 
+from .permissions import *
+
+
 # Create your views here.
 @api_view(['GET'])
 def index(request):
@@ -25,6 +28,7 @@ class AirportList(generics.ListCreateAPIView):
     """
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
+    permission_classes = [IsAdmin]
 
     def get(self, request, format=None):
         airports = Airport.objects.all()
