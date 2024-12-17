@@ -9,14 +9,8 @@ const UserProfile = () => {
     const [ displayUsernameForm, setDisplayUsernameForm ] = useState(false);
     const [ displayPasswordForm, setDisplayPasswordForm ] = useState(false);
     const [ password, setPassword ] = useState('');
-    const [userInfo, setUserInfo] = useState({
-        email: '',
-        id: 0,
-        username: '',
-        booked_tickets: [],
-        customers: []
-    });
-    const { accessToken } = useContext(AuthContext);
+    const { accessToken, userInfo, setUserInfo } = useContext(AuthContext);
+
     useEffect(() => {
         try {
             const headers = {}
@@ -33,6 +27,8 @@ const UserProfile = () => {
             console.error('Error fetching user info:', error);
         }
     }, []);
+
+    useEffect(() => {localStorage.setItem('username', userInfo.username)}, [userInfo]);
 
     async function submit(name, value) {
         
