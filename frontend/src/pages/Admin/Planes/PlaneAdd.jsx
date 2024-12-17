@@ -7,10 +7,10 @@ const PlaneAdd = () => {
 		"registration_number": "",
 		"manufacturer": "",
 		"model": "",
-		"first_class_capacity": null,
-		"business_class_capacity": null,
-		"premium_class_capacity": null,
-		"economy_class_capacity": null,
+		"first_class_row_count": null,
+		"business_class_row_count": null,
+		"premium_class_row_count": null,
+		"economy_class_row_count": null,
 		"current_airport": null
 	});
 	const [airports, setAirports] = useState([]);
@@ -118,7 +118,7 @@ const PlaneAdd = () => {
         <label htmlFor="first-class-capacity">First-class Capacity</label>
         <input
           type="number"
-          name='first_class_capacity'
+          name='first_class_row_count'
           onChange={handleInput}
           required
         />
@@ -128,7 +128,7 @@ const PlaneAdd = () => {
         <label htmlFor="business-class-capacity">Business-class Capacity</label>
         <input
           type="number"
-          name='business_class_capacity'
+          name='business_class_row_count'
           onChange={handleInput}
           required
         />
@@ -138,7 +138,7 @@ const PlaneAdd = () => {
 				<label htmlFor="premium-class-capacity">Premium-class Capacity</label>
 				<input
 					type="number"
-					name='premium_class_capacity'
+					name='premium_class_row_count'
 					onChange={handleInput}
 					required
 				/>
@@ -148,7 +148,7 @@ const PlaneAdd = () => {
 				<label htmlFor="economy-class-capacity">Economy-class Capacity</label>
 				<input
 					type="number"
-					name='economy_class_capacity'
+					name='economy_class_row_count'
 					onChange={handleInput}
 					required
 				/>

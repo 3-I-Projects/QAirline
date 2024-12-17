@@ -52,10 +52,11 @@ const PlaneList = () => {
 			<table>
 				<thead>
 					<tr>
-						<th>Name</th>
 						<th>Registration Number</th>
 						<th>Manufacturer</th>
 						<th>Model</th>
+                        <th>Current Airport</th>
+                        <th>Delete PLane</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,6 +67,7 @@ const PlaneList = () => {
 							</td>
 							<td>{plane.manufacturer}</td>
 							<td>{plane.model}</td>
+                            <td>{plane.current_airport}</td>
 							<td>
 								<button onClick={() => handleDeleteAction(plane.id)}>Delete plane</button>
 							</td>
