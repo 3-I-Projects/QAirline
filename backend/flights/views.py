@@ -198,13 +198,13 @@ def find_flight(request):
     from_date = request.data['from_date'].split('-')
     from_date = datetime.datetime(int(from_date[0]), int(from_date[1]), int(from_date[2]))
     from_date = timezone.make_aware(from_date, timezone.get_current_timezone())
-    to_date = request.data['to_date'].split('-')
-    to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
-    to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
+    # to_date = request.data['to_date'].split('-')
+    # to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
+    # to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
     from_airport = request.data['from_airport']
     to_airport = request.data['to_airport']
 
-    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))
+    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))#& Q(departure_time__lt=to_date) 
     for flight in flights:
         purge_unpaid_tickets(flight, 1)
     serializer = FlightSerializer(flights, many=True)
