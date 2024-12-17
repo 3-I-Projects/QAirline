@@ -1,27 +1,96 @@
-/* styles/FlightCard.css */
+@import "./Global.css";
 
 /* Thẻ chuyến bay */
 .flight-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid var( --border-color);
+  border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
   width: 100%; /* Chiều rộng đầy đủ */
   max-width: 800px; /* Giới hạn chiều rộng thẻ lớn */
   margin: 0 auto; /* Căn giữa thẻ */
-  transition: background 0.2s ease;
+  transition: transform 0.2s ease;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .flight-card:hover {
   background: #f0f0f0;
+  transform: translateY(-5px);
 }
 
-/* Thông tin trong thẻ chuyến bay */
-.flight-card-details {
-  font-size: 1rem;
-  margin: 10px 0;
-  line-height: 1.5;
+.flight-info {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
 }
+
+.time, .route, .duration {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.details-link {
+  color: green;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.flight-details {
+  background-color: #f9f9f9;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.flight-pricing {
+  display: flex;
+  margin-top: 10px;
+}
+
+.pricing-card {
+  flex: 1;
+  margin: 0 5px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.economy {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.business {
+  background-color: #003366;
+  color: white;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.seats {
+  font-size: 12px;
+}
+
+.book-btn {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: white;
+  color: #4CAF50;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.book-btn:hover {
+  background-color: #f1f1f1;
+}
+
+
 
 /* Responsive */
 @media (max-width: 768px) {

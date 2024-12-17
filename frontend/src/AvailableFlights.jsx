@@ -20,7 +20,7 @@ const AvailableFlights = () => {
   }, [apiFlights]);
 
   return (
-    <div>
+    <div className='available-flights'>
       <header className="header">
         <p>Menu</p>
       </header>
@@ -29,6 +29,7 @@ const AvailableFlights = () => {
       </div>
       <div className="flight-list-container">
         <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
+        
         {flights.length > 0 ? (
           flights.map((flight) => (
             <FlightCard key={flight.id} flight={flight} />

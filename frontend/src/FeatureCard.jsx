@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import toast from 'react-hot-toast';
-import './style/FeatureCardStyle.css';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import "./style/FeatureCardStyle.css";
+import AirportSelect from "./components/AirportSelect";
+import { BookingContext } from "./context/BookingContext";
 
 function FeatureCard() {
-  const [activeTab, setActiveTab] = useState('MUA VÉ');
+  const [activeTab, setActiveTab] = useState("MUA VÉ");
   const navigate = useNavigate();
 
   // State cho thông tin
-  const [bookingInfo, setBookingInfo] = useState({
-    from: '',
-    to: '', 
-    departureDate: '',
-    returnDate: '',
-    tripType: 'khứ hồi',
-    passengers: '',
-  });
+  
+  const { toAirport, setToAirport, fromAirport, setFromAirport, customerCount, setCustomerCount, bookingInfo, setBookingInfo } =
+    useContext(BookingContext);
 
   // const [reservationInfo, setReservationInfo] = useState({
   //   reservationCode: '',
@@ -35,11 +32,11 @@ function FeatureCard() {
 
   const handleInputChange = (e, section) => {
     const { name, value } = e.target;
-    if (section === 'booking') {
+    if (section === "booking") {
       setBookingInfo({ ...bookingInfo, [name]: value });
-    } else if (section === 'reservation') {
+    } else if (section === "reservation") {
       setReservationInfo({ ...reservationInfo, [name]: value });
-    } else if (section === 'checkin') {
+    } else if (section === "checkin") {
       setCheckInInfo({ ...checkInInfo, [name]: value });
     }
   };
@@ -57,125 +54,105 @@ function FeatureCard() {
 
   let airportData = []; // Biến lưu thông tin sân bay
 
-// Fetch thông tin sân bay từ API
-const fetchAirports = async () => {
-  try {
-    const response = await fetch('http://localhost:8000/flights/airports');
-    if (!response.ok) {
-      toast.error('Không thể lấy thông tin sân bay từ máy chủ!');
+  // Fetch thông tin sân bay từ API
+  const fetchAirports = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/flights/airports");
+      if (!response.ok) {
+        toast.error("Không thể lấy thông tin sân bay từ máy chủ!");
+        return false;
+      }
+
+      const data = await response.json();
+      console.log("Fetched airport data:", data); // Debug thông tin fetch
+      airportData = data;
+      return true;
+    } catch (error) {
+      console.error("Lỗi khi lấy thông tin sân bay:", error);
+      toast.error("Lỗi khi lấy thông tin sân bay!");
       return false;
     }
-
-    const data = await response.json();
-    console.log("Fetched airport data:", data); // Debug thông tin fetch
-    airportData = data; 
-    return true;
-  } catch (error) {
-    console.error('Lỗi khi lấy thông tin sân bay:', error);
-    toast.error('Lỗi khi lấy thông tin sân bay!');
-    return false;
-  }
-};
-
-// Hàm chuẩn hóa chuỗi để loại bỏ dấu tiếng Việt và chuyển về chữ thường
-const removeDiacritics = (str) => {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu
-    .toLowerCase(); // Chuyển về chữ thường
-};
-
-// Map tên sân bay thành ID thông qua dữ liệu từ API
-const mapAirportToID = (airportCityOrName) => {
-  if (!airportData || airportData.length === 0) {
-    console.error("Airport data chưa được load.");
-    return 0;
-  }
-
-  const normalizedSearch = removeDiacritics(airportCityOrName);
-
-  console.log("Searching for:", normalizedSearch);
-
-  const airport = airportData.find(
-    (item) =>
-      removeDiacritics(item.name) === normalizedSearch ||
-      removeDiacritics(item.city) === normalizedSearch
-  );
-
-  console.log("Found airport:", airport);
-
-  return airport ? airport.id : 0; 
-};
-
-// Gửi thông tin đặt vé
-const handleBookingSubmit = async () => {
-  const { from, to, departureDate, returnDate, passengers } = bookingInfo;
-
-  const fieldsToValidate = {
-    "Nơi đi": from,
-    "Nơi đến": to,
-    "Ngày đi": departureDate,
-    "Ngày về": returnDate,
-    "Số hành khách": passengers,
   };
 
-  if (!validateFields(fieldsToValidate)) return;
+  // Hàm chuẩn hóa chuỗi để loại bỏ dấu tiếng Việt và chuyển về chữ thường
+  const removeDiacritics = (str) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu
+      .toLowerCase(); // Chuyển về chữ thường
+  };
 
-  // Fetch dữ liệu sân bay trước khi tìm chuyến bay
-  const airportsFetched = await fetchAirports();
-  if (!airportsFetched) return;
+  // Map tên sân bay thành ID thông qua dữ liệu từ API
+  const mapAirportToID = (airportCityOrName) => {
+    if (!airportData || airportData.length === 0) {
+      console.error("Airport data chưa được load.");
+      return 0;
+    }
 
-  console.log("Dữ liệu sân bay sau khi fetch:", airportData);
+    const normalizedSearch = removeDiacritics(airportCityOrName);
 
-  const fromAirportID = mapAirportToID(from);
-  const toAirportID = mapAirportToID(to);
+    console.log("Searching for:", normalizedSearch);
 
-  console.log("From Airport ID:", fromAirportID);
-  console.log("To Airport ID:", toAirportID);
+    const airport = airportData.find(
+      (item) =>
+        removeDiacritics(item.name) === normalizedSearch ||
+        removeDiacritics(item.city) === normalizedSearch
+    );
 
-  if (fromAirportID === 0 || toAirportID === 0) {
-    toast.error("Không tìm thấy thông tin sân bay phù hợp.");
-    return;
-  }
+    console.log("Found airport:", airport);
 
-  try {
-    const bodyData = {
-      from_date: departureDate,
-      to_date: returnDate,
-      from_airport: fromAirportID,
-      to_airport: toAirportID,
+    return airport ? airport.id : 0;
+  };
+
+  // Gửi thông tin đặt vé
+  const handleBookingSubmit = async () => {
+    const { departureDate, returnDate } = bookingInfo;
+
+    const fieldsToValidate = {
+      "Nơi đi": fromAirport,
+      "Nơi đến": toAirport,
+      "Ngày đi": departureDate,
+      "Ngày về": returnDate,
+      "Số hành khách": customerCount,
     };
+    
+    if (!validateFields(fieldsToValidate)) return;
 
-    console.log("Body data gửi tới server:", bodyData);
+    try {
+      const bodyData = {
+        from_date: departureDate,
+        to_date: returnDate,
+        from_airport: fromAirport,
+        to_airport: toAirport,
+      };
 
-    const response = await fetch('http://localhost:8000/flights/find', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bodyData),
-    });
+      console.log("Body data gửi tới server:", bodyData);
 
-    if (!response.ok) {
-      toast.error('Có lỗi xảy ra!');
-      return;
+      const response = await fetch("http://localhost:8000/flights/find", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData),
+      });
+
+      if (!response.ok) {
+        toast.error("Có lỗi xảy ra!");
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Dữ liệu trả về từ API:", data);
+
+      if (data && data.length > 0) {
+        toast.success(`Tìm thấy ${data.length} chuyến bay!`);
+        navigate("/flights", { state: { flights: data } });
+      } else {
+        toast.error("Không tìm thấy chuyến bay phù hợp.");
+      }
+    } catch (error) {
+      console.error("Có lỗi xảy ra:", error);
+      toast.error("Có lỗi xảy ra! Vui lòng thử lại.");
     }
-
-    const data = await response.json();
-    console.log("Dữ liệu trả về từ API:", data);
-
-    if (data && data.length > 0) {
-      toast.success(`Tìm thấy ${data.length} chuyến bay!`);
-      navigate('/flights', { state: { flights: data } });
-    } else {
-      toast.error('Không tìm thấy chuyến bay phù hợp.');
-    }
-  } catch (error) {
-    console.error('Có lỗi xảy ra:', error);
-    toast.error('Có lỗi xảy ra! Vui lòng thử lại.');
-  }
-};
-
-  
-
+  };
 
   // Gửi thông tin quản lý đặt chỗ
   // const handleReservationSubmit = () => {
@@ -207,179 +184,211 @@ const handleBookingSubmit = async () => {
   // };
 
   return (
-    <><Toaster /><div className="feature-card">
-      {/* Tabs */}
-      <div className="tabs">
-        <button
-          className={`tab ${activeTab === 'MUA VÉ' ? 'active' : ''}`}
-          onClick={() => handleTabChange('MUA VÉ')}
-        >
-          MUA VÉ
-        </button>
-        <button
-          className={`tab ${activeTab === 'QUẢN LÝ ĐẶT CHỖ' ? 'active' : ''}`}
-          onClick={() => handleTabChange('QUẢN LÝ ĐẶT CHỖ')}
-        >
-          QUẢN LÝ ĐẶT CHỖ
-        </button>
-        <button
-          className={`tab ${activeTab === 'LÀM THỦ TỤC' ? 'active' : ''}`}
-          onClick={() => handleTabChange('LÀM THỦ TỤC')}
-        >
-          LÀM THỦ TỤC
-        </button>
-      </div>
+    <>
+      <Toaster />
+      <div className="feature-card">
+        {/* Tabs */}
+        <div className="tabs">
+          <button
+            className={`tab ${activeTab === "MUA VÉ" ? "active" : ""}`}
+            onClick={() => handleTabChange("MUA VÉ")}
+          >
+            MUA VÉ
+          </button>
+          <button
+            className={`tab ${activeTab === "QUẢN LÝ ĐẶT CHỖ" ? "active" : ""}`}
+            onClick={() => handleTabChange("QUẢN LÝ ĐẶT CHỖ")}
+          >
+            QUẢN LÝ ĐẶT CHỖ
+          </button>
+          <button
+            className={`tab ${activeTab === "LÀM THỦ TỤC" ? "active" : ""}`}
+            onClick={() => handleTabChange("LÀM THỦ TỤC")}
+          >
+            LÀM THỦ TỤC
+          </button>
+        </div>
 
-      {/* Nội dung */}
-      <div className="card-content">
-        {activeTab === 'MUA VÉ' && (
-          <div>
-            <h3>Mua vé</h3>
-            <div className="input-group">
-              {/* Lựa chọn loại vé */}
-              <div className="trip-type-selector">
-                <label>
-                  <input
-                    type="radio"
-                    name="tripType"
-                    value="khứ hồi"
-                    checked={bookingInfo.tripType === 'khứ hồi'}
-                    onChange={(e) => handleInputChange(e, 'booking')} />‎ Khứ hồi
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="tripType"
-                    value="một chiều"
-                    checked={bookingInfo.tripType === 'một chiều'}
-                    onChange={(e) => handleInputChange(e, 'booking')} />‎ Một chiều
-                </label>
-              </div>
+        {/* Nội dung */}
+        <div className="card-content">
+          {activeTab === "MUA VÉ" && (
+            <div>
+              <h3>Mua vé</h3>
+              <div className="input-group">
+                {/* Lựa chọn loại vé */}
+                <div className="trip-type-selector">
+                  <label>
+                    <input
+                      type="radio"
+                      name="tripType"
+                      value="khứ hồi"
+                      checked={bookingInfo.tripType === "khứ hồi"}
+                      onChange={(e) => handleInputChange(e, "booking")}
+                    />
+                    ‎ Khứ hồi
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="tripType"
+                      value="một chiều"
+                      checked={bookingInfo.tripType === "một chiều"}
+                      onChange={(e) => handleInputChange(e, "booking")}
+                    />
+                    ‎ Một chiều
+                  </label>
+                </div>
+                <AirportSelect
+                  value={fromAirport}
+                  onChange={(e) => setFromAirport(e.target.value)}
+                />
+                <AirportSelect
+                  value={toAirport}
+                  onChange={(e) => setToAirport(e.target.value)}
+                />
 
-              {/* Nhập thông tin nơi đi, nơi đến và ngày */}
-              <div className="input-item">
-                <label>Từ</label>
-                <input
-                  type="text"
-                  name="from"
-                  value={bookingInfo.from}
-                  onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập nơi đi" />
-              </div>
-              <div className="input-item">
-                <label>Đến</label>
-                <input
-                  type="text"
-                  name="to"
-                  value={bookingInfo.to}
-                  onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập nơi đến" />
-              </div>
-              <div className="input-item">
-                <label>Ngày đi</label>
-                <input
-                  type="date"
-                  name="departureDate"
-                  value={bookingInfo.departureDate}
-                  onChange={(e) => handleInputChange(e, 'booking')} />
-              </div>
-              {bookingInfo.tripType === 'khứ hồi' && (
+                {/* Nhập thông tin nơi đi, nơi đến và ngày */}
+                {/* <div className="input-item">
+                  <label>Từ</label>
+                  <input
+                    type="text"
+                    name="from"
+                    value={bookingInfo.from}
+                    onChange={(e) => handleInputChange(e, "booking")}
+                    placeholder="Nhập nơi đi"
+                  />
+                </div>
                 <div className="input-item">
-                  <label>Ngày về</label>
+                  <label>Đến</label>
+                  <input
+                    type="text"
+                    name="to"
+                    value={bookingInfo.to}
+                    onChange={(e) => handleInputChange(e, "booking")}
+                    placeholder="Nhập nơi đến"
+                  />
+                </div> */}
+                <div className="input-item">
+                  <label>Ngày đi</label>
                   <input
                     type="date"
-                    name="returnDate"
-                    value={bookingInfo.returnDate}
-                    onChange={(e) => handleInputChange(e, 'booking')} />
+                    name="departureDate"
+                    value={bookingInfo.departureDate}
+                    onChange={(e) => handleInputChange(e, "booking")}
+                  />
                 </div>
-              )}
-              <div className="input-item">
-                <label>Số hành khách</label>
-                <input
-                  type="number"
-                  name="passengers"
-                  min="1"
-                  value={bookingInfo.passengers}
-                  onChange={(e) => handleInputChange(e, 'booking')}
-                  placeholder="Nhập số hành khách" />
+                {bookingInfo.tripType === "khứ hồi" && (
+                  <div className="input-item">
+                    <label>Ngày về</label>
+                    <input
+                      type="date"
+                      name="returnDate"
+                      value={bookingInfo.returnDate}
+                      onChange={(e) => handleInputChange(e, "booking")}
+                    />
+                  </div>
+                )}
+                <div className="input-item">
+                  <label>Số hành khách</label>
+                  <input
+                    type="number"
+                    name="passengers"
+                    min="1"
+                    value={customerCount}
+                    onChange={(e) => setCustomerCount(e.target.value)}
+                    placeholder="Nhập số hành khách"
+                  />
+                </div>
+                <button
+                  className="find-flights-button"
+                  onClick={handleBookingSubmit}
+                >
+                  TÌM CHUYẾN BAY
+                </button>
               </div>
-              <button className="find-flights-button" onClick={handleBookingSubmit}>
-                TÌM CHUYẾN BAY
-              </button>
             </div>
+          )}
 
-          </div>
-        )}
-
-
-        {activeTab === 'QUẢN LÝ ĐẶT CHỖ' && (
-          <div>
-            <h3>Quản lý đặt chỗ</h3>
-            <div className="input-group">
-              <div className="input-item">
-                <label>Mã đặt chỗ/Số vé điện tử</label>
-                <input
-                  type="text"
-                  name="reservationCode"
-                  value={reservationInfo.reservationCode}
-                  onChange={(e) => handleInputChange(e, 'reservation')}
-                  placeholder="Nhập mã đặt chỗ" />
+          {activeTab === "QUẢN LÝ ĐẶT CHỖ" && (
+            <div>
+              <h3>Quản lý đặt chỗ</h3>
+              <div className="input-group">
+                <div className="input-item">
+                  <label>Mã đặt chỗ/Số vé điện tử</label>
+                  <input
+                    type="text"
+                    name="reservationCode"
+                    value={reservationInfo.reservationCode}
+                    onChange={(e) => handleInputChange(e, "reservation")}
+                    placeholder="Nhập mã đặt chỗ"
+                  />
+                </div>
+                <div className="input-item">
+                  <label>Họ</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={reservationInfo.lastName}
+                    onChange={(e) => handleInputChange(e, "reservation")}
+                    placeholder="Nhập họ"
+                  />
+                </div>
+                <button
+                  className="search-button"
+                  onClick={handleReservationSubmit}
+                >
+                  TÌM KIẾM
+                </button>
               </div>
-              <div className="input-item">
-                <label>Họ</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={reservationInfo.lastName}
-                  onChange={(e) => handleInputChange(e, 'reservation')}
-                  placeholder="Nhập họ" />
-              </div>
-              <button className="search-button" onClick={handleReservationSubmit}>
-                TÌM KIẾM
-              </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {activeTab === 'LÀM THỦ TỤC' && (
-          <div>
-            <h3>Làm thủ tục</h3>
-            <div className="input-group">
-              <div className="input-item">
-                <label>Mã đặt chỗ</label>
-                <input
-                  type="text"
-                  name="pnrCode"
-                  value={checkInInfo.pnrCode}
-                  onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập mã đặt chỗ" />
+          {activeTab === "LÀM THỦ TỤC" && (
+            <div>
+              <h3>Làm thủ tục</h3>
+              <div className="input-group">
+                <div className="input-item">
+                  <label>Mã đặt chỗ</label>
+                  <input
+                    type="text"
+                    name="pnrCode"
+                    value={checkInInfo.pnrCode}
+                    onChange={(e) => handleInputChange(e, "checkin")}
+                    placeholder="Nhập mã đặt chỗ"
+                  />
+                </div>
+                <div className="input-item">
+                  <label>Số vé điện tử</label>
+                  <input
+                    type="text"
+                    name="ticketNumber"
+                    value={checkInInfo.ticketNumber}
+                    onChange={(e) => handleInputChange(e, "checkin")}
+                    placeholder="Nhập số vé điện tử"
+                  />
+                </div>
+                <div className="input-item">
+                  <label>Họ</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={checkInInfo.lastName}
+                    onChange={(e) => handleInputChange(e, "checkin")}
+                    placeholder="Nhập họ"
+                  />
+                </div>
+                <button
+                  className="check-in-button"
+                  onClick={handleCheckInSubmit}
+                >
+                  LÀM THỦ TỤC
+                </button>
               </div>
-              <div className="input-item">
-                <label>Số vé điện tử</label>
-                <input
-                  type="text"
-                  name="ticketNumber"
-                  value={checkInInfo.ticketNumber}
-                  onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập số vé điện tử" />
-              </div>
-              <div className="input-item">
-                <label>Họ</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={checkInInfo.lastName}
-                  onChange={(e) => handleInputChange(e, 'checkin')}
-                  placeholder="Nhập họ" />
-              </div>
-              <button className="check-in-button" onClick={handleCheckInSubmit}>
-                LÀM THỦ TỤC
-              </button>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div></>
+    </>
   );
 }
 

@@ -24,7 +24,7 @@ class Seat(models.Model):
     row = models.CharField(max_length=3)
     column = models.CharField(max_length=3)
     is_available = models.BooleanField(default=True)
-    seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='4')
+    seat_class = models.CharField(max_length=20, choices=SEAT_CHOICES, default='3')
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
@@ -42,10 +42,10 @@ class Plane(models.Model):
     registration_number = models.CharField(max_length=120)
     manufacturer = models.CharField(max_length=120)
     model = models.CharField(max_length=120)
-    first_class_capacity = models.IntegerField()
-    business_class_capacity = models.IntegerField()
-    premium_class_capacity = models.IntegerField()
-    economy_class_capacity = models.IntegerField()
+    first_class_row_count = models.IntegerField()
+    business_class_row_count = models.IntegerField()
+    premium_class_row_count = models.IntegerField()
+    economy_class_row_count = models.IntegerField()
     current_airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='available_planes')
 
     def __str__(self):
