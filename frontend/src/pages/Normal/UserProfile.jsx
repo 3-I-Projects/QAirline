@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import ChangeInfoForm from '../../components/ChangeInfoForm';
+import { useNavigate } from 'react-router-dom';
+import '../../style/User.css';
 
 const UserProfile = () => {
     // const {} = useContext(AuthContext);
@@ -10,6 +12,8 @@ const UserProfile = () => {
     const [ displayPasswordForm, setDisplayPasswordForm ] = useState(false);
     const [ password, setPassword ] = useState('');
     const { accessToken, userInfo, setUserInfo } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -63,7 +67,8 @@ const UserProfile = () => {
     }
 
     return (
-        <div>
+        <div className='user-container'>
+            <div className='user'>
             <h1>User Profile</h1>
             {displayUsernameForm ? (
                 <ChangeInfoForm 
@@ -73,12 +78,12 @@ const UserProfile = () => {
                     handleSubmit={() => submit('username', userInfo.username)}
                 />
             ) : userInfo.username ? (
-                <div>
+                <div className='user-infor'>
                     <label>Username:</label>
                     <span>{userInfo.username}</span>
                 </div>
             ) : (
-                <div>
+                <div className='user-infor'>
                     <label>Username:</label>
                     <span>How</span>
                 </div>
@@ -92,12 +97,12 @@ const UserProfile = () => {
                     handleSubmit={() => submit('email', userInfo.email)}
                 />
             ) : userInfo.email ? (
-                <div>
+                <div className='user-infor'>
                     <label>Email:</label>
                     <span>{userInfo.email}</span>
                 </div>
             ) : (
-                <div>
+                <div className='user-infor'>
                     <label>Email:</label>
                     <span>Nothing</span>
                 </div>
@@ -111,8 +116,11 @@ const UserProfile = () => {
                     handleSubmit={() => submit('password', password)}
                 />
             )}
-            <button onClick={() => setDisplayPasswordForm(!displayPasswordForm)}>Change Password</button>
-
+            <div className='btn-container'>
+                <button onClick={() => setDisplayPasswordForm(!displayPasswordForm)}>Change Password</button>
+                <button onClick={() => navigate('/home')}>Home</button>
+            </div>
+            </div>
         </div>
     );
 };

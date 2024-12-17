@@ -33,11 +33,6 @@ function SignIn() {
 		}));
 	};
 
-	// Điều hướng đến trang chủ
-	const goToHome = () => {
-		navigate('/home');
-	};
-
 	return (
 		<div className='login'>
 			<div className="login-container">
@@ -93,7 +88,7 @@ function SignIn() {
 								Sign Up
 							</span>
 						</p>
-						<button onClick={goToHome} className="action-button">
+						<button onClick={() => navigate('/home')} className="action-button">
 							Go to Home
 						</button>
 					</div>
