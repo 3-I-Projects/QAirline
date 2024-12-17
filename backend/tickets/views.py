@@ -27,14 +27,39 @@ class TicketList(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs): # shouldve used serializer more here
+        print(request.data)
+        flight = request.data['flight']
+        flight = Flight.objects.get(pk=flight)
+        if flight.seats.filter(is_available=True).count() == 0:
+            return Response({'error': 'no available seats'}, status=status.HTTP_404_NOT_FOUND)
         seat = request.data['seat']
-        seat = Seat.objects.get(pk=seat)
+        if not seat:
+            seat = flight.seats.filter(is_available=True).order_by('price').first()
+            print(seat)
+            if seat.booked_ticket:
+                print('seat is ', seat.booked_ticket.status)
+                if seat.booked_ticket.status == 'Paid':
+                    seat.is_available = True
+                    seat.save()
+                    return Response({'error': 'seat not available, please choose seat again'}, status=status.HTTP_404_NOT_FOUND)
+                else:
+                    # seat.booked_ticket.seat = None
+                    tik = seat.booked_ticket
+                    tik.status = 'Cancelled'
+                    tik.seat = None
+                    tik.save()
+                    # seat.booked_ticket = None
+                    # seat.save()
+                    # seat.save()
+                    # print(seat.booked_ticket, ' is now none')
+        else:
+            seat = Seat.objects.get(pk=seat)
+        if seat.id not in [seat.id for seat in flight.seats.all()]:
+            return Response({'error': 'seat not in flight'}, status=status.HTTP_404_NOT_FOUND)
         if not seat.is_available:
             return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
         customer = request.data['customer']
         customer = Customer.objects.get(pk=customer)
-        flight = request.data['flight']
-        flight = Flight.objects.get(pk=flight)
         price = seat.price + flight.base_price
         user = request.user if request.user.is_authenticated else None
         ticket = Ticket(booked_by=user, customer=customer, flight=flight, seat=seat, price=price)
