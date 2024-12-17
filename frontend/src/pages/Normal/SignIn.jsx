@@ -39,62 +39,64 @@ function SignIn() {
 	};
 
 	return (
-		<div className="login-container">
-			<div className="login-card">
-				{/* Header */}
-				<div className="login-header">
-					<h2 className="title">Sign In</h2>
-					<p className="description">Use your username and password to log in.</p>
-				</div>
-
-				{/* Form */}
-				<form className="login-form" onSubmit={handleSubmitEvent}>
-					<div className="form-group">
-						<label htmlFor="login-username" className="input-label">Username</label>
-						<input
-							id="login-username"
-							type="text"
-							placeholder="Enter your username"
-							className="input-field"
-							name='username'
-							onChange={handleInput}
-							required
-						/>
+		<div className='login'>
+			<div className="login-container">
+				<div className="login-card">
+					{/* Header */}
+					<div className="login-header">
+						<h2 className="title">Sign In</h2>
+						<p className="description">Use your username and password to log in.</p>
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="login-password" className="input-label">Password</label>
-						<input
-							id="login-password"
-							type="password"
-							placeholder="Enter your password"
-							className="input-field"
-							name='password'
-							onChange={handleInput}
-							required
-						/>
+					{/* Form */}
+					<form className="login-form" onSubmit={handleSubmitEvent}>
+						<div className="form-group">
+							<label htmlFor="login-username" className="input-label">Username</label>
+							<input
+								id="login-username"
+								type="text"
+								placeholder="Enter your username"
+								className="input-field"
+								name='username'
+								onChange={handleInput}
+								required
+							/>
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="login-password" className="input-label">Password</label>
+							<input
+								id="login-password"
+								type="password"
+								placeholder="Enter your password"
+								className="input-field"
+								name='password'
+								onChange={handleInput}
+								required
+							/>
+						</div>
+
+						<a href="#" className="forgot-password">
+							Forgot Your Password?
+						</a>
+
+						<button type="submit" className="action-button">
+							SIGN IN
+						</button>
+					</form>
+
+					{/* Footer */}
+					<div className="login-footer">
+						<p>
+							Don't have an account?{' '}
+							<span onClick={() => navigate('/signup')} className="toggle-link">
+								Sign Up
+							</span>
+						</p>
+						<button onClick={goToHome} className="action-button">
+							Go to Home
+						</button>
 					</div>
-
-					<a href="#" className="forgot-password">
-						Forgot Your Password?
-					</a>
-
-					<button type="submit" className="action-button">
-						SIGN IN
-					</button>
-				</form>
-
-				{/* Footer */}
-				<div className="login-footer">
-					<p>
-						Don't have an account?{' '}
-						<span onClick={() => navigate('/signup')} className="toggle-link">
-							Sign Up
-						</span>
-					</p>
-					<button onClick={goToHome} className="action-button">
-						Go to Home
-					</button>
 				</div>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ const BookingContext = createContext(null);
 export { BookingContext };
 export default function BookingContextProvider({ children }) {
   const [count, setCount] = useState(0);
-  const [customerCount, setCustomerCount] = useState(3);
+  const [customerCount, setCustomerCount] = useState(1);
   const [allCustomers, setAllCustomers] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [fromAirport, setFromAirport] = useState(0);
@@ -17,7 +17,21 @@ export default function BookingContextProvider({ children }) {
     tripType: "khứ hồi",
     // passengers: "",
   });
-  const [ flight, setFlight ] = useState({})
+  const [ flight, setFlight ] = useState({
+    "id": 0,
+    "plane": 0,
+    "origin_airport": 0,
+    "destination_airport": 0,
+    "departure_time": "",
+    "delay": 0,
+    "base_price": 0,
+    "arrival_time": "",
+    "available_seat_count": 0,
+    "origin_airport_code": "",
+    "origin_airport_city": "",
+    "destination_airport_code": "",
+    "destination_airport_city": ""
+  })
   useEffect(() => {
     setAllCustomers(
       Array(customerCount).fill({
@@ -62,6 +76,8 @@ export default function BookingContextProvider({ children }) {
         setFromAirport,
         bookingInfo,
         setBookingInfo, 
+        flight,
+        setFlight,
       }}
     >
       {children}

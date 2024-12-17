@@ -1,6 +1,6 @@
 @import './Global.css';
 
-body {
+.login {
   font-family: var(--font-family);
   background: #f0f0f0;
   height: 100vh;
