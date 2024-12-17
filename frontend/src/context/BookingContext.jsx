@@ -4,9 +4,9 @@ const BookingContext = createContext(null);
 export { BookingContext };
 export default function BookingContextProvider({ children }) {
   const [count, setCount] = useState(0);
-  const [customerCount, setCustomerCount] = useState(5);
+  const [customerCount, setCustomerCount] = useState(1);
   const [allCustomers, setAllCustomers] = useState([]);
-  const [tickets, setTickets] = useState([]);
+  const [ticketIds, setTicketIds] = useState([]);
   const [fromAirport, setFromAirport] = useState(0);
   const [toAirport, setToAirport] = useState(0);
   const [bookingInfo, setBookingInfo] = useState({
@@ -45,18 +45,9 @@ export default function BookingContextProvider({ children }) {
         gender: "",
       })
     );
-    setTickets(
-      Array(customerCount).fill({
-        id: "",
-        price: "",
-        ordered_time: "",
-        status: "",
-        booked_by: "Viet Nam",
-        customer: "",
-        flight: "",
-        seat: "",
-      })
-    );
+    // setTicketIds(
+    //   Array(customerCount).fill({id: ""})
+    // );
   }, [customerCount]);
 
   return (
@@ -68,8 +59,8 @@ export default function BookingContextProvider({ children }) {
         setAllCustomers,
         customerCount,
         setCustomerCount,
-        tickets,
-        setTickets,
+        ticketIds,
+        setTicketIds,
         toAirport,
         setToAirport,
         fromAirport,

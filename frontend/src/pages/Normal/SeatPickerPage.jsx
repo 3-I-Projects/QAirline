@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from '../../context/BookingContext';
+import AuthContext from '../../context/AuthContext';
 
 const SeatPickerPage = () => {
     const navigate = useNavigate();
-    const { flight, allCustomers } = useContext(BookingContext);
-    const [ seats, setSeats ] = useState([]);
+    const { flight, allCustomers, customerCount, ticketIds, setTicketIds } = useContext(BookingContext);
+    const { accessToken } = useContext(AuthContext);
+    const [ seats, setSeats ] = useState([]); // huan dung ttin torng nay de tao giao dien chon cho ngoi
     const [ selectedSeats, setSelectedSeats ] = useState([]);
+    // useEffect(() => {
+    //     setSelectedSeats(Array(customerCount).fill({id: ""}));
+    // }, [])
 
 
     // console.log(allCustomers);
@@ -24,12 +29,39 @@ const SeatPickerPage = () => {
             console.log(seats);
         })
     }, []);
-    const onClick = () => {
-        // if (selectedSeats.length === allCustomers.length) {
-        navigate('/payment');
-        // } else {
 
-        // }
+    const onClick = async () => {
+        // if (selectedSeats.length === allCustomers.length) {
+        const headers = { "Content-Type": "application/json" };
+        if (accessToken) {
+            headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        for (let i = 0; i < customerCount; i++) {
+            const data = {
+                "customer": allCustomers[i].id,
+                "flight": flight.id,
+                "seat": selectedSeats.length > 0 ? selectedSeats[i].id : ''
+            }
+            console.log(data);
+            fetch('http://localhost:8000/tickets/', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                setTicketIds((prevTicketIds) => [...prevTicketIds, data.id]);
+                toast.success("Success: ", data.id);
+                console.log(ticketIds);
+            })
+            .catch(error => {
+                toast.error("Error: " + error.message);
+                console.error(error);
+            });
+            // sleep to avoid race condition of the database side
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        navigate('/payment');
     }
     return (
         <div>
