@@ -159,7 +159,7 @@ const PlaneAdd = () => {
 				<select className='form-select' name="current_airport" id="" defaultValue={'DEFAULT'} onChange={handleInput}>
 					<option value="DEFAULT" disabled>Select an airport</option>
 					{airports.map((airport) => (
-						<option value={airport.id}>{airport.name}</option>
+						<option key={airport.id}>{airport.name}</option>
 					))}
 				</select>
 			</div>

@@ -84,7 +84,6 @@ const PlaneDetail = () => {
 
   return (
     <form onSubmit={handleSubmitEvent}>
-      <div>capacity: {typeof plane.first_class_row_count}</div>
       <div className='form-group'>
         <label htmlFor="registration_number">Registration Number</label>
         <input
@@ -159,7 +158,7 @@ const PlaneDetail = () => {
         <label htmlFor="current-airport">Current Airport</label>
         <select className='form-select' name="current_airport" id="" defaultValue={input.current_airport} onChange={handleInput}>
           {airports.map((airport) => (
-            <option value={airport.id}>{airport.name}</option>
+            <option key={airport.id}>{airport.name}</option>
           ))}
         </select>
       </div>

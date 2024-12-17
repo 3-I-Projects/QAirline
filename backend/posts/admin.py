@@ -13,12 +13,12 @@ admin.site.register(AnnouncementCategory)
 
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'created_at', 'last_update', 'status', 'type', 'get_tag')
+    list_display = ('id', 'title', 'created_at', 'last_update', 'status', 'type')
     search_fields = ('title', 'body')
     list_filter = ('created_at', 'status')
 
-    def get_tag(self, obj):
-        return ', '.join([tag.name for tag in obj.tag.all()])
+    # def get_tag(self, obj):
+    #     return ', '.join([tag.name for tag in obj.tag.all()])
     
     def type(self, obj):
         return obj.type()
