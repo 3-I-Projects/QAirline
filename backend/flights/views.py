@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, SAFE_METHODS
 
 from .serializers import *
 from .models import *
@@ -28,7 +29,13 @@ class AirportList(generics.ListCreateAPIView):
     """
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
-    permission_classes = [IsAdmin]
+    # permission_classes = [IsAuthenticatedOrReadOnly, IsAdmin]
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            self.permission_classes = [IsAuthenticatedOrReadOnly]
+        else:
+            self.permission_classes = [IsAdmin]
+        return super().get_permissions()
 
     def get(self, request, format=None):
         airports = Airport.objects.all()
@@ -48,7 +55,13 @@ class AirportDetail(APIView):
     """
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
-
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            self.permission_classes = [IsAuthenticatedOrReadOnly]
+        else:
+            self.permission_classes = [IsAdmin]
+        return super().get_permissions()
+    
     def get_object(self, pk):
         try:
             return Airport.objects.get(pk=pk)

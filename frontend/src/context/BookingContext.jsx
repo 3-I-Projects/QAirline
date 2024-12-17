@@ -17,6 +17,7 @@ export default function BookingContextProvider({ children }) {
     tripType: "khứ hồi",
     // passengers: "",
   });
+  const [ flight, setFlight ] = useState({})
   useEffect(() => {
     setAllCustomers(
       Array(customerCount).fill({
