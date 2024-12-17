@@ -52,6 +52,24 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
 
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        data = request.data.copy()
+
+        if 'password' in data:
+            instance.set_password(data['password'])
+            data['password'] = instance.password
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        # if getattr(instance, '_prefetched_objects_cache', None):
+        #     instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_info(request):
