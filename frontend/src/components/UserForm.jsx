@@ -390,7 +390,6 @@ function UserForm({ formData = {}, errors = {}, handleChange }) {
               <option value="O">Khác</option>
             </select>
           </div>
-          <button type="submit">Gửi Thông Tin</button>
         </>
       )}
       {/* </form> */}

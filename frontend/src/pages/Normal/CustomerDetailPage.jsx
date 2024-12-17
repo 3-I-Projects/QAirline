@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from "../../context/BookingContext";
 import { useNavigate } from 'react-router-dom';
 import AuthContext from "../../context/AuthContext";
+import '../../style/Detail.css';
 
 const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
@@ -104,7 +105,7 @@ const CustomerDetailPage = () => {
   };
 
   return (
-    <>
+    <div className="detail">
     <div>
         <label htmlFor="customerCount">Number of Customers:</label>
         <input
@@ -131,7 +132,7 @@ const CustomerDetailPage = () => {
         Gửi Thông Tin
       </button>
       <Toaster />
-    </>
+    </div>
   );
 };
 
