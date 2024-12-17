@@ -46,7 +46,7 @@ class AnnouncementCategory(models.Model):
 class Announcement(Post):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    tag = models.ManyToManyField(AnnouncementCategory)
+    # tag = models.ManyToManyField(AnnouncementCategory)
     alert_level = models.CharField(max_length=10, choices=Post.ALERT_LEVEL, default='low')
 
     # def type(self):
@@ -64,7 +64,7 @@ class InformationCategory(models.Model):
 
 
 class Information(Post):
-    tag = models.ManyToManyField(InformationCategory)
+    # tag = models.ManyToManyField(InformationCategory)
 
     # def type(self):
     #     return 'Information'
@@ -81,7 +81,7 @@ class NewsCategory(models.Model):
 
 
 class News(Post):
-    tag = models.ManyToManyField(NewsCategory)
+    # tag = models.ManyToManyField(NewsCategory)
 
     # def type(self):
     #     return 'News'
@@ -98,7 +98,7 @@ class DiscountCategory(models.Model):
 
 
 class Discount(Post):
-    tag = models.ManyToManyField(DiscountCategory)
+    # tag = models.ManyToManyField(DiscountCategory)
 
     # def type(self):
     #     return 'Discount'
