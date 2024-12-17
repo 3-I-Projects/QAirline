@@ -10,12 +10,13 @@ import "../../style/Payment.css";
 import visaImage from "../../assets/visa.png";
 import mastercardImage from "../../assets/mastercard.png";
 import amexImage from "../../assets/amex.png";
+import AuthContext from "../../context/AuthContext";
 
 const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("CARD");
   const [selectedCard, setSelectedCard] = useState(""); // Lưu trạng thái thẻ đang chọn
-  const { tickets, setTickets } = useContext(BookingContext);
-  const { accessToken } = useContext(BookingContext);
+  const { ticketIds, setTicketIds } = useContext(BookingContext);
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleCardSelection = (cardType) => {
@@ -27,27 +28,42 @@ const PaymentPage = () => {
     const headers = { "Content-Type": "application/json" };
     if (accessToken) {
       headers["Authorization"] = `Bearer ${accessToken}`;
-    }
+    };
 
-    tickets.forEach((ticket) => {
-      fetch("http://localhost:8000/tickets/", {
-        method: "PUT",
-        headers: headers,
-        body: JSON.stringify({ ticket }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
+    ticketIds.forEach(ticketId => {
+        fetch(`http://localhost:8000/tickets/${ticketId}`, {
+            method: 'PATCH',
+            headers: headers,
+            body: JSON.stringify({ status: 'PAID' })
         })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        .then(response => response.json())
+        .then(data => {
+            toast.success("Success: ", data.id)
+        })
     });
+
+    // tickets.forEach((ticket) => {
+    //   fetch("http://localhost:8000/tickets/", {
+    //     method: "PUT",
+    //     headers: headers,
+    //     body: JSON.stringify({ ticket }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       console.log("Success:", data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // });
     navigate("/");
   };
 
   return (
     <div className="payment-page">
+        {/* {ticketIds.map(ticketId => {
+            return <Ticket key={ticketId} id={ticketId} />
+        })} */}
       <h1>Payment Page</h1>
       <p>Welcome to the payment page. Below are your tickets:</p>
 

@@ -108,7 +108,7 @@ const FlightDetail = () => {
 				<label htmlFor="plane">Current Airport</label>
 				<select className='form-select' name="plane" id="" defaultValue={input.plane} onChange={handleInput}>
 					{planes.map((plane) => (
-						<option key={plane.id}>{plane.registration_number}</option>
+						<option key={plane.id} value={plane.id}>{plane.registration_number}</option>
 					))}
 				</select>
 			</div>
@@ -117,7 +117,7 @@ const FlightDetail = () => {
 				<label htmlFor="origin_airport">Origin Airport</label>
 				<select className='form-select' name="origin_airport" id="" defaultValue={input.origin_airport} onChange={handleInput}>
 					{airports.map((airport) => (
-						<option key={airport.code}>{airport.code} - {airport.city}</option>
+						<option key={airport.code} value={airport.id}>{airport.code} - {airport.name}</option>
 					))}
 				</select>
 			</div>
@@ -126,7 +126,7 @@ const FlightDetail = () => {
 				<label htmlFor="destination_airport">Destination Airport</label>
 				<select className='form-select' name="destination_airport" id="" defaultValue={input.destination_airport} onChange={handleInput}>
 					{airports.map((airport) => (
-						<option key={airport.code}>{airport.code} - {airport.city}</option>
+						<option key={airport.code} value={airport.id}>{airport.code} - {airport.name}</option>
 					))}
 				</select>
 

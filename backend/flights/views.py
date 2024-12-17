@@ -17,6 +17,7 @@ from .models import *
 
 from .permissions import *
 
+from utils.utils import purge_unpaid_tickets
 
 # Create your views here.
 @api_view(['GET'])
@@ -102,6 +103,8 @@ class FlightList(generics.ListCreateAPIView):
     serializer_class = FlightSerializer
 
     def get(self, request, *args, **kwargs):
+        for flight in Flight.objects.all():
+            purge_unpaid_tickets(flight, 5)
         return self.list(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
@@ -182,21 +185,7 @@ def available_seats(request, pk):
     try:
         # print(request.data)
         flight = Flight.objects.get(pk=pk)
-        filled_seats = flight.seats.filter(is_available=False)
-        for seat in filled_seats:
-            if not hasattr(seat, 'booked_ticket'):
-                continue
-            if seat.booked_ticket.status == 'Paid':
-                continue
-
-            time_since_booking = timezone.now() - seat.booked_ticket.ordered_time
-            if time_since_booking > datetime.timedelta(minutes=5):  # assuming 1 hour is the threshold
-                seat.is_available = True
-                tik = seat.booked_ticket
-                tik.status = 'Cancelled'
-                tik.save()
-                seat.booked_ticket = None
-                seat.save()
+        purge_unpaid_tickets(flight, 5)
         seats = flight.seats.all()
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
@@ -209,13 +198,15 @@ def find_flight(request):
     from_date = request.data['from_date'].split('-')
     from_date = datetime.datetime(int(from_date[0]), int(from_date[1]), int(from_date[2]))
     from_date = timezone.make_aware(from_date, timezone.get_current_timezone())
-    to_date = request.data['to_date'].split('-')
-    to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
-    to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
+    # to_date = request.data['to_date'].split('-')
+    # to_date = datetime.datetime(int(to_date[0]), int(to_date[1]), int(to_date[2]))
+    # to_date = timezone.make_aware(to_date, timezone.get_current_timezone())
     from_airport = request.data['from_airport']
     to_airport = request.data['to_airport']
 
-    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(departure_time__lt=to_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))
+    flights = Flight.objects.filter(Q(departure_time__gt=from_date) & Q(origin_airport__id=from_airport) & Q(destination_airport__id=to_airport))#& Q(departure_time__lt=to_date) 
+    for flight in flights:
+        purge_unpaid_tickets(flight, 1)
     serializer = FlightSerializer(flights, many=True)
 
     return Response(serializer.data)

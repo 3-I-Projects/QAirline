@@ -40,4 +40,4 @@ class FlightSerializer(serializers.ModelSerializer):
 class SeatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seat
-        fields = '__all__'
+        fields = ['id', 'flight', 'row', 'column', 'is_available', 'seat_class', 'price', 'booked_ticket']

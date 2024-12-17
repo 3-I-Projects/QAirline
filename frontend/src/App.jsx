@@ -36,7 +36,8 @@ import FlightAdd from "./pages/Admin/Flights/FlightAdd";
 import FlightList from "./pages/Admin/Flights/FlightList";
 import FlightDetail from "./pages/Admin/Flights/FlightDetail";
 
-import PostList from "./pages/Admin/PostList";
+import PostList from "./pages/Admin/Posts/PostList";
+import AnnouncementDetail from "./pages/Admin/Posts/AnnouncementDetail";
 
 function AdminLayout() {
   return (
@@ -92,7 +93,8 @@ function App() {
                 </Route>
 
                 <Route path="posts" element={<PrivateRoute />} exact>
-                  <Route index element={<PostList/>} />
+                  <Route index element={<PostList />} />
+                  <Route path="detail" element={<AnnouncementDetail />} />
                 </Route>
               </Route>
             </Routes>

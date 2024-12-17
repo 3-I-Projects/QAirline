@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const PostList = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -120,7 +121,7 @@ const PostList = () => {
           <tbody>
             {announcements.map((announcement) => (
               <tr key={announcement.id}>
-                <td>{announcement.title}</td>
+                <td><Link to={'/admin/posts/detail'} state={{announcement: announcement}}>{announcement.title}</Link></td>
                 <td>{announcement.body}</td>
                 <td><button onClick={() => handleDeleteAction('announcements', announcement.id)}>Delete</button></td>
               </tr>
@@ -155,7 +156,7 @@ const PostList = () => {
           <thead>
             <tr>
               <th>Title</th>
-              <th>body</th>
+              <th>Body</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -176,8 +177,8 @@ const PostList = () => {
           <thead>
             <tr>
               <th>Title</th>
-              <th>body</th>
-              <th>Image</th>
+              <th>Body</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
