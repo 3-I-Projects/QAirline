@@ -39,6 +39,10 @@ import FlightDetail from "./pages/Admin/Flights/FlightDetail";
 import PostList from "./pages/Admin/Posts/PostList";
 import AnnouncementDetail from "./pages/Admin/Posts/AnnouncementDetail";
 
+import UserList from "./pages/Admin/Users/UserList";
+import UserDetail from "./pages/Admin/Users/UserDetail";
+import UserAdd from "./pages/Admin/Users/UserAdd";
+
 function AdminLayout() {
   return (
     <>
@@ -96,6 +100,12 @@ function App() {
                   <Route index element={<PostList />} />
                   <Route path="detail" element={<AnnouncementDetail />} />
                 </Route>
+
+                <Route path="users" element={<PrivateRoute />} exact>
+                  <Route index element={<UserList/>} />
+                  <Route path="detail" element={<UserDetail />} />
+                  <Route path="add" element={<UserAdd />} />
+                  </Route>
               </Route>
             </Routes>
           </BookingContextProvider>

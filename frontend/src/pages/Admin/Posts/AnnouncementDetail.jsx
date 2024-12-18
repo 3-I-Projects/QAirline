@@ -55,7 +55,6 @@ const AnnouncementDetail = () => {
     };
     return (
         <form onSubmit={handleSubmitEvent}>
-
         </form>
     )
 }

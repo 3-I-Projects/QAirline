@@ -20,6 +20,10 @@ const Dashboard = () => {
 		navigate('/admin/posts');
 	}
 
+	const goToUsers = () => {
+		navigate('/admin/users');
+	}
+
 	return (
 		<div>
 			<p>Welcome again, motherfucker! You're in admin dashboard.</p>
@@ -30,6 +34,8 @@ const Dashboard = () => {
 			<button onClick={goToFlights}>Flights Management</button>
 			<span> | </span>
 			<button onClick={goToPosts}>Posts Management</button>
+			<span> | </span>
+			<button onClick={goToUsers}>Users Management</button>
 		</div>
 	)
 }

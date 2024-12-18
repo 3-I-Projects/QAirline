@@ -21,7 +21,7 @@ const PostList = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const fetchDiscounts = async () => {
     try {

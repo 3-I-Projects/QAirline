@@ -1,7 +1,4 @@
-from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
+from rest_framework import permissions, viewsets
 
 from posts.models import *
 from posts.serializers import *
@@ -12,10 +9,14 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
 
 class AnnouncementCategoryViewSet(viewsets.ModelViewSet):
     queryset = AnnouncementCategory.objects.all()
     serializer_class = AnnouncementCategorySerializer
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -30,62 +31,41 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-class DiscountCategoryList(generics.ListCreateAPIView):
+class DiscountCategoryViewSet(viewsets.ModelViewSet):
     queryset = DiscountCategory.objects.all()
     serializer_class = DiscountCategorySerializer
 
-
-class DiscountCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = DiscountCategory.objects.all()
-    serializer_class = DiscountCategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class DiscountList(generics.ListCreateAPIView):
+class DiscountViewSet(viewsets.ModelViewSet):
     queryset = Discount.objects.all()
     serializer_class = DiscountSerializer
 
-
-class DiscountDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Discount.objects.all()
-    serializer_class = DiscountSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class InformationCategoryList(generics.ListCreateAPIView):
+class InformationCategoryViewSet(viewsets.ModelViewSet):
     queryset = InformationCategory.objects.all()
     serializer_class = InformationCategorySerializer
 
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class InformationCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = InformationCategory.objects.all()
-    serializer_class = InformationCategorySerializer
-
-
-class InformationList(generics.ListCreateAPIView):
+class InformationViewSet(viewsets.ModelViewSet):
     queryset = Information.objects.all()
     serializer_class = InformationSerializer
 
 
-class InformationDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Information.objects.all()
-    serializer_class = InformationSerializer
-
-
-class NewsCategoryList(generics.ListCreateAPIView):
+class NewsCategoryViewSet(viewsets.ModelViewSet):
     queryset = NewsCategory.objects.all()
     serializer_class = NewsCategorySerializer
 
-
-class NewsCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = NewsCategory.objects.all()
-    serializer_class = NewsCategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
-class NewsList(generics.ListCreateAPIView):
+class NewsViewSet(viewsets.ModelViewSet):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
 
-
-class NewsDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
