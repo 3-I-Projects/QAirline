@@ -16,7 +16,7 @@ const FlightCard = ({ flight, setFlight }) => {
 
   const chooseFlight = () => {
     if (flight.available_seat_count < customerCount) {
-      toast("there isn't enough seats on this flight");
+      toast("There isn't enough seats on this flight");
     } else {
       setFlight(flight);
       navigate('/detail');

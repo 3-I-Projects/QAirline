@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import "./style/FeatureCardStyle.css";
@@ -144,7 +144,7 @@ function FeatureCard() {
 
       if (data && data.length > 0) {
         toast.success(`Tìm thấy ${data.length} chuyến bay!`);
-        navigate("/flights", { state: { flights: data } });
+        navigate("/flights", { state: { flights: data, customerCount } });
       } else {
         toast.error("Không tìm thấy chuyến bay phù hợp.");
       }

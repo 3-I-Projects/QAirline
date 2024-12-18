@@ -25,9 +25,9 @@ const Menu = () => {
     <header className="menu-header">
       <div className="menu-container">
         {/* Logo */}
-        <div className="logo">
-          <img src="/images/cr7.1.jpg" alt="Logo" className="logo-image" />
-        </div>
+          <Link to="/home">
+            <img src="/images/cr7.1.jpg" alt="Logo" className="logo-image" />
+          </Link>
 
         {/* Menu bên phải */}
         <div className="menu-right">

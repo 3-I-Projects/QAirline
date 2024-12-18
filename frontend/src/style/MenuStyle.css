@@ -23,15 +23,13 @@
 }
 
 /* Logo */
-.logo {
-  flex-shrink: 0;
-  height: 80px; 
+.logo-image {
   display: flex;
   align-items: center;
 }
 
 .logo-image {
-  height: 100%;
+  height: 80px;
 }
 
 /* Menu bên phải */

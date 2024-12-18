@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './style/AvailableFlights.css';
 import FlightCard from './FlightCard.jsx';
 import { BookingContext } from './context/BookingContext.jsx';
+import Menu from './Menu.jsx';
 
 const AvailableFlights = () => {
   const [flights, setFlights] = useState([]);
   const location = useLocation();
   const { setFlight } = useContext(BookingContext);
-  
-  const { flights: apiFlights } = location.state || {};
+  const { flights: apiFlights, customerCount } = location.state || {};
+  const [showMenu, setShowMenu] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (apiFlights) {
@@ -21,23 +23,59 @@ const AvailableFlights = () => {
     }
   }, [apiFlights]);
 
+  useEffect(() => {
+    const handleScroll = () => setShowMenu(window.scrollY <= 50);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className='available-flights'>
-      <header className="header">
-        <p>Menu</p>
+      <header className={`header ${!showMenu ? 'hidden' : ''}`}>
+        {showMenu && <Menu />}
+        <div className={`flight-info`}
+        style={{ marginTop: showMenu ? "110px" : "0" }} >
+          <div className='flight-details'>
+            <div className='flight-route' id='infor'>
+              <div>
+                <span className='label'>{flights[0]?.origin_airport_code}</span>
+                <span className='value'>{flights[0]?.origin_airport_city}</span>
+              </div>
+              <span className='route-icon'>✈️</span>
+              <div>
+                <span className='label'>{flights[0]?.destination_airport_code}</span>
+                <span className='value'>{flights[0]?.destination_airport_city}</span>
+              </div>
+            </div>
+            <div id='infor'>
+              <span className='label'>Khởi hành</span>
+              <span className='value'>{flights[0]?.departure_time}</span>
+              <span className='label'>Trở về</span>
+              <span className='value'>{flights[0]?.arrival_time}</span>
+            </div>
+            <div id='infor'>
+              <span className='label'>Hành khách</span>
+              <span className='value'>{customerCount} 👤</span>
+            </div>
+          </div>
+        </div>
+
+
       </header>
       <div className='chart-placeholder'>
         <p>Biểu đồ sẽ hiện ở đây (nếu có)</p>
       </div>
       <div className="flight-list-container">
         <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
-        
         {flights.length > 0 ? (
           flights.map((flight) => (
-            <FlightCard key={flight.id} flight={flight} setFlight={setFlight}/>
+            <FlightCard key={flight.id} flight={flight} setFlight={setFlight} />
           ))
         ) : (
-          <p>Không có chuyến bay nào khả dụng.</p>
+          <div className="no-flights">
+            <p>Không có chuyến bay nào khả dụng.</p>
+          </div>
         )}
       </div>
     </div>
