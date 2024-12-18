@@ -10,7 +10,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'password', 'email', 'booked_tickets', 'customers']
+        
+        # added is_staff field to view user's role on admin page in frontend
+        fields = ['id', 'username', 'password', 'email', 'booked_tickets', 'customers', 'is_staff']
         extra_kwargs = {
             'password': {'write_only': True}
         }
