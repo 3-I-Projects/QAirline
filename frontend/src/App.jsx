@@ -101,7 +101,7 @@ function App() {
                   <Route path="detail" element={<AnnouncementDetail />} />
                 </Route>
 
-                <Route path="Users" element={<PrivateRoute />} exact>
+                <Route path="users" element={<PrivateRoute />} exact>
                   <Route index element={<UserList/>} />
                   <Route path="detail" element={<UserDetail />} />
                   <Route path="add" element={<UserAdd />} />

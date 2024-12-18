@@ -64,7 +64,7 @@ const UserList = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td><Link to={'/admin/customers/detail'} state={{ user: user }}>{user.username}</Link></td>
+              <td><Link to={'/admin/users/detail'} state={{ user: user }}>{user.username}</Link></td>
               <td>{user.email}</td>
               <td>{user.booked_tickets.length}</td>
               <td>

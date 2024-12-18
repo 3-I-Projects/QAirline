@@ -20,6 +20,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, null=True)
+    thumbnail = models.ImageField(upload_to='static/images/', null=True)
 
     def type(self):
         if isinstance(self, Announcement):

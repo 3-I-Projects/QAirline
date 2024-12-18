@@ -9,10 +9,14 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
 
 class AnnouncementCategoryViewSet(viewsets.ModelViewSet):
     queryset = AnnouncementCategory.objects.all()
     serializer_class = AnnouncementCategorySerializer
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
