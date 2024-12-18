@@ -1,105 +1,71 @@
 @import "./Global.css";
 
-/* Thẻ chuyến bay */
+/* Thẻ chuyến bay chính */
 .flight-card {
-  border: 1px solid var( --border-color);
+  border: 1px solid var(--border-color, #ddd);
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
-  width: 100%; /* Chiều rộng đầy đủ */
-  max-width: 800px; /* Giới hạn chiều rộng thẻ lớn */
-  margin: 0 auto; /* Căn giữa thẻ */
-  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto;
+  background-color: #d8d8d8;
+  transition: transform 0.2s ease, background-color 0.3s ease;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .flight-card:hover {
-  background: #f0f0f0;
+  background: #ffffff;
   transform: translateY(-5px);
 }
 
-.flight-info {
-  display: flex;
-  justify-content: space-between;
+/* Thông tin chuyến bay chính */
+.flight-card .flight-info {
   cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.time, .route, .duration {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-.details-link {
-  color: green;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.flight-card .flight-details {
-  background-color: #f9f9f9;
-  margin-top: 10px;
-  padding: 10px;
+/* Hiển thị thông tin chi tiết */
+.flight-card .flight-detail {
+  background-color: #f0f0f0;
+  padding: 15px;
   border-top: 1px solid #ddd;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #555;
+  border-radius: 3px;
 }
 
-.flight-pricing {
-  display: flex;
-  margin-top: 10px;
+.flight-card .flight-detail p {
+  margin: 8px 0;
 }
 
-.pricing-card {
-  flex: 1;
-  margin: 0 5px;
-  text-align: center;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.economy {
-  background-color: #4CAF50;
+/* Nút đặt vé */
+.flight-card .book-btn {
+  margin: 10px 0;
+  padding: 10px 15px;
+  background-color: var(--primary-color);
   color: white;
-}
-
-.business {
-  background-color: #003366;
-  color: white;
-}
-
-.price {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.seats {
-  font-size: 12px;
-}
-
-.book-btn {
-  margin-top: 5px;
-  padding: 5px 10px;
   border: none;
-  background-color: white;
-  color: #4CAF50;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
-.book-btn:hover {
-  background-color: #f1f1f1;
+.flight-card .book-btn:hover {
+  background-color: var(--secondary-color);
 }
-
-
 
 /* Responsive */
 @media (max-width: 768px) {
-  .flight-card {
+ .flight-card {
     padding: 15px;
   }
 
-  .flight-card-details {
-    font-size: 0.9rem;
+.flight-card  .flight-info {
+    font-size: 14px;
   }
 }
 
@@ -108,7 +74,12 @@
     padding: 10px;
   }
 
-  .flight-card-details {
-    font-size: 0.8rem;
+  .flight-card .flight-info {
+    font-size: 12px;
+  }
+
+  .flight-card .book-btn {
+    padding: 8px 12px;
+    font-size: 12px;
   }
 }

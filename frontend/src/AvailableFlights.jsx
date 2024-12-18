@@ -30,6 +30,17 @@ const AvailableFlights = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  function getFormattedDateInfo(dateString) {
+    const date = new Date(dateString);
+  
+    const options = { 
+      weekday: 'long', 
+      day: 'numeric', 
+      month: 'long' 
+    };
+  
+    return date.toLocaleDateString('vi-VN', options);
+  }
   return (
     <div className='available-flights'>
       <header className={`header ${!showMenu ? 'hidden' : ''}`}>
@@ -48,15 +59,19 @@ const AvailableFlights = () => {
                 <span className='value'>{flights[0]?.destination_airport_city}</span>
               </div>
             </div>
-            <div id='infor'>
-              <span className='label'>Khởi hành</span>
-              <span className='value'>{flights[0]?.departure_time}</span>
+            <div className="infor-date" id='infor'>
+              <div className='infor-dates'>
+                <span className='label'>Khởi hành</span>
+                <span className='value'>{getFormattedDateInfo(flights[0]?.departure_time)}</span>
+              </div>
+              <div className='infor-dates'>
               <span className='label'>Trở về</span>
-              <span className='value'>{flights[0]?.arrival_time}</span>
+              <span className='value'>{getFormattedDateInfo(flights[0]?.arrival_time)}</span>
+              </div>
             </div>
             <div id='infor'>
               <span className='label'>Hành khách</span>
-              <span className='value'>{customerCount} 👤</span>
+              <span className='value'> ‎  {customerCount} 👤</span>
             </div>
           </div>
         </div>
