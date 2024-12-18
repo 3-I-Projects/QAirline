@@ -62,10 +62,6 @@ function SignUp() {
     }));
   };
 
-  const goToHome = () => {
-    navigate('/home');
-  };
-
   return (
     <div className="login">
       <div className="login-container">
@@ -127,7 +123,7 @@ function SignUp() {
               Sign In
             </span>
           </p>
-          <button onClick={goToHome} className="action-button">
+          <button onClick={() => navigate('/home')} className="action-button">
             Go to Home
           </button>
         </div>

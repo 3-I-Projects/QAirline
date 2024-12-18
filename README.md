@@ -56,7 +56,7 @@ The routes below can also be posted to with the same data excluding the id field
 Request:  
 {
     "from_date": "2024-12-01",
-    "to_date": "2024-12-12",
+    ~~"to_date": "2024-12-12",~~
     "from_airport": 1,
     "to_airport": 2
 }  

@@ -17,9 +17,9 @@ const AirportSelect = ({ value, onChange }) => {
 
     return (
         <div>
-            <label htmlFor="airport-select">Select an Airport:</label>
+            <label htmlFor="airport-select">Chọn sân bay: ‎ </label>
             <select id="airport-select" value={value} onChange={onChange}>
-                <option value="">--Please choose an option--</option>
+                <option value="">-- Vui lòng chọn sân bay --</option>
                 {airports.length > 0 ? (
                     airports.map((airport) => (
                         <option key={airport.id} value={airport.id}>

@@ -115,7 +115,7 @@ function FeatureCard() {
       "Ngày về": returnDate,
       "Số hành khách": customerCount,
     };
-    
+
     if (!validateFields(fieldsToValidate)) return;
 
     try {
@@ -238,36 +238,16 @@ function FeatureCard() {
                     ‎ Một chiều
                   </label>
                 </div>
-                <AirportSelect
-                  value={fromAirport}
-                  onChange={(e) => setFromAirport(e.target.value)}
-                />
-                <AirportSelect
-                  value={toAirport}
-                  onChange={(e) => setToAirport(e.target.value)}
-                />
-
-                {/* Nhập thông tin nơi đi, nơi đến và ngày */}
-                {/* <div className="input-item">
-                  <label>Từ</label>
-                  <input
-                    type="text"
-                    name="from"
-                    value={bookingInfo.from}
-                    onChange={(e) => handleInputChange(e, "booking")}
-                    placeholder="Nhập nơi đi"
+                <div className="input-item">
+                  <AirportSelect
+                    value={fromAirport}
+                    onChange={(e) => setFromAirport(e.target.value)}
+                  />
+                  <AirportSelect
+                    value={toAirport}
+                    onChange={(e) => setToAirport(e.target.value)}
                   />
                 </div>
-                <div className="input-item">
-                  <label>Đến</label>
-                  <input
-                    type="text"
-                    name="to"
-                    value={bookingInfo.to}
-                    onChange={(e) => handleInputChange(e, "booking")}
-                    placeholder="Nhập nơi đến"
-                  />
-                </div> */}
                 <div className="input-item">
                   <label>Ngày đi</label>
                   <input

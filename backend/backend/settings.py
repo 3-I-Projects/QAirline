@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'tickets',
     'flights',
     'posts',
+    'utils',
     
     # other
     'debug_toolbar',

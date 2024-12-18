@@ -1,6 +1,7 @@
 import datetime
 from django.utils import timezone
 from django.shortcuts import render
+from django.db import transaction
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -17,7 +18,10 @@ from tickets.serializers import TicketSerializer
 from tickets.permissions import IsOwnerOrReadOnly
 from users.permissions import IsAdminOrOwner
 
+from utils.utils import purge_unpaid_tickets
+
 CANCEL_TIME_AMOUNT = datetime.timedelta(days=1)
+
 
 class TicketList(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
@@ -26,36 +30,39 @@ class TicketList(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs): # shouldve used serializer more here
+        # get flight
         print(request.data)
         flight = request.data['flight']
         flight = Flight.objects.get(pk=flight)
+        # remove all tickets booked but not paid after 5 min
+        purge_unpaid_tickets(flight)
         if flight.seats.filter(is_available=True).count() == 0:
             return Response({'error': 'no available seats'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # get cheapest available seat
         seat = request.data['seat']
         if not seat:
             seat = flight.seats.filter(is_available=True).order_by('price').first()
             print(seat)
-            if seat.booked_ticket:
+            if hasattr(seat, 'booked_ticket') and seat.booked_ticket:
                 print('seat is ', seat.booked_ticket.status)
                 if seat.booked_ticket.status == 'Paid':
                     seat.is_available = True
                     seat.save()
                     return Response({'error': 'seat not available, please choose seat again'}, status=status.HTTP_404_NOT_FOUND)
                 else:
-                    # seat.booked_ticket.seat = None
                     tik = seat.booked_ticket
                     tik.status = 'Cancelled'
                     tik.seat = None
                     tik.save()
-                    # seat.booked_ticket = None
-                    # seat.save()
-                    # seat.save()
-                    # print(seat.booked_ticket, ' is now none')
         else:
             seat = Seat.objects.get(pk=seat)
+        # check if seat not in flight
         if seat.id not in [seat.id for seat in flight.seats.all()]:
             return Response({'error': 'seat not in flight'}, status=status.HTTP_404_NOT_FOUND)
+        # check if seat is available
         if not seat.is_available:
             return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
         customer = request.data['customer']
@@ -68,14 +75,6 @@ class TicketList(generics.ListCreateAPIView):
         seat.is_available = False
         seat.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # def perform_create(self, serializer):
-    #     seat = serializer.validated_data['seat']
-    #     if not seat.is_available:
-    #         return Response({'error': 'seat not available'}, status=status.HTTP_404_NOT_FOUND)
-    #     seat.is_available = False
-    #     seat.save()
-    #     serializer.save(booked_by=self.request.user, price=seat.price + serializer.validated_data['flight'].base_price)
 
 
 class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -90,21 +89,34 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
         return super().get_permissions()
 
     def put(self, request, *args, **kwargs):
-        # if request.status == 'Paid':
-        #     print(request.status)
         ticket = Ticket.objects.get(pk=kwargs['pk'])
+        if ticket.status == 'Cancelled':
+            return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         ticket.status = 'Paid'
         ticket.save()
+        ticket.seat.is_available = False
+        ticket.seat.save()
         serializer = self.get_serializer(ticket)
         return Response(serializer.data)
         # return Response("can't do that")
 
-    # def patch(self, request, pk, *args, **kwargs):
-    #     # return self.partial_update(request, *args, **kwargs)
-    #     return Response(f"can't do that with {pk}")
+    def patch(self, request, pk, *args, **kwargs):
+        ticket = Ticket.objects.get(pk=pk)
+        if ticket.status == 'Cancelled':
+            return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
+        ticket.status = 'Paid'
+        ticket.save()
+        ticket.seat.is_available = False
+        ticket.seat.save()
+        serializer = self.get_serializer(ticket)
+        return Response(serializer.data)
+        # return self.partial_update(request, *args, **kwargs)
+        return Response(f"can't do that with {pk}")
 
     def delete(self, request, pk, *args, **kwargs):
         ticket = Ticket.objects.get(pk=pk)
+        if ticket.status == 'Cancelled':
+            return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         seat = ticket.seat
         ordered_time = ticket.ordered_time
         cancel_threshold = ordered_time + CANCEL_TIME_AMOUNT
