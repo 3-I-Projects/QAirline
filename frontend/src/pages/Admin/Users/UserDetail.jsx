@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const CustomerDetail = () => {
+const UserDetail = () => {
     const location = useLocation();
     const { user: customer } = location.state;
     const navigate = useNavigate();
@@ -83,4 +83,4 @@ const CustomerDetail = () => {
     )
 }
 
-export default CustomerDetail
+export default UserDetail

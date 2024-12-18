@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 
-const CustomerList = () => {
+const UserList = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -78,4 +78,4 @@ const CustomerList = () => {
   )
 }
 
-export default CustomerList
+export default UserList;
