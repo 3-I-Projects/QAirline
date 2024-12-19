@@ -15,7 +15,7 @@ from users.models import Customer
 from users.serializers import CustomUserSerializer
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
-from tickets.permissions import IsOwnerOrReadOnly
+from tickets.permissions import IsOwnerOrAdminOrReadOnly
 from users.permissions import IsAdminOrOwner
 
 from utils.utils import purge_unpaid_tickets
@@ -85,7 +85,7 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method == 'PUT':
             self.permission_classes = []
         else:
-            self.permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
+            self.permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrAdminOrReadOnly]
         return super().get_permissions()
 
     def put(self, request, *args, **kwargs):
