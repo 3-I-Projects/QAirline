@@ -27,7 +27,7 @@
   flex-direction: column;
   font-family: Arial, sans-serif;
   color: #002855; /* Dark navy color */
-  padding-left: 80px;
+  padding: 5px 0 5px 150px;
 }
 
 .flight-route {
@@ -42,12 +42,13 @@
   font-size: 14px;
   border-left: 1px solid #555;
   border-right: 1px solid #555;
-  text-wrap: calc(50%);
-  padding: 0 5px 10px 5px;
 }
 
 .available-flights .infor-dates {
-  padding: 5px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .route-icon {
@@ -59,7 +60,29 @@
 .available-flights .flight-details {
   display: flex;
   justify-content: start;
-  gap: 20px;
+}
+
+.available-flights .infor-date {
+  padding: 0 10px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+
+.available-flights .abc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.available-flights .flight-route,
+.available-flights .infor-pass {
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .flight-details #infor {
@@ -69,12 +92,50 @@
 .flight-details .label {
   font-weight: bold;
   display: block;
-  padding-top: 10px;
+  font-size: 27px;
 }
 
 .flight-details .value {
   font-size: 14px;
   color: #002855;
+}
+
+.available-flights .xyz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.available-flights .icon-flight {
+  display: flex; /* Sử dụng Flexbox để căn giữa các phần tử */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  width: 100%; /* Đảm bảo thẻ chiếm toàn bộ chiều rộng */
+  height: 10px; /* Đặt chiều cao để thấy rõ căn giữa */
+  box-sizing: border-box;
+  text-align: center; /* Căn giữa nội dung trong phần tử */
+}
+
+.dotted-line {
+  flex: 1;
+  font-weight: 300;
+  letter-spacing: 1.2px;
+}
+
+
+/* Biểu tượng máy bay */
+.plane-icon1 img {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  margin-left: 5px;
+}
+
+.plane-icon2 img {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  margin-right: 5px;
 }
 
 

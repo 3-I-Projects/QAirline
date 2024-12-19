@@ -18,12 +18,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.user span, .user input {
+.user-infor span, .user-infor input {
     width: 100%;
     padding: 5px;
     font-size: 16px;
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
     outline: none;
     margin-top: 3px;
     font-family: 'Times New Roman', Times, serif;
@@ -32,6 +30,17 @@
 .user-infor {
     display: flex;
     flex-direction: column;
+}
+
+.user-infor-edit {
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-top: 3px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .user button {

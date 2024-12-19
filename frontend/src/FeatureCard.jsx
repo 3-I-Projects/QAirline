@@ -144,7 +144,7 @@ function FeatureCard() {
 
       if (data && data.length > 0) {
         toast.success(`Tìm thấy ${data.length} chuyến bay!`);
-        navigate("/flights", { state: { flights: data, customerCount } });
+        navigate("/flights", { state: { flights: data, customerCount, bookingInfo } });
       } else {
         toast.error("Không tìm thấy chuyến bay phù hợp.");
       }

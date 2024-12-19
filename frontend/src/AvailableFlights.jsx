@@ -10,7 +10,7 @@ const AvailableFlights = () => {
   const [flights, setFlights] = useState([]);
   const location = useLocation();
   const { setFlight } = useContext(BookingContext);
-  const { flights: apiFlights, customerCount } = location.state || {};
+  const { flights: apiFlights, customerCount, bookingInfo } = location.state || {};
   const [showMenu, setShowMenu] = useState(true);
   const navigate = useNavigate();
 
@@ -49,13 +49,35 @@ const AvailableFlights = () => {
         style={{ marginTop: showMenu ? "110px" : "0" }} >
           <div className='flight-details'>
             <div className='flight-route' id='infor'>
-              <div>
+              <div className='abc'>
                 <span className='label'>{flights[0]?.origin_airport_code}</span>
-                <span className='value'>{flights[0]?.origin_airport_city}</span>
-              </div>
-              <span className='route-icon'>✈️</span>
-              <div>
+                {bookingInfo.tripType === "khứ hồi" && (
+                  <div className='xyz'><div className='icon-flight'>
+                    <span className="dotted-line">-------------</span>
+                    <div className="plane-icon1">
+                      <img src='/images/di.png' />
+                    </div>
+                  </div>
+                  <div className='icon-flight'>
+                      <div className="plane-icon2">
+                        <img src='/images/ve.png' />
+                      </div>
+                      <span className="dotted-line">-------------</span>
+                    </div>
+                  </div>
+                )}
+                {bookingInfo.tripType === "một chiều" && (
+                  <div className='icon-flight'>
+                    <div className="dotted-line">-------------</div>
+                    <div className="plane-icon1">
+                      <img src='/images/di.png' />
+                    </div>
+                  </div>
+                )}
                 <span className='label'>{flights[0]?.destination_airport_code}</span>
+              </div>
+              <div className='abc'>
+                <span className='value'>{flights[0]?.origin_airport_city}</span>
                 <span className='value'>{flights[0]?.destination_airport_city}</span>
               </div>
             </div>
@@ -69,7 +91,7 @@ const AvailableFlights = () => {
               <span className='value'>{getFormattedDateInfo(flights[0]?.arrival_time)}</span>
               </div>
             </div>
-            <div id='infor'>
+            <div className='infor-pass' id='infor'>
               <span className='label'>Hành khách</span>
               <span className='value'> ‎  {customerCount} 👤</span>
             </div>
