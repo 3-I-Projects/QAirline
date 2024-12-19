@@ -7,6 +7,7 @@
   min-height: 100vh;
   width: 100%;
   margin: 0 auto;
+  font-family: var(--font-family);
 }
 
 /* Header */
@@ -25,7 +26,7 @@
 /* Infor */
 .flight-info {
   flex-direction: column;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family);
   color: #002855; /* Dark navy color */
   padding: 5px 0 5px 150px;
 }
@@ -69,6 +70,8 @@
   flex-direction: row;
 }
 
+ /* biểu tượng máy bay */
+ 
 .available-flights .abc {
   display: flex;
   justify-content: space-between;
@@ -111,32 +114,27 @@
   align-items: center; /* Căn giữa theo chiều dọc */
   justify-content: center; /* Căn giữa theo chiều ngang */
   width: 100%; /* Đảm bảo thẻ chiếm toàn bộ chiều rộng */
-  height: 10px; /* Đặt chiều cao để thấy rõ căn giữa */
   box-sizing: border-box;
-  text-align: center; /* Căn giữa nội dung trong phần tử */
+  padding: 0 4px;
 }
 
 .dotted-line {
   flex: 1;
-  font-weight: 300;
-  letter-spacing: 1.2px;
+  margin: 0 5px;
+}
+
+.dotted-line svg {
+  display: block;
 }
 
 
 /* Biểu tượng máy bay */
-.plane-icon1 img {
-  width: 15px;
-  height: 15px;
+.plane-icon img {
+  width: 20x;
+  height: 20px;
   object-fit: contain;
-  margin-left: 5px;
 }
 
-.plane-icon2 img {
-  width: 15px;
-  height: 15px;
-  object-fit: contain;
-  margin-right: 5px;
-}
 
 
 /* Biểu đồ Placeholder */

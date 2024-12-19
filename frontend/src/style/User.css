@@ -2,10 +2,11 @@
 
 .user-container {
     display: flex;
-    justify-content: center; /* Căn giữa theo chiều ngang */
-    align-items: center;     /* Căn giữa theo chiều dọc */
-    height: 100vh;           /* Chiều cao bằng chiều cao màn hình */
-    background-color: #f7f7f7; /* Màu nền nhẹ (tùy chọn) */
+    font-family: var(--font-family);
+    justify-content: center;
+    align-items: center;     
+    height: 100vh;
+    background-color: #f7f7f7; 
 }
 
 .user {

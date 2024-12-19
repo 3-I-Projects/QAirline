@@ -4,6 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  font-family: var(--font-family);
   width: 100%;
   background: linear-gradient(180deg, #1c1c1c, #50505085); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

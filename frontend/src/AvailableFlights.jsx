@@ -49,33 +49,53 @@ const AvailableFlights = () => {
         style={{ marginTop: showMenu ? "110px" : "0" }} >
           <div className='flight-details'>
             <div className='flight-route' id='infor'>
-              <div className='abc'>
-                <span className='label'>{flights[0]?.origin_airport_code}</span>
-                {bookingInfo.tripType === "khứ hồi" && (
-                  <div className='xyz'><div className='icon-flight'>
-                    <span className="dotted-line">-------------</span>
-                    <div className="plane-icon1">
-                      <img src='/images/di.png' />
+            <div className="abc">
+              <span className="label">{flights[0]?.origin_airport_code}</span>
+              
+              {bookingInfo.tripType === "khứ hồi" && (
+                <div className="xyz">
+                  {/* Điểm đi */}
+                  <div className="icon-flight">
+                    <div className="dotted-line">
+                      <svg height="2" width="100%">
+                        <line x1="0" y1="0" x2="100%" y2="0" style={{ stroke: "#002855", strokeWidth: 5, strokeDasharray: "2,3" }} />
+                      </svg>
+                    </div>
+                    <div className="plane-icon">
+                      <img src="/images/di.png" alt="Điểm đi" />
                     </div>
                   </div>
-                  <div className='icon-flight'>
-                      <div className="plane-icon2">
-                        <img src='/images/ve.png' />
-                      </div>
-                      <span className="dotted-line">-------------</span>
+
+                  {/* Điểm về */}
+                  <div className="icon-flight">
+                    <div className="plane-icon">
+                      <img src="/images/ve.png" alt="Điểm về" />
+                    </div>
+                    <div className="dotted-line">
+                      <svg height="2" width="100%">
+                        <line x1="0" y1="0" x2="100%" y2="0" style={{ stroke: "#002855", strokeWidth: 5, strokeDasharray: "2,3" }} />
+                      </svg>
                     </div>
                   </div>
-                )}
-                {bookingInfo.tripType === "một chiều" && (
-                  <div className='icon-flight'>
-                    <div className="dotted-line">-------------</div>
-                    <div className="plane-icon1">
-                      <img src='/images/di.png' />
-                    </div>
+                </div>
+              )}
+
+              {bookingInfo.tripType === "một chiều" && (
+                <div className="icon-flight">
+                  <div className="dotted-line">
+                    <svg height="2" width="100%">
+                      <line x1="0" y1="0" x2="100%" y2="0" style={{ stroke: "#002855", strokeWidth: 5, strokeDasharray: "5,5" }} />
+                    </svg>
                   </div>
-                )}
-                <span className='label'>{flights[0]?.destination_airport_code}</span>
-              </div>
+                  <div className="plane-icon">
+                    <img src="/images/di.png" alt="Điểm đi" />
+                  </div>
+                </div>
+              )}
+
+              <span className="label">{flights[0]?.destination_airport_code}</span>
+            </div>
+
               <div className='abc'>
                 <span className='value'>{flights[0]?.origin_airport_city}</span>
                 <span className='value'>{flights[0]?.destination_airport_city}</span>
