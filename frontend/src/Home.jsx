@@ -5,11 +5,9 @@ import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
 import AnnouncementSection from './components/AnnouncementSection';
-// import UserForm from './components/UserForm.jsx';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showMenu, setShowMenu] = useState(true); // State điều khiển hiển thị menu
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,33 +19,19 @@ function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setShowMenu(false);
-      } else {
-        setShowMenu(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="home-container">
       <Background />
 
       {/* Menu hiển thị ở đầu trang và ẩn khi cuộn xuống */}
-      {showMenu && <Menu />}
+      <div className='menu'>
+        <Menu />  
+      </div>
+      
 
       {/* Nội dung chính phía sau menu */}
       <div className="content">
         <FeatureCard />
-        {/* <UserForm /> */}
       </div>
 
       <div>

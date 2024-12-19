@@ -45,4 +45,4 @@ const AnnouncementSection = () => {
 	)
 }
 
-export default AnnouncementSection
+export default AnnouncementSection;

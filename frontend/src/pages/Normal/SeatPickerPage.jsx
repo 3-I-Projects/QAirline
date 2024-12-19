@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from '../../context/BookingContext';
 import AuthContext from '../../context/AuthContext';
+import Menu from '../../Menu';
 
 const SeatPickerPage = () => {
     const navigate = useNavigate();
@@ -65,6 +66,9 @@ const SeatPickerPage = () => {
     }
     return (
         <div>
+            <div className="menu">
+                <Menu />
+            </div>
             <h1>Seat Picker</h1>
             <button onClick={onClick}>
                 Đi tiếp

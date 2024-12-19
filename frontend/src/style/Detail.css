@@ -11,6 +11,10 @@
     font-family: var( --font-family);
 }
 
+.detail .menu {
+    margin-bottom: 100px;
+}
+
 .detail input {
     width: 100%;
     padding: 8px;

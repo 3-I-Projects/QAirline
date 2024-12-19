@@ -4,6 +4,7 @@ import PaymentQR from "../../components/PaymentQR";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { BookingContext } from "../../context/BookingContext";
+import Menu from "../../Menu";
 import "../../style/Payment.css";
 
 // Thêm các ảnh tương ứng với các loại thẻ
@@ -60,7 +61,14 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="payment-page">
+    <div className="payment-page-container">
+
+            <div className="menu">
+              <Menu />
+            </div>
+
+      <div className="payment-page">
+      
         {/* {ticketIds.map(ticketId => {
             return <Ticket key={ticketId} id={ticketId} />
         })} */}
@@ -127,6 +135,8 @@ const PaymentPage = () => {
       {paymentMethod === "QR" && <PaymentQR />}
       <Toaster />
     </div>
+    </div>
+    
   );
 };
 

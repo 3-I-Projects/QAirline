@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { BookingContext } from "../../context/BookingContext";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import Menu from "../../Menu";
 import "../../style/Detail.css";
 
 const CustomerDetailPage = () => {
@@ -124,6 +125,9 @@ const CustomerDetailPage = () => {
 
   return (
     <div className="detail">
+      <div className="menu">
+        <Menu />
+      </div>
       <div>
         <label htmlFor="customerCount">Number of Customers:</label>
         <input

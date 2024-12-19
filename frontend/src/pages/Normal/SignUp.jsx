@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/LoginStyle.css";
+import Menu from "../../Menu";
 import { useAuth } from '../../context/AuthContext'
 
 function SignUp() {
@@ -64,6 +65,9 @@ function SignUp() {
 
   return (
     <div className="login">
+      <div className='menu'>
+          <Menu />
+      </div>
       <div className="login-container">
       <div className="login-card">
         {/* Header */}

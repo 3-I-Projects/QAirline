@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import ChangeInfoForm from '../../components/ChangeInfoForm';
 import { useNavigate } from 'react-router-dom';
+import Menu from '../../Menu';
 import '../../style/User.css';
+
 
 const UserProfile = () => {
     // const {} = useContext(AuthContext);
@@ -68,6 +70,9 @@ const UserProfile = () => {
 
     return (
         <div className='user-container'>
+            <div className='menu'>
+                <Menu />
+            </div>
             <div className='user'>
             <h1>User Profile</h1>
             {displayUsernameForm ? (

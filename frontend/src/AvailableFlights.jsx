@@ -11,8 +11,8 @@ const AvailableFlights = () => {
   const location = useLocation();
   const { setFlight } = useContext(BookingContext);
   const { flights: apiFlights, customerCount, bookingInfo } = location.state || {};
-  const [showMenu, setShowMenu] = useState(true);
   const navigate = useNavigate();
+  const [isMenuHidden, setIsMenuHidden] = useState(false);
 
   useEffect(() => {
     if (apiFlights) {
@@ -22,13 +22,6 @@ const AvailableFlights = () => {
       toast.error("Không có dữ liệu chuyến bay từ API.");
     }
   }, [apiFlights]);
-
-  useEffect(() => {
-    const handleScroll = () => setShowMenu(window.scrollY <= 50);
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   function getFormattedDateInfo(dateString) {
     const date = new Date(dateString);
@@ -41,12 +34,35 @@ const AvailableFlights = () => {
   
     return date.toLocaleDateString('vi-VN', options);
   }
+
+  useEffect(() => {
+    let lastScrollPosition = 0;
+
+    const handleScroll = () => {
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (currentScrollPosition > 50 && currentScrollPosition > lastScrollPosition) {
+        setIsMenuHidden(true); // Ẩn menu
+      } else if (currentScrollPosition <= lastScrollPosition) {
+        setIsMenuHidden(false); // Hiển thị menu
+      }
+
+      lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className='available-flights'>
-      <header className={`header ${!showMenu ? 'hidden' : ''}`}>
-        {showMenu && <Menu />}
-        <div className={`flight-info`}
-        style={{ marginTop: showMenu ? "110px" : "0" }} >
+      <header className="header">
+        
+      <Menu isHidden={isMenuHidden} />
+
+      <div className={`flight-info ${isMenuHidden ? "menu-hidden" : ""}`}>
           <div className='flight-details'>
             <div className='flight-route' id='infor'>
             <div className="abc">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../style/LoginStyle.css';
 import { useAuth } from '../../context/AuthContext';
+import Menu from '../../Menu';
 
 function SignIn() {
 	const [input, setInput] = useState({
@@ -35,6 +36,10 @@ function SignIn() {
 
 	return (
 		<div className='login'>
+
+			<div className="menu">
+                <Menu />
+            </div>
 			<div className="login-container">
 				<div className="login-card">
 					{/* Header */}

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Ticket from '../../components/Ticket';
+import Menu from '../../Menu';
 import AuthContext from '../../context/AuthContext';
 
 const MyBookingsPage = () => {
@@ -24,6 +25,9 @@ const MyBookingsPage = () => {
 
     return (
         <div>
+            <div className='menu'>
+                <Menu />
+            </div>
             <h1>My Bookings</h1>
             <p>Welcome to the My Bookings page. Here you can view all your bookings.</p>
             {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (

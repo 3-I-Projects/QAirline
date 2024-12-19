@@ -29,6 +29,12 @@
   font-family: var(--font-family);
   color: #002855; /* Dark navy color */
   padding: 5px 0 5px 150px;
+  transition: margin-top 0.1s ease;
+  margin-top: 110px;
+}
+
+.flight-info.menu-hidden {
+  margin-top: 0; 
 }
 
 .flight-route {
