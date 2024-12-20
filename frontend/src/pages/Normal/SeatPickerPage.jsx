@@ -8,8 +8,9 @@ import Menu from '../../Menu';
 
 const SeatPickerPage = () => {
     const navigate = useNavigate();
-    const { flight, allCustomers, customerCount, ticketIds, setTicketIds } = useContext(BookingContext);
+    const { flight, allCustomers, customerCount, ticketIds, setTicketIds, roundTripFlight } = useContext(BookingContext);
     const { accessToken } = useContext(AuthContext);
+<<<<<<< HEAD
     const [seats, setSeats] = useState([]);
     const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -18,6 +19,16 @@ const SeatPickerPage = () => {
             toast.error("Mất thông tin đặt chuyến bay!");
             return;
         }
+=======
+    const [ seats, setSeats ] = useState([]); // huan dung ttin torng nay de tao giao dien chon cho ngoi
+    const [ selectedSeats, setSelectedSeats ] = useState([]);
+
+    // console.log(allCustomers);
+    useEffect(() => {
+        // allCustomers.forEach((customer) => {
+        //     toast.success("Gửi thông tin thành công, id: " + customer.id);
+        // });
+>>>>>>> 6951b697a84564e628406cdc8ed04f4d3381f2d5
 
         fetch(`http://localhost:8000/flights/flights/${flight.id}/seats`)
             .then(response => {
@@ -74,6 +85,32 @@ const SeatPickerPage = () => {
                 toast.error("Error: " + error.message);
                 console.error(error);
             }
+        }
+        // book round trip flight
+        for (let i = 0; i < customerCount; i++) {
+            const data = {
+                "customer": allCustomers[i].id,
+                "flight": roundTripFlight.id,
+                "seat": selectedSeats.length > 0 ? selectedSeats[i].id : ''
+            }
+            console.log(data);
+            fetch('http://localhost:8000/tickets/', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                setTicketIds((prevTicketIds) => [...prevTicketIds, data.id]);
+                toast.success("Success: ", data.id);
+                console.log(ticketIds);
+            })
+            .catch(error => {
+                toast.error("Error: " + error.message);
+                console.error(error);
+            });
+            // sleep to avoid race condition of the database side
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
         navigate('/payment');
     };

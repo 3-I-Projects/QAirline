@@ -43,6 +43,8 @@ const PaymentPage = () => {
         })
     });
 
+    setTicketIds([]);
+
     // tickets.forEach((ticket) => {
     //   fetch("http://localhost:8000/tickets/", {
     //     method: "PUT",

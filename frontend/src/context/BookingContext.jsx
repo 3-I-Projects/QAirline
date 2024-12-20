@@ -32,6 +32,21 @@ export default function BookingContextProvider({ children }) {
     "destination_airport_code": "",
     "destination_airport_city": ""
   })
+  const [ roundTripFlight, setRoundTripFlight ] = useState({
+    "id": 0,
+    "plane": 0,
+    "origin_airport": 0,
+    "destination_airport": 0,
+    "departure_time": "",
+    "delay": 0,
+    "base_price": 0,
+    "arrival_time": "",
+    "available_seat_count": 0,
+    "origin_airport_code": "",
+    "origin_airport_city": "",
+    "destination_airport_code": "",
+    "destination_airport_city": ""
+  })
   useEffect(() => {
     setAllCustomers(
       Array(customerCount).fill({
@@ -69,6 +84,8 @@ export default function BookingContextProvider({ children }) {
         setBookingInfo, 
         flight,
         setFlight,
+        roundTripFlight,
+        setRoundTripFlight,
       }}
     >
       {children}

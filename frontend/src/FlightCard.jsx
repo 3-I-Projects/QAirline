@@ -1,13 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./style/FlightCard.css";
-import { useNavigate } from "react-router-dom";
 import { BookingContext } from "./context/BookingContext";
 import toast, { Toaster } from "react-hot-toast";
 
-const FlightCard = ({ flight, setFlight }) => {
+const FlightCard = ({ flight, chooseFlight }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const navigate = useNavigate();
-  const { customerCount } = useContext(BookingContext);
 
   // Toggle hiển thị chi tiết chuyến bay
   const toggleDetails = (e) => {
@@ -15,6 +12,7 @@ const FlightCard = ({ flight, setFlight }) => {
     setShowDetails((prev) => !prev);
   };
 
+<<<<<<< HEAD
   const chooseFlight = (e) => {
     e.stopPropagation(); // Ngăn click vùng cha kích hoạt
     if (flight.available_seat_count < customerCount) {
@@ -25,6 +23,8 @@ const FlightCard = ({ flight, setFlight }) => {
     }
   }
 
+=======
+>>>>>>> 6951b697a84564e628406cdc8ed04f4d3381f2d5
   return (
     <div className="flight-card" onClick={toggleDetails}>
       {/* Phần hiển thị thông tin chuyến bay chính */}

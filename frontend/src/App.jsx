@@ -42,6 +42,7 @@ import AnnouncementDetail from "./pages/Admin/Posts/AnnouncementDetail";
 import UserList from "./pages/Admin/Users/UserList";
 import UserDetail from "./pages/Admin/Users/UserDetail";
 import UserAdd from "./pages/Admin/Users/UserAdd";
+import RoundTripAvailableFlights from "./RoundTripAvailableFlights";
 
 function AdminLayout() {
   return (
@@ -64,6 +65,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/flights" element={<AvailableFlights />} />
+              <Route path="/round-trip-flights" element={<RoundTripAvailableFlights />} />
               <Route path="/home" element={<Home />} />
               <Route path="/detail" element={<CustomerDetailPage />} />
               <Route path="/seats" element={<SeatPickerPage />} />
