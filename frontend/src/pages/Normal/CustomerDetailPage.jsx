@@ -167,9 +167,9 @@ const CustomerDetailPage = () => {
       </div>
 
       {allCustomers.map((data, index) => (
-        <div key={index}>
+        <div className="select-customer" key={index}>
           <CustomerSelect accessToken={accessToken} value={data} onChange={(e) => handleSelect(e, index)} />
-          <h3>Customer {index + 1}</h3>
+          <h3>Hành khách {index + 1}</h3>
           <UserForm
             formData={data}
             errors={errors[index]}

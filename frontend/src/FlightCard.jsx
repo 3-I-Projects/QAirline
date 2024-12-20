@@ -12,23 +12,10 @@ const FlightCard = ({ flight, chooseFlight }) => {
     setShowDetails((prev) => !prev);
   };
 
-<<<<<<< HEAD
-  const chooseFlight = (e) => {
-    e.stopPropagation(); // Ngăn click vùng cha kích hoạt
-    if (flight.available_seat_count < customerCount) {
-      toast.error("Chuyến bay không đủ chỗ");
-    } else {
-      setFlight(flight);
-      navigate('/detail');
-    }
-  }
-
-=======
->>>>>>> 6951b697a84564e628406cdc8ed04f4d3381f2d5
   return (
-    <div className="flight-card" onClick={toggleDetails}>
+    <div className="flight-card">
       {/* Phần hiển thị thông tin chuyến bay chính */}
-      <div className="flight-infos">
+      <div className="flight-infos" onClick={toggleDetails}>
         <h4>{`Chuyến bay từ ${flight.origin_airport_city} đến ${flight.destination_airport_city}`}</h4>
         <p>Khởi hành: {new Date(flight.departure_time).toLocaleString()}</p>
         <p>Đến nơi: {new Date(flight.arrival_time).toLocaleString()}</p>
@@ -68,6 +55,7 @@ const FlightCard = ({ flight, chooseFlight }) => {
           <button className="book-btn" onClick={chooseFlight}>
             Xác nhận và tiếp tục
           </button>
+
         </div>
       )}
 

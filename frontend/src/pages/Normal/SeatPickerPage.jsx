@@ -10,16 +10,6 @@ const SeatPickerPage = () => {
     const navigate = useNavigate();
     const { flight, allCustomers, customerCount, ticketIds, setTicketIds, roundTripFlight } = useContext(BookingContext);
     const { accessToken } = useContext(AuthContext);
-<<<<<<< HEAD
-    const [seats, setSeats] = useState([]);
-    const [selectedSeats, setSelectedSeats] = useState([]);
-
-    useEffect(() => {
-        if (!flight || !flight.id) {
-            toast.error("Mất thông tin đặt chuyến bay!");
-            return;
-        }
-=======
     const [ seats, setSeats ] = useState([]); // huan dung ttin torng nay de tao giao dien chon cho ngoi
     const [ selectedSeats, setSelectedSeats ] = useState([]);
 
@@ -28,7 +18,6 @@ const SeatPickerPage = () => {
         // allCustomers.forEach((customer) => {
         //     toast.success("Gửi thông tin thành công, id: " + customer.id);
         // });
->>>>>>> 6951b697a84564e628406cdc8ed04f4d3381f2d5
 
         fetch(`http://localhost:8000/flights/flights/${flight.id}/seats`)
             .then(response => {
@@ -42,7 +31,7 @@ const SeatPickerPage = () => {
             })
             .catch(error => {
                 console.error("Error fetching seats:", error);
-                toast.error("Failed to load seat data.");
+                toast.error("Lỗi khi tải dữ liệu.");
             });
     }, [flight]);
 

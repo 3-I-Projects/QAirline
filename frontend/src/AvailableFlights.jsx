@@ -37,16 +37,16 @@ const AvailableFlights = () => {
       navigate('/detail');
     }
   }
-
+  
   function getFormattedDateInfo(dateString) {
     const date = new Date(dateString);
-  
+
     const options = { 
       weekday: 'long', 
       day: 'numeric', 
       month: 'long' 
     };
-  
+
     return date.toLocaleDateString('vi-VN', options);
   }
 
@@ -74,7 +74,7 @@ const AvailableFlights = () => {
   return (
     <div className='available-flights'>
       <header className="header">
-        
+
       <Menu isHidden={isMenuHidden} />
 
       <div className={`flight-info ${isMenuHidden ? "menu-hidden" : ""}`}>
@@ -82,7 +82,7 @@ const AvailableFlights = () => {
             <div className='flight-route' id='infor'>
             <div className="abc">
               <span className="label">{flights[0]?.origin_airport_code}</span>
-              
+
               {bookingInfo.tripType === "khứ hồi" && (
                 <div className="xyz">
                   {/* Điểm đi */}

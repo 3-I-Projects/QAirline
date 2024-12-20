@@ -22,10 +22,10 @@ const CustomerSelect = ({ accessToken, value, onChange }) => {
     }, []);
 
     return (
-        <div>
+        <div className='a'>
             <label htmlFor="customer-select">Chọn: ‎ </label>
             <select name='id' id="customer-select" value={value.id} onChange={onChange}>
-                <option value="">-- Vui lòng chọn sân bay --</option>
+                <option value="">-- Chọn hành khách cũ --</option>
                 {customers.length > 0 ? (
                     customers.map((customer) => (
                         <option key={customer.id} value={customer.id}>
@@ -33,7 +33,7 @@ const CustomerSelect = ({ accessToken, value, onChange }) => {
                         </option>
                     ))
                 ) : (
-                    <option value="">Loading customers...</option>
+                    <option value="">Đang tải hành khách</option>
                 )}
             </select>
         </div>
