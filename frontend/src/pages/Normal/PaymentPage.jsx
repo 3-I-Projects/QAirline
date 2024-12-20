@@ -6,15 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { BookingContext } from "../../context/BookingContext";
 import Menu from "../../Menu";
 import "../../style/Payment.css";
+import AuthContext from "../../context/AuthContext";
 
 // Thêm các ảnh tương ứng với các loại thẻ
 import visaImage from "../../assets/visa.png";
 import mastercardImage from "../../assets/mastercard.png";
 import amexImage from "../../assets/amex.png";
-import AuthContext from "../../context/AuthContext";
 
 const PaymentPage = () => {
-  const [paymentMethod, setPaymentMethod] = useState("CARD");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [selectedCard, setSelectedCard] = useState(""); // Lưu trạng thái thẻ đang chọn
   const { ticketIds, setTicketIds } = useContext(BookingContext);
   const { accessToken } = useContext(AuthContext);
@@ -25,7 +25,7 @@ const PaymentPage = () => {
   };
 
   const onClick = () => {
-    toast("Payment successful. Redirecting to homepage");
+    toast("Thanh toán thành công! Quay trở lại trang chủ.");
     const headers = { "Content-Type": "application/json" };
     if (accessToken) {
       headers["Authorization"] = `Bearer ${accessToken}`;
@@ -72,19 +72,18 @@ const PaymentPage = () => {
         {/* {ticketIds.map(ticketId => {
             return <Ticket key={ticketId} id={ticketId} />
         })} */}
-      <h1>Payment Page</h1>
-      <p>Welcome to the payment page. Below are your tickets:</p>
+      <h1>Thanh toán</h1>
+      <p>Thanh toán để hoàn tất đặt vé</p>
 
-      <div className="section-title">Ticket Component</div>
+      <div className="section-title">Chọn phương thức thanh toán</div>
       <div className="payment-buttons">
-        <button onClick={() => setPaymentMethod("CARD")}>Card Payment</button>
-        <button onClick={() => setPaymentMethod("QR")}>QR Payment</button>
+        <button onClick={() => setPaymentMethod("CARD")}>Thẻ tín dụng</button>
+        <button onClick={() => setPaymentMethod("QR")}>Quét mã QR</button>
       </div>
-
-      <div className="section-title">Payment Method</div>
 
       {paymentMethod === "CARD" && (
         <div className="card-selection-section">
+          <div className="section-title">Chọn loại thẻ</div>
           <div className="card-options">
             <button
               className={`card-btn ${selectedCard === "visa" ? "active" : ""}`}
@@ -109,15 +108,15 @@ const PaymentPage = () => {
           {selectedCard && (
             <div className="payment-form">
               <div className="form-group">
-                <label>Card Number</label>
+                <label>Số thẻ</label>
                 <input type="text" placeholder="1234 5678 9012 3456" />
               </div>
               <div className="form-group">
-                <label>Name on Card</label>
+                <label>Tên</label>
                 <input type="text" placeholder="Full Name" />
               </div>
               <div className="form-group">
-                <label>Expiry Date</label>
+                <label>Hạn sử dụng</label>
                 <input type="text" placeholder="MM/YY" />
               </div>
               <div className="form-group">
@@ -125,7 +124,7 @@ const PaymentPage = () => {
                 <input type="password" placeholder="123" />
               </div>
               <button className="submit-button" onClick={onClick}>
-                Pay Now
+                Thanhh toán ngay
               </button>
             </div>
           )}

@@ -36,7 +36,7 @@ function SignUp() {
         const res = await response.json();
 
         if (res) {
-          alert('Sign Up successful!');
+          alert('Đăng nhập thành công!');
           let inputWithoutEmail = {
             username: input.username,
             password: input.password,
@@ -46,7 +46,7 @@ function SignUp() {
           localStorage.setItem('isLoggedIn', 'true');
           return;
         } else {
-          alert('Invalid input');
+          alert('Phương thức nhập không hợp lệ');
         }
       } catch (err) {
         console.log(err);
@@ -72,14 +72,14 @@ function SignUp() {
       <div className="login-card">
         {/* Header */}
         <div className="login-header">
-          <h2 className="title">Register</h2>
-          <p className="description">Create a new account to get started!</p>
+          <h2 className="title">Đăng ký</h2>
+          <p className="description">Tạo tài khoản mới để bắt đầu!</p>
         </div>
 
         {/* Form */}
         <form className="login-form" onSubmit={handleSubmitEvent}>
           <div className="form-group">
-            <label htmlFor="username" className="input-label">Username</label>
+            <label htmlFor="username" className="input-label">Tên người dùng</label>
             <input
               id="full-name"
               type="text"
@@ -92,7 +92,7 @@ function SignUp() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email" className="input-label">Email</label>
+            <label htmlFor="email" className="input-label">Địa chỉ email</label>
             <input
               id="email"
               type="email"
@@ -105,7 +105,7 @@ function SignUp() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="input-label">Password</label>
+            <label htmlFor="password" className="input-label">Mật khẩu</label>
             <input
               id="password"
               type="password"
@@ -117,18 +117,18 @@ function SignUp() {
             />
           </div>
 
-          <button type="submit" className="action-button">SIGN UP</button>
+          <button type="submit" className="action-button">Đăng ký</button>
         </form>
 
         <div className="login-footer">
           <p>
-            Have an account?{' '}
+            Đã có tài khoản?{' '}
             <span onClick={() => navigate('/signin')} className="toggle-link">
-              Sign In
+              Đăng nhập
             </span>
           </p>
           <button onClick={() => navigate('/home')} className="action-button">
-            Go to Home
+            Trang chủ
           </button>
         </div>
       </div>

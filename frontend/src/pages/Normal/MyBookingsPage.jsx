@@ -37,7 +37,7 @@ const MyBookingsPage = () => {
                         <Ticket key={ticket} id={ticket} />
                     ))
                 ) : (
-                    <div className="no-bookings">You've made no bookings</div>
+                    <div className="no-bookings">Bạn chưa đặt vé nào</div>
                 )}
             </div>
 

@@ -129,7 +129,7 @@ const CustomerDetailPage = () => {
         <Menu />
       </div>
       <div>
-        <label htmlFor="customerCount">Number of Customers:</label>
+        <label htmlFor="customerCount">Số hành khách:</label>
         <input
           type="number"
           id="customerCount"

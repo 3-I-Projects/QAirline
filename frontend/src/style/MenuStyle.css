@@ -77,6 +77,16 @@
 
 #dx:hover {
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-link,
+.menu-link2,
+#dn,
+#dk,
+#tg,
+#dx {
+  transition: all 0.3s ease; /* Hiệu ứng chuyển đổi chung */
 }
 
 .menu-list {
@@ -99,18 +109,21 @@
 
 .menu-link:hover {
   color: #007BFF;
+  text-decoration: underline; 
+  transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .menu-link2 {
   text-decoration: none;
   color: var(--text-color);
   transition: color 0.3s;
+  padding: 10px;
 }
 
 .menu-link2:hover {
   background-color: var(--secondary-color);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  padding: 10px 10px;
   color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

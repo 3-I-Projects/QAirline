@@ -15,7 +15,7 @@ const SeatPickerPage = () => {
 
     useEffect(() => {
         if (!flight || !flight.id) {
-            toast.error("Flight information is missing!");
+            toast.error("Mất thông tin đặt chuyến bay!");
             return;
         }
 
@@ -42,7 +42,7 @@ const SeatPickerPage = () => {
             if (selectedSeats.length < customerCount) {
                 setSelectedSeats([...selectedSeats, seat]);
             } else {
-                toast.error("You cannot select more seats than customers!");
+                toast.error("Không thể chọn số chỗ nhiều hơn số hành khách!");
             }
         }
     };
@@ -65,11 +65,11 @@ const SeatPickerPage = () => {
                     body: JSON.stringify(data),
                 });
                 if (!response.ok) {
-                    throw new Error(`Failed to book ticket: ${response.statusText}`);
+                    throw new Error(`Lỗi khi đặt vé: ${response.statusText}`);
                 }
                 const result = await response.json();
                 setTicketIds((prevTicketIds) => [...prevTicketIds, result.id]);
-                toast.success("Successfully booked ticket!");
+                toast.success("Đặt vé thành công!");
             } catch (error) {
                 toast.error("Error: " + error.message);
                 console.error(error);
@@ -111,16 +111,15 @@ const SeatPickerPage = () => {
                                     title={`Row: ${seat.row}, Column: ${seat.column}, Price: ${seat.price}`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="50" height="50">
-                                    <rect className="seat-body" x="21" y="10" width="22" height="20" rx="4" ry="4" />
-                                    {!seat.is_available && (
-                                        <text x="32" y="24" fontSize="14" fill="#000" textAnchor="middle" alignmentBaseline="middle" fontWeight="bold">
-                                            X
-                                        </text>
-                                    )}
-                                    <rect className="seat-armrest" x="16" y="28" width="4" height="10" rx="2" ry="2" />
-                                    <rect className="seat-armrest" x="44" y="28" width="4" height="10" rx="2" ry="2" />
-                                    <rect className="seat-cushion" x="22" y="32" width="22" height="8" rx="3" ry="3" />
-
+                                        <rect className="seat-body" x="18" y="10" width="28" height="20" rx="4" ry="4" />
+                                        {!seat.is_available && (
+                                            <text x="32" y="24" fontSize="14" fill="#000" textAnchor="middle" alignmentBaseline="middle" fontWeight="bold">
+                                                X
+                                            </text>
+                                        )}
+                                        <rect className="seat-armrest" x="16" y="28" width="4" height="10" rx="2" ry="2" />
+                                        <rect className="seat-armrest" x="44" y="28" width="4" height="10" rx="2" ry="2" />
+                                        <rect className="seat-cushion" x="20" y="32" width="24" height="8" rx="3" ry="3" />
                                     </svg>
                                 </div>
                             ))}

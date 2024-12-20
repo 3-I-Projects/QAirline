@@ -18,7 +18,7 @@ const FlightCard = ({ flight, setFlight }) => {
   const chooseFlight = (e) => {
     e.stopPropagation(); // Ngăn click vùng cha kích hoạt
     if (flight.available_seat_count < customerCount) {
-      toast.error("There isn't enough seats on this flight");
+      toast.error("Chuyến bay không đủ chỗ");
     } else {
       setFlight(flight);
       navigate('/detail');
