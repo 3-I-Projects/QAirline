@@ -1,29 +1,16 @@
 import React, { useContext, useState } from "react";
 import "./style/FlightCard.css";
-import { useNavigate } from "react-router-dom";
 import { BookingContext } from "./context/BookingContext";
 import toast, { Toaster } from "react-hot-toast";
 
-const FlightCard = ({ flight, setFlight }) => {
+const FlightCard = ({ flight, chooseFlight }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const navigate = useNavigate();
-  const { customerCount } = useContext(BookingContext);
 
   // Toggle hiển thị chi tiết chuyến bay
   const toggleDetails = (e) => {
     e.stopPropagation(); // Ngăn vùng cha kích hoạt click
     setShowDetails((prev) => !prev);
   };
-
-  const chooseFlight = (e) => {
-    e.stopPropagation(); // Ngăn click vùng cha kích hoạt
-    if (flight.available_seat_count < customerCount) {
-      toast.error("There isn't enough seats on this flight");
-    } else {
-      setFlight(flight);
-      navigate('/detail');
-    }
-  }
 
   return (
     <div className="flight-card">

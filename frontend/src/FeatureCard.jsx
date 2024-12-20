@@ -45,7 +45,7 @@ function FeatureCard() {
   const validateFields = (fields) => {
     for (const [key, value] of Object.entries(fields)) {
       if (!value) {
-        alert(`Trường "${key}" là bắt buộc!`);
+        toast.error(`Trường "${key}" là bắt buộc!`);
         return false;
       }
     }
@@ -108,51 +108,96 @@ function FeatureCard() {
   const handleBookingSubmit = async () => {
     const { departureDate, returnDate } = bookingInfo;
 
-    const fieldsToValidate = {
-      "Nơi đi": fromAirport,
-      "Nơi đến": toAirport,
-      "Ngày đi": departureDate,
-      "Ngày về": returnDate,
-      "Số hành khách": customerCount,
-    };
+    var fieldsToValidate;
+    if (bookingInfo.tripType === 'khứ hồi') {
+      fieldsToValidate = {
+        "Nơi đi": fromAirport,
+        "Nơi đến": toAirport,
+        "Ngày đi": departureDate,
+        "Ngày về": returnDate,
+        "Số hành khách": customerCount,
+      };
+    } else {
+      fieldsToValidate = {
+        "Nơi đi": fromAirport,
+        "Nơi đến": toAirport,
+        "Ngày đi": departureDate,
+        "Số hành khách": customerCount,
+      };
+    }
+
 
     if (!validateFields(fieldsToValidate)) return;
 
-    try {
-      const bodyData = {
-        from_date: departureDate,
-        to_date: returnDate,
-        from_airport: fromAirport,
-        to_airport: toAirport,
-      };
-
-      console.log("Body data gửi tới server:", bodyData);
-
-      const response = await fetch("http://localhost:8000/flights/find", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyData),
-      });
-
-      if (!response.ok) {
-        toast.error("Có lỗi xảy ra!");
-        return;
+    const getFlights = async(departure, from, to) => {
+      try {
+        const bodyData = {
+          from_date: departure,
+          from_airport: from,
+          to_airport: to,
+        }
+        const response = await fetch("http://localhost:8000/flights/find", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyData),
+        });
+        if (!response.ok) {
+          toast.error("Có lỗi xảy ra!");
+          return;
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Có lỗi xảy ra:", error);
+        toast.error("Có lỗi xảy ra! Vui lòng thử lại.");
       }
-
-      const data = await response.json();
-      console.log("Dữ liệu trả về từ API:", data);
-
-      if (data && data.length > 0) {
-        toast.success(`Tìm thấy ${data.length} chuyến bay!`);
-        navigate("/flights", { state: { flights: data, customerCount, bookingInfo } });
-      } else {
-        toast.error("Không tìm thấy chuyến bay phù hợp.");
-      }
-    } catch (error) {
-      console.error("Có lỗi xảy ra:", error);
-      toast.error("Có lỗi xảy ra! Vui lòng thử lại.");
     }
+
+    const flights = await getFlights(departureDate, fromAirport, toAirport);
+    if (bookingInfo.tripType === 'một chiều') {
+      navigate('/flights', { state: { flights: flights, customerCount, bookingInfo } });
+      return
+    }
+    const roundTripFlights = await getFlights(returnDate, toAirport, fromAirport);
+    navigate('/flights', { state: { flights: flights, roundTripFlights: roundTripFlights, customerCount, bookingInfo } });
   };
+
+    
+  //   try {
+  //     const bodyData = {
+  //       from_date: departureDate,
+  //       to_date: returnDate,
+  //       from_airport: fromAirport,
+  //       to_airport: toAirport,
+  //     };
+
+  //     console.log("Body data gửi tới server:", bodyData);
+
+  //     const response = await fetch("http://localhost:8000/flights/find", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(bodyData),
+  //     });
+
+  //     if (!response.ok) {
+  //       toast.error("Có lỗi xảy ra!");
+  //       return;
+  //     }
+
+  //     const data = await response.json();
+  //     console.log("Dữ liệu trả về từ API:", data);
+
+  //     if (data && data.length > 0) {
+  //       toast.success(`Tìm thấy ${data.length} chuyến bay!`);
+  //       navigate("/flights", { state: { flights: data, customerCount, bookingInfo } });
+  //     } else {
+  //       toast.error("Không tìm thấy chuyến bay phù hợp.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Có lỗi xảy ra:", error);
+  //     toast.error("Có lỗi xảy ra! Vui lòng thử lại.");
+  //   }
+  // };
 
   // Gửi thông tin quản lý đặt chỗ
   // const handleReservationSubmit = () => {

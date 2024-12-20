@@ -6,11 +6,11 @@ import FlightCard from './FlightCard.jsx';
 import { BookingContext } from './context/BookingContext.jsx';
 import Menu from './Menu.jsx';
 
-const AvailableFlights = () => {
+const RoundTripAvailableFlights = () => {
   const [flights, setFlights] = useState([]);
   const location = useLocation();
-  const { setFlight } = useContext(BookingContext);
-  const { flights: apiFlights, roundTripFlights, customerCount, bookingInfo } = location.state || {};
+  const { setRoundTripFlight } = useContext(BookingContext);
+  const { flights: apiFlights, customerCount, bookingInfo } = location.state || {};
   const navigate = useNavigate();
   const [isMenuHidden, setIsMenuHidden] = useState(false);
 
@@ -29,11 +29,7 @@ const AvailableFlights = () => {
       toast.error("There isn't enough seats on this flight");
     } else {
       setFlight(flight);
-      if (bookingInfo.tripType === "khứ hồi") {
-        console.log("Chuyến bay đi:", flight);
-        navigate('/round-trip-flights', { state: { flights: roundTripFlights, customerCount, bookingInfo } });
-        return;
-      }
+      console.log('Chuyến bay đi:', flight);
       navigate('/detail');
     }
   }
@@ -158,7 +154,7 @@ const AvailableFlights = () => {
         <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
         {flights.length > 0 ? (
           flights.map((flight) => (
-            <FlightCard key={flight.id} flight={flight} setFlight={setFlight} chooseFlight={(e) => chooseFlight(e, flight, setFlight)}/>
+            <FlightCard key={flight.id} flight={flight} setFlight={setRoundTripFlight} chooseFlight={(e) => chooseFlight(e, flight, setRoundTripFlight)} />
           ))
         ) : (
           <div className="no-flights">
@@ -170,4 +166,4 @@ const AvailableFlights = () => {
   );
 };
 
-export default AvailableFlights;
+export default RoundTripAvailableFlights;
