@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Menu from "../../Menu";
 import "../../style/Detail.css";
+import CustomerSelect from "../../components/CustomerSelect";
 
 const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
   const { allCustomers, setAllCustomers, customerCount, setCustomerCount } =
     useContext(BookingContext);
+  const [ selectOld, setSelectOld ] = useState(false);
   const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -48,7 +50,9 @@ const CustomerDetailPage = () => {
   // Handle input change for a specific form
   const handleChange = (e, index) => {
     const { name, value } = e.target;
+    console.log(name, value);
 
+    setSelectOld(false);
     setAllCustomers((prevCustomers) => {
       const updatedCustomers = [...prevCustomers];
       updatedCustomers[index] = {
@@ -57,6 +61,27 @@ const CustomerDetailPage = () => {
       };
       return updatedCustomers;
     });
+    console.log(allCustomers);
+  };
+
+  const handleSelect = (e, index) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSelectOld(true);
+    fetch(`http://localhost:8000/users/customers/${value}`)
+    .then(response => response.json())
+    .then(data => {
+      setAllCustomers((prevCustomers) => {
+        const updatedCustomers = [...prevCustomers];
+        updatedCustomers[index] = {
+          ...updatedCustomers[index],
+          ...data
+        };
+        return updatedCustomers;
+      });
+    })
+    console.log(allCustomers);
+
   };
 
   // Validate all forms
@@ -89,34 +114,36 @@ const CustomerDetailPage = () => {
     }
 
     // Submit all customer data
-    for (const [index, formData] of allCustomers.entries()) {
-      try {
-        const headers = { "Content-Type": "application/json" };
-        if (accessToken) {
-          headers["Authorization"] = `Bearer ${accessToken}`;
+    if (!selectOld) {
+      for (const [index, formData] of allCustomers.entries()) {
+        try {
+          const headers = { "Content-Type": "application/json" };
+          if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+          }
+
+          const response = await fetch("http://localhost:8000/users/customers", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(formData),
+          });
+
+          if (!response.ok) {
+            throw new Error("Lỗi khi gửi dữ liệu.");
+          }
+
+          const data = await response.json();
+
+          setAllCustomers((prevCustomers) => {
+            const updatedCustomers = [...prevCustomers];
+            updatedCustomers[index] = { ...updatedCustomers[index], id: data.id };
+            return updatedCustomers;
+          });
+
+          toast.success(`Khách hàng ${index + 1} đã được gửi thành công!`);
+        } catch (error) {
+          toast.error(`Lỗi khách hàng ${index + 1}: ${error.message}`);
         }
-
-        const response = await fetch("http://localhost:8000/users/customers", {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          throw new Error("Lỗi khi gửi dữ liệu.");
-        }
-
-        const data = await response.json();
-
-        setAllCustomers((prevCustomers) => {
-          const updatedCustomers = [...prevCustomers];
-          updatedCustomers[index] = { ...updatedCustomers[index], id: data.id };
-          return updatedCustomers;
-        });
-
-        toast.success(`Khách hàng ${index + 1} đã được gửi thành công!`);
-      } catch (error) {
-        toast.error(`Lỗi khách hàng ${index + 1}: ${error.message}`);
       }
     }
 
@@ -139,12 +166,12 @@ const CustomerDetailPage = () => {
         />
       </div>
 
-      {allCustomers.map((formData, index) => (
+      {allCustomers.map((data, index) => (
         <div key={index}>
+          <CustomerSelect accessToken={accessToken} value={data} onChange={(e) => handleSelect(e, index)} />
           <h3>Customer {index + 1}</h3>
           <UserForm
-            key={index}
-            formData={formData}
+            formData={data}
             errors={errors[index]}
             handleChange={(e) => handleChange(e, index)}
           />
