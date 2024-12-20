@@ -1,0 +1,132 @@
+@import './Global.css';
+
+.seat-picker-page-container {
+    padding: 20px;
+    max-width: 800px;
+    font-family: var(--font-family);
+    margin: 130px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+/* Seat Info - Mô tả thông tin về các màu ghế */
+.seat-info {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.seat-info p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.seat-info span {
+    margin-right: 10px;
+}
+
+/* Các biểu tượng trạng thái ghế */
+.seat-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.available-seat {
+    background-color: #4caf50; /* Màu xanh lá cho ghế khả dụng */
+    border-radius: 50%;
+}
+
+.selected-seat {
+    background-color: #ffeb3b; /* Màu vàng cho ghế đã chọn */
+    border-radius: 50%;
+}
+
+.unavailable-seat {
+    background-color: #9e9e9e; /* Màu xám cho ghế không khả dụng */
+    border-radius: 50%;
+}
+
+/* Container cho lưới ghế */
+.seat-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Hàng ghế */
+.seat-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Nhãn cột */
+.seat-label {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    color: #000;
+}
+
+/* Ghế */
+.seat {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Ghế khả dụng */
+.seat.available .seat-body {
+    fill: #4caf50; /* Màu xanh lá cho ghế khả dụng */
+}
+
+/* Ghế đã chọn */
+.seat.selected .seat-body {
+    fill: #ffeb3b; /* Màu vàng cho ghế đã chọn */
+}
+
+/* Ghế không khả dụng */
+.seat.unavailable .seat-body {
+    fill: #9e9e9e; /* Màu xám cho ghế không khả dụng */
+}
+
+.seat.unavailable text {
+    fill: #000; /* Màu đen cho chữ X trong ghế không khả dụng */
+}
+
+/* X trong ghế không khả dụng */
+.seat.unavailable text {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Nút tiếp tục */
+.seat-picker-page-container .submit {
+    border-radius: 10px;
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: var(--primary-color);
+}
+
+/* .seat-picker-page-container .submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+} */

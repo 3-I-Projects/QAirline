@@ -10,7 +10,6 @@ const AnnouncementSection = () => {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
 				},
 			});
 			const res = await response.json();

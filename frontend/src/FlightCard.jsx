@@ -26,9 +26,9 @@ const FlightCard = ({ flight, setFlight }) => {
   }
 
   return (
-    <div className="flight-card">
+    <div className="flight-card" onClick={toggleDetails}>
       {/* Phần hiển thị thông tin chuyến bay chính */}
-      <div className="flight-info" onClick={toggleDetails}>
+      <div className="flight-infos">
         <h4>{`Chuyến bay từ ${flight.origin_airport_city} đến ${flight.destination_airport_city}`}</h4>
         <p>Khởi hành: {new Date(flight.departure_time).toLocaleString()}</p>
         <p>Đến nơi: {new Date(flight.arrival_time).toLocaleString()}</p>
@@ -60,7 +60,7 @@ const FlightCard = ({ flight, setFlight }) => {
             <strong>{flight.available_seat_count}</strong>
           </p>
           <p>
-            Mã máy bay: <strong>{flight.plane}</strong>
+            Mã máy bay: <strong>{flight.id}</strong>
           </p>
           <p>
             Thời gian trễ: <strong>{flight.delay} phút</strong>

@@ -91,7 +91,7 @@ const Menu = () => {
                 <Link to="/trip-info" className="menu-link2">Thông Tin Hành Trình</Link>
               </li>
               <li className="menu-item">
-                <Link to="/user" className="menu-link2">User</Link>
+                <Link to="/user" className="menu-link2">Tài khoản</Link>
               </li>
             </ul>
           </div>

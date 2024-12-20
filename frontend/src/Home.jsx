@@ -34,9 +34,9 @@ function Home() {
         <FeatureCard />
       </div>
 
-      <div>
+      {/* <div>
         <AnnouncementSection/>
-      </div>
+      </div> */}
     </div>
   );
 }

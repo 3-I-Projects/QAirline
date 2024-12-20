@@ -26,16 +26,16 @@ const Ticket = ({ id }) => {
         }
     }, [])
     return (
-        <div>
-            <h1>Ticket Component</h1>
+        <div className='ticket'>
+            <h1>Vé</h1>
             {ticket && (
                 <>
-                    <div>Id: {ticket.id}</div>
-                    <div>Price: {ticket.price}</div>
-                    <div>Status: {ticket.status}</div>
-                    <div>For: {ticket.customer}</div>
-                    <div>Flight: {ticket.flight}</div>
-                    <div>Seat: {ticket.seat}</div>
+                    <div>ID vé: {ticket.id}</div>
+                    <div>Giá vé: {ticket.price}</div>
+                    <div>Trạng thái thanh toán: {ticket.status}</div>
+                    <div>Mã khách hàng: {ticket.customer}</div>
+                    <div>Chuyến bay: {ticket.flight}</div>
+                    <div>Vị trí ghế ngồi: {ticket.seat}</div>
                 </>
             )}
         </div>

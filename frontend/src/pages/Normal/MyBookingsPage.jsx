@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Ticket from '../../components/Ticket';
 import Menu from '../../Menu';
+import '../../style/MyBookingPage.css';
 import AuthContext from '../../context/AuthContext';
 
 const MyBookingsPage = () => {
@@ -24,19 +25,22 @@ const MyBookingsPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className='my-booking'>
             <div className='menu'>
                 <Menu />
             </div>
-            <h1>My Bookings</h1>
-            <p>Welcome to the My Bookings page. Here you can view all your bookings.</p>
-            {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
-                userInfo.booked_tickets.map(ticket => (
-                    <Ticket key={ticket} id={ticket} />
-                ))
-            ) : (
-                <div>You've made no bookings</div>
-            )}
+            <div className="container">
+                <h1>Các vé của tôi</h1>
+                <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
+                {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
+                    userInfo.booked_tickets.map(ticket => (
+                        <Ticket key={ticket} id={ticket} />
+                    ))
+                ) : (
+                    <div className="no-bookings">You've made no bookings</div>
+                )}
+            </div>
+
             {/* <Ticket /> */}
         </div>
     );
