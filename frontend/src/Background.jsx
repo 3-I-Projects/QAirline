@@ -38,7 +38,7 @@ const Background = () => {
     };
 
     return (
-    <div className={`container ${currentBackgroundClass}`}>
+    <div className={`bg-container ${currentBackgroundClass}`}>
       {/* Background Selector */}
       <div className="background-selector">
         <div className="checkbox-container">
