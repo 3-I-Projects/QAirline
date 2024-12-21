@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import '../style/AnnouncementSection.css'
+import '../style/AnnouncementsSection.css'
 import Background from '../Background';
 
 

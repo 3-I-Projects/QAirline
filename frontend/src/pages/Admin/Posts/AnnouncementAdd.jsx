@@ -97,13 +97,13 @@ const FlightAdd = () => {
 				</select>
 			</div>
 
-			<div>
+			{/* <div>
 				<label htmlFor="thumbnail">Thumbnail (Not working)</label>
 				<input
 					type="file"
 					name="thumbnail"
 				/>
-			</div>
+			</div> */}
 
 			<div>
 				<label htmlFor="start_date">Start Date</label>

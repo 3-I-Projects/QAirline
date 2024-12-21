@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import '../../style/AdminGlobal.css'
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Login = () => {
@@ -20,15 +22,19 @@ const Login = () => {
     });
 
     const auth = useAuth();
-    const handleSubmitEvent = (e) => {
+    const handleSubmitEvent = async (e) => {
         e.preventDefault();
 
         if (input.username !== '' && input.password !== '') {
-            auth.loginAction(input, 'admin');
+            if (await auth.loginAction(input, 'admin') === 1) {
+                toast.success('Login successful');
+                return;
+            }
+            toast.error(await auth.loginAction(input, 'admin'));
             return;
         }
 
-        alert('invalid input');
+        toast.error('Invalid input');
     };
 
     const handleInput = (e) => {
@@ -43,8 +49,9 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmitEvent}>
+            <Toaster />
             <div className='form_control'>
-                <label htmlFor="user-username">Username:</label>
+                <label htmlFor="user-username">Username:</label><br />
                 <input
                     type="text"
                     id='user-username'
@@ -57,7 +64,7 @@ const Login = () => {
                 </div> */}
             </div>
             <div className="form_control">
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password:</label><br />
                 <input
                     type="password"
                     id="password"

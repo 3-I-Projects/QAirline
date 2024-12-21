@@ -66,7 +66,7 @@ const AirportAdd = () => {
       </div>
 
       <div className='form-group'>
-        <label htmlFor="city">City</label>
+        <label htmlFor="city">Location (City name only)</label>
         <input
           type="text"
           name='city'
@@ -76,7 +76,7 @@ const AirportAdd = () => {
       </div>
 
       <div className='form-group'>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Airport Full Name</label>
         <input
           type="text"
           name='name'

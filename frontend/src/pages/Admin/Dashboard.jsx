@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -25,17 +25,15 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div>
-			<p>Welcome again, motherfucker! You're in admin dashboard.</p>
-			<button onClick={goToAirports}>Airports Management</button>
-			<span> | </span>
-			<button onClick={goToPlanes}>Planes Management</button>
-			<span> | </span>
-			<button onClick={goToFlights}>Flights Management</button>
-			<span> | </span>
-			<button onClick={goToPosts}>Posts Management</button>
-			<span> | </span>
-			<button onClick={goToUsers}>Users Management</button>
+		<div className='dashboard-container'>
+			<p>Welcome! You're in admin dashboard.</p>
+			<div className='dashboard-button-container'>
+				<button className='dashboard-button' onClick={goToAirports}>Airports Management</button>
+				<button className='dashboard-button' onClick={goToPlanes}>Planes Management</button>
+				<button className='dashboard-button' onClick={goToFlights}>Flights Management</button>
+				<button className='dashboard-button' onClick={goToPosts}>Posts Management</button>
+				<button className='dashboard-button' onClick={goToUsers}>Users Management</button>
+			</div>
 		</div>
 	)
 }

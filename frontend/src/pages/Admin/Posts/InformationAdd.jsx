@@ -95,13 +95,13 @@ const InformationAdd = () => {
 				</select>
 			</div>
 
-			<div>
+			{/* <div>
 				<label htmlFor="thumbnail">Thumbnail (Not working)</label>
 				<input
 					type="file"
 					name="thumbnail"
 				/>
-			</div>
+			</div> */}
 			<button type="submit">Add</button>
 		</form>
 	)

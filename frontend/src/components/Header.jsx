@@ -1,6 +1,7 @@
 import { React } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import '../style/AdminGlobal.css';
 
 const Header = () => {
   let username = (localStorage.getItem('username')) ? localStorage.getItem('username'): 'guest';
@@ -13,16 +14,12 @@ const Header = () => {
 	};
 
   return (
-    <div>
-      <Link to='/'>Normal Homepage</Link>
-      <span> | </span>
-      <Link to='http://localhost:8000/admin'>Backend Admin</Link>
-      <span> | </span>
-      <Link to='/admin'>Admin Homepage</Link>
-      <span> | </span>
-      <button onClick={logout}>Logout</button>
-
-      <p>Hello, nigga {username}</p>
+    <div className='header-container'>
+      <p style={{color: 'black'}}>Welcome, {username}</p>
+      <Link className='header-link' to='/'>Normal Homepage</Link>
+      <Link className='header-link' to='http://localhost:8000/admin'>Backend Admin</Link>
+      <Link className='header-link' to='/admin'>Admin Homepage</Link>
+      {localStorage.getItem('isLoggedIn') ? <button onClick={logout}>Logout</button> : null}
     </div>
   )
 }

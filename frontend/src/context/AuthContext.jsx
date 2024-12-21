@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, Children } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import toast, {Toaster} from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -27,7 +28,12 @@ export const AuthProvider = ({ children }) => {
 				body: JSON.stringify(data)
 			});
 
+			if (!response.ok) {
+				return 'Invalid username or password';
+			}
+
 			const res = await response.json();
+			
 
 			if (res && mode === 'admin') {
 				if (jwtDecode(res.access).is_admin === true) {
@@ -36,9 +42,9 @@ export const AuthProvider = ({ children }) => {
 					localStorage.setItem('username', jwtDecode(res.access).username);
 					localStorage.setItem('isLoggedIn', true);
 					navigate('/admin/dashboard');
-					return;
+					return 1;
 				} else {
-					alert('You are not authorized to access this page');
+					return 'You are not authorized to access this page';
 				}
 			} else if (res && mode === 'user') {
 				setAccessToken(res.access);
@@ -48,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 				navigate('/home');
 				return;
 			} else {
-				alert('Invalid username or password');
+				return 'Invalid username or password';
 			}
 		} catch (err) {
 			console.log(err);
@@ -56,6 +62,7 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	const logoutAction = () => {
+		toast.success('Logout successful');
 		localStorage.removeItem('accessToken');
 		localStorage.removeItem('username');
 		localStorage.removeItem('isLoggedIn');
@@ -64,6 +71,7 @@ export const AuthProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider value={{ accessToken, loginAction, logoutAction, userInfo, setUserInfo }}>
 			{children}
+			<Toaster/>
 		</AuthContext.Provider>
 	)
 }

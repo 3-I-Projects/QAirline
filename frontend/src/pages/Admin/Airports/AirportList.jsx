@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
+import '../../../style/AdminGlobal.css';
 
 const AirportList = () => {
 	const [airports, setAirports] = useState([]);
@@ -87,15 +88,15 @@ const AirportList = () => {
 	}
 
 	return (
-		<div>
+		<div className='airports-container'>
 			<h2>Airports List (Sorted by: {sortField.name ? sortField.name + ' ascending: ' + sortField.asc : 'unsorted'})</h2>
 			<button onClick={goToAddAirport}>Add an airport</button>
-			<table>
+			<table className='airports-table'>
 				<thead>
 					<tr>
-						<th>Name<button onClick={() => changeSortState('name', sortField.asc)}>Sort by name</button></th>
-						<th>Code<button onClick={() => changeSortState('code', sortField.asc)}>Sort by code</button></th>
-						<th>City<button onClick={() => changeSortState('city', sortField.asc)}>Sort by city</button></th>
+						<th>Airport Name<button onClick={() => changeSortState('name', sortField.asc)}>Sort by name</button></th>
+						<th>Airport Code<button onClick={() => changeSortState('code', sortField.asc)}>Sort by code</button></th>
+						<th>Location<button onClick={() => changeSortState('city', sortField.asc)}>Sort by city</button></th>
 						<th>Delete Airport</th>
 					</tr>
 				</thead>
@@ -108,7 +109,7 @@ const AirportList = () => {
 							<td>{airport.code}</td>
 							<td>{airport.city}</td>
 							<td>
-								<button onClick={() => handleDeleteAction(airport.id)}>Delete airport</button>
+								<button onClick={() => handleDeleteAction(airport.id)}>Delete Airport</button>
 							</td>
 						</tr>
 					))}

@@ -41,23 +41,20 @@ const UserList = () => {
     }
   }
 
-  const goToCustomerDetail = () => {
-    navigate('/admin/customers/detail');
-  }
-
-  const goToCustomerAdd = () => {
-    navigate('/admin/customers/add');
+  const goToUserAdd = () => {
+    navigate('/admin/users/add');
   }
 
   return (
     <div>
-      <button onClick={goToCustomerAdd}>Add a customer</button>
+      <button onClick={goToUserAdd}>Add an user</button>
       <table>
         <thead>
           <tr>
             <th>Username</th>
             <th>Email</th>
             <th>Number of booked tickets</th>
+            <th>Admin Status</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -67,6 +64,7 @@ const UserList = () => {
               <td><Link to={'/admin/users/detail'} state={{ user: user }}>{user.username}</Link></td>
               <td>{user.email}</td>
               <td>{user.booked_tickets.length}</td>
+              <td>{user.is_staff ? 'Admin' : 'User'}</td>
               <td>
                 <button onClick={() => handleDeleteAction(user.id)}>Delete</button>
               </td>

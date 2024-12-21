@@ -166,6 +166,12 @@ const PostList = () => {
     navigate('/admin/posts/addNew');
   }
 
+  const isoDateToLocale = (isoDate) => {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+  }
+
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div>
@@ -177,9 +183,13 @@ const PostList = () => {
               <th>Title</th>
               <th>Short Description</th>
               <th>Body</th>
+              <th>Start date</th>
+              <th>End date</th>
+              <th>Created at</th>
+              <th>Last Update</th>
+              <th>Actions</th>
               <th>Status</th>
               <th>Author</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -188,8 +198,12 @@ const PostList = () => {
                 <td><Link to={'/admin/posts/detail'} state={{ announcement: announcement }}>{announcement.title}</Link></td>
                 <td>{announcement.short_description}</td>
                 <td>{announcement.body}</td>
-                <td>{announcement.status}</td>
+                <td>{isoDateToLocale(announcement.start_date)}</td>
+                <td>{isoDateToLocale(announcement.end_date)}</td>
+                <td>{isoDateToLocale(announcement.created_at)}</td>
+                <td>{isoDateToLocale(announcement.last_update)}</td>
                 <td>{announcement.author}</td>
+                <td>{announcement.status}</td>
                 <td>
                   <button onClick={() => handleDeleteAction('announcements', announcement.id)}>Delete</button>
                   {announcement.status === 'published' ? (
@@ -212,6 +226,11 @@ const PostList = () => {
               <th>Title</th>
               <th>Short Description</th>
               <th>Body</th>
+              <th>Start date</th>
+              <th>End date</th>
+              <th>Created at</th>
+              <th>Last Update</th>
+              <th>Author</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -222,6 +241,11 @@ const PostList = () => {
                 <td>{discount.title}</td>
                 <td>{discount.short_description}</td>
                 <td>{discount.body}</td>
+                <td>{isoDateToLocale(discount.start_date)}</td>
+                <td>{isoDateToLocale(discount.end_date)}</td>
+                <td>{isoDateToLocale(discount.created_at)}</td>
+                <td>{isoDateToLocale(discount.last_update)}</td>
+                <td>{discount.author}</td>
                 <td>{discount.status}</td>
                 <td>
                   <button onClick={() => handleDeleteAction('discounts', discount.id)}>Delete</button>

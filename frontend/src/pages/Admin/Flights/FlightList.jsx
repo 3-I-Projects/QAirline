@@ -5,6 +5,7 @@ const FlightList = () => {
 	const [flights, setFlights] = useState([]);
 	const navigate = useNavigate();
 	const [airports, setAirports] = useState([]);
+	const [planes, setPlanes] = useState([]);
 
 	const fetchFlights = async () => {
 		try {
@@ -40,10 +41,32 @@ const FlightList = () => {
 		}
 	};
 
+	const fetchPlanes = async () => {
+		try {
+			const response = await fetch('http://localhost:8000/flights/planes', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+				},
+			});
+			const res = await response.json();
+			setPlanes(res);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	useEffect(() => {
+		fetchPlanes();
 		fetchAirports();
 		fetchFlights();
 	}, []);
+
+	const planeIdToName = (planeId) => {
+		const plane = planes.find((plane) => plane.id === planeId);
+		return plane;
+	};
 
 	const handleDeleteAction = async (id) => {
 		try {
@@ -65,6 +88,11 @@ const FlightList = () => {
 		navigate('/admin/flights/add');
 	};
 
+	const isoDateToLocale = (isoDate) => {
+		const date = new Date(isoDate);
+		return date.toLocaleString();
+	}
+
 	return (
 		<div>
 			<h2>Flights List</h2>
@@ -79,8 +107,8 @@ const FlightList = () => {
 						<th>Available Seats</th>
 						<th>Departure Time</th>
 						<th>Arrival Time</th>
-						<th>Delay</th>
-						<th>Base Price</th>
+						<th>Delay (Hours)</th>
+						<th>Base Price (US Dollar)</th>
 						<th>Delete Flight</th>
 					</tr>
 				</thead>
@@ -90,12 +118,12 @@ const FlightList = () => {
 							<td>
 								<Link to={'/admin/flights/detail'} state={{ flight: flight }}>VNA-{flight.id}</Link>
 							</td>
-							<td>{flight.plane}</td>
+							<td>{planeIdToName(flight.plane).registration_number}</td>
 							<td>{airports.find((airport) => airport.id === flight.origin_airport).name}</td>
 							<td>{airports.find((airport) => airport.id === flight.destination_airport).name}</td>
 							<td>{flight.available_seat_count}</td>
-							<td>{flight.departure_time}</td>
-							<td>{flight.arrival_time}</td>
+							<td>{isoDateToLocale(flight.departure_time)}</td>
+							<td>{isoDateToLocale(flight.arrival_time)}</td>
 							<td>{flight.delay}</td>
 							<td>{flight.base_price}</td>
 							<td>
