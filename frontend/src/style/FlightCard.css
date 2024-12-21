@@ -1,7 +1,7 @@
 @import "./Global.css";
 
 /* Thẻ chuyến bay chính */
- .flight-card {
+.flight-card {
   border: 1px solid var(--border-color, #ddd);
   font-family: var(--font-family);
   border-radius: 10px;

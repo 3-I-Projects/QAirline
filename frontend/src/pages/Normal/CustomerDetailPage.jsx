@@ -7,6 +7,7 @@ import AuthContext from "../../context/AuthContext";
 import Menu from "../../Menu";
 import "../../style/Detail.css";
 import CustomerSelect from "../../components/CustomerSelect";
+import Footer from "../../components/Footer";
 
 const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
@@ -173,6 +174,7 @@ const CustomerDetailPage = () => {
 
       {allCustomers.map((data, index) => (
         <div className="select-customer" key={index}>
+          <h3>Hành khách {index + 1}</h3>
           {accessToken && (
             <CustomerSelect
               accessToken={accessToken}
@@ -180,7 +182,6 @@ const CustomerDetailPage = () => {
               onChange={(e) => handleSelect(e, index)}
             />
           )}
-          <h3>Hành khách {index + 1}</h3>
           <UserForm
             formData={data}
             errors={errors[index]}
@@ -192,6 +193,7 @@ const CustomerDetailPage = () => {
       <button className="submit-button" onClick={handleSubmit}>
         Gửi Thông Tin
       </button>
+      <Footer />
       <Toaster />
     </div>
   );

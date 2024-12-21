@@ -5,6 +5,7 @@ import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
 import AnnouncementSection from './components/AnnouncementSection';
+import Footer from './components/Footer';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +38,7 @@ function Home() {
       <div>
         <AnnouncementSection/>
       </div>
+      <Footer />
     </div>
   );
 }

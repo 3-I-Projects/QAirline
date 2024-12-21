@@ -5,6 +5,7 @@ import { BookingContext } from '../../context/BookingContext';
 import AuthContext from '../../context/AuthContext';
 import '../../style/SeatPicker.css';
 import Menu from '../../Menu';
+import Footer from '../../components/Footer';
 
 const RoundTripSeatPickerPage = () => {
     const navigate = useNavigate();
@@ -128,6 +129,7 @@ const RoundTripSeatPickerPage = () => {
                 <button onClick={onClick} className="submit">Tiếp tục</button>
                 <Toaster />
             </div>
+            <Footer />
         </div>
     );
 };

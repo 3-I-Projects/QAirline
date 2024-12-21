@@ -5,6 +5,7 @@ import './style/AvailableFlights.css';
 import FlightCard from './FlightCard.jsx';
 import { BookingContext } from './context/BookingContext.jsx';
 import Menu from './Menu.jsx';
+import Footer from './components/Footer.jsx';
 
 const AvailableFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -166,6 +167,7 @@ const AvailableFlights = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
