@@ -12,7 +12,7 @@
   z-index: 1;
 }
 
-.background-container {
+.home-container .background-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@
   z-index: -1;
 }
 
-.content {
+.home-container .content {
   position: relative;
   z-index: 2;
   display: flex;

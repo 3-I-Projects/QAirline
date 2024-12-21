@@ -1,28 +1,119 @@
-@import "./Global.css";
+@import './Global.css';
 
+/* Footer Styling */
 .footer {
-  /* background-color: var(--primary-color); */
-  /* color: var(--text-color); */
-  padding: 20px;
+  background-color: #ff7b47; /* Màu cam đậm cho nền footer */
+  color: #ffffff; /* Màu chữ trắng nổi bật */
+  padding: 20px 15px;
   text-align: center;
+  width: 100vw;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #e0431a; /* Viền trên màu cam đậm hơn */
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-content p {
+  font-size: 1rem;
+  margin: 0;
+  font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 .footer-nav {
-  margin-top: 10px;
+  display: flex;
+  gap: 15px;
 }
 
 .footer-nav a {
-  margin: 0 10px;
+  color: #ffffff; /* Màu cam nhạt */
   text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: #ffffff; /* Màu trắng khi hover */
+  text-decoration: underline;
 }
 
 .footer-newsletter {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.footer-newsletter p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
 
+.footer-newsletter form {
+  display: flex;
+  gap: 10px;
+  background-color: #ff5c1c;
+}
+
+.footer .input-item {
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ffccb3; /* Màu viền cam nhạt */
+  border-radius: 5px;
+  outline: none;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.footer .input-item:focus {
+  box-shadow: 0 0 5px #ff7b47; /* Hiệu ứng sáng cam nhạt khi focus */
+  border-color: #ff7b47;
+}
+
+.footer-newsletter button {
+  background-color: #e44505; /* Cam nhạt hài hòa */
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-newsletter button:hover {
+  background-color: #ff4800; /* Cam đậm hơn khi hover */
+  transform: scale(1.05);
+}
+
+.footer-newsletter button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-content {
+    gap: 15px;
+  }
+
+  .footer-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-newsletter form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-newsletter button {
+    width: 100%;
+  }
+}

@@ -160,7 +160,6 @@ const RoundTripAvailableFlights = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

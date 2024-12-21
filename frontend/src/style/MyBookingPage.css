@@ -1,6 +1,6 @@
 @import './Global.css';
 
-.my-booking .containers {
+.my-booking .booking-container {
     width: 80%;
     margin: 0 auto;
     padding: 20px;

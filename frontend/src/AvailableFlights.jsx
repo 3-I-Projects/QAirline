@@ -164,7 +164,6 @@ const AvailableFlights = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

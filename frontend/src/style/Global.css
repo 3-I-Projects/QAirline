@@ -10,6 +10,7 @@ body.light {
   --border-color: #ddd; /* Đường viền nhạt cho các phần tử */
   --hover-color: #ff4800; /* Màu hover tươi sáng */
   --font-family: 'Roboto', 'Arial', sans-serif;
+  --menu-footer-color: #fd6832;
 }
 
 /* Dark Theme */

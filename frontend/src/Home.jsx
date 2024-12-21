@@ -39,11 +39,11 @@ function Home() {
       <div className="content">
         <FeatureCard />
       </div>
-      <Footer />
         <AnnouncementsSection />
         <DiscountsSection />
         <NewsSection />
         <InformationsSection />
+        <Footer />
     </div>
   );
 }

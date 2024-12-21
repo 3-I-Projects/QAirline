@@ -122,7 +122,6 @@ const PaymentPage = () => {
       {paymentMethod === "QR" && <PaymentQR />}
       <Toaster />
     </div>
-    <Footer />
     </div>
     
   );
