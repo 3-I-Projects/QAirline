@@ -40,7 +40,7 @@
 .my-booking .ticket h1 {
     font-size: 1.5rem;
     text-align: center;
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
@@ -57,12 +57,12 @@
 
 .my-booking .ticket-label {
     font-weight: bold;
-    color: #555;
+    color: var(--text-color);
 }
 
 .my-booking .ticket-value {
     font-size: 1rem;
-    color: #333;
+    color: var(--text-color);
     text-align: right;
 }
 
