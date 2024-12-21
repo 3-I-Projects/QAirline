@@ -118,7 +118,7 @@ const FlightList = () => {
 							<td>
 								<Link to={'/admin/flights/detail'} state={{ flight: flight }}>VNA-{flight.id}</Link>
 							</td>
-							<td>{planeIdToName(flight.plane).registration_number}</td>
+							<td>{planeIdToName(flight.plane) ? planeIdToName(flight.plane).registration_number : 'No plane selected' }</td>
 							<td>{airports.find((airport) => airport.id === flight.origin_airport).name}</td>
 							<td>{airports.find((airport) => airport.id === flight.destination_airport).name}</td>
 							<td>{flight.available_seat_count}</td>
