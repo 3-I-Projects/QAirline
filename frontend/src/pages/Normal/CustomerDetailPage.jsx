@@ -12,7 +12,7 @@ const CustomerDetailPage = () => {
   const { count, setCount } = useContext(BookingContext);
   const { allCustomers, setAllCustomers, customerCount, setCustomerCount } =
     useContext(BookingContext);
-  const [ selectOld, setSelectOld ] = useState(false);
+  const [selectOld, setSelectOld] = useState(false);
   const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -69,19 +69,18 @@ const CustomerDetailPage = () => {
     console.log(name, value);
     setSelectOld(true);
     fetch(`http://localhost:8000/users/customers/${value}`)
-    .then(response => response.json())
-    .then(data => {
-      setAllCustomers((prevCustomers) => {
-        const updatedCustomers = [...prevCustomers];
-        updatedCustomers[index] = {
-          ...updatedCustomers[index],
-          ...data
-        };
-        return updatedCustomers;
+      .then((response) => response.json())
+      .then((data) => {
+        setAllCustomers((prevCustomers) => {
+          const updatedCustomers = [...prevCustomers];
+          updatedCustomers[index] = {
+            ...updatedCustomers[index],
+            ...data,
+          };
+          return updatedCustomers;
+        });
       });
-    })
     console.log(allCustomers);
-
   };
 
   // Validate all forms
@@ -122,11 +121,14 @@ const CustomerDetailPage = () => {
             headers["Authorization"] = `Bearer ${accessToken}`;
           }
 
-          const response = await fetch("http://localhost:8000/users/customers", {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(formData),
-          });
+          const response = await fetch(
+            "http://localhost:8000/users/customers",
+            {
+              method: "POST",
+              headers: headers,
+              body: JSON.stringify(formData),
+            }
+          );
 
           if (!response.ok) {
             throw new Error("Lỗi khi gửi dữ liệu.");
@@ -136,7 +138,10 @@ const CustomerDetailPage = () => {
 
           setAllCustomers((prevCustomers) => {
             const updatedCustomers = [...prevCustomers];
-            updatedCustomers[index] = { ...updatedCustomers[index], id: data.id };
+            updatedCustomers[index] = {
+              ...updatedCustomers[index],
+              id: data.id,
+            };
             return updatedCustomers;
           });
 
@@ -168,7 +173,13 @@ const CustomerDetailPage = () => {
 
       {allCustomers.map((data, index) => (
         <div className="select-customer" key={index}>
-          <CustomerSelect accessToken={accessToken} value={data} onChange={(e) => handleSelect(e, index)} />
+          {accessToken && (
+            <CustomerSelect
+              accessToken={accessToken}
+              value={data}
+              onChange={(e) => handleSelect(e, index)}
+            />
+          )}
           <h3>Hành khách {index + 1}</h3>
           <UserForm
             formData={data}

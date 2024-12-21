@@ -43,6 +43,7 @@ import UserList from "./pages/Admin/Users/UserList";
 import UserDetail from "./pages/Admin/Users/UserDetail";
 import UserAdd from "./pages/Admin/Users/UserAdd";
 import RoundTripAvailableFlights from "./RoundTripAvailableFlights";
+import RoundTripSeatPickerPage from "./pages/Normal/RoundTripSeatPickerPage";
 
 function AdminLayout() {
   return (
@@ -69,6 +70,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/detail" element={<CustomerDetailPage />} />
               <Route path="/seats" element={<SeatPickerPage />} />
+              <Route path="/round-trip-seats" element={<RoundTripSeatPickerPage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/user" element={<UserProfile />} />
               <Route path="/my-bookings" element={<MyBookingsPage />} />

@@ -6,9 +6,9 @@ import AuthContext from '../../context/AuthContext';
 import '../../style/SeatPicker.css';
 import Menu from '../../Menu';
 
-const SeatPickerPage = () => {
+const RoundTripSeatPickerPage = () => {
     const navigate = useNavigate();
-    const { flight, allCustomers, customerCount, ticketIds, setTicketIds, roundTripFlight, bookingInfo } = useContext(BookingContext);
+    const { allCustomers, customerCount, ticketIds, setTicketIds, roundTripFlight } = useContext(BookingContext);
     const { accessToken } = useContext(AuthContext);
     const [ seats, setSeats ] = useState([]); // huan dung ttin torng nay de tao giao dien chon cho ngoi
     const [ selectedSeats, setSelectedSeats ] = useState([]);
@@ -18,7 +18,7 @@ const SeatPickerPage = () => {
         //     toast.success("Gửi thông tin thành công, id: " + customer.id);
         // });
 
-        fetch(`http://localhost:8000/flights/flights/${flight.id}/seats`)
+        fetch(`http://localhost:8000/flights/flights/${roundTripFlight.id}/seats`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch seats: ${response.statusText}`);
@@ -32,7 +32,7 @@ const SeatPickerPage = () => {
                 console.error("Error fetching seats:", error);
                 toast.error("Lỗi khi tải dữ liệu.");
             });
-    }, [flight]);
+    }, [roundTripFlight]);
 
     const toggleSeatSelection = (seat) => {
         if (selectedSeats.find((s) => s.id === seat.id)) {
@@ -54,7 +54,7 @@ const SeatPickerPage = () => {
         for (let i = 0; i < customerCount; i++) {
             const data = {
                 "customer": allCustomers[i].id,
-                "flight": flight.id,
+                "flight": roundTripFlight.id,
                 "seat": selectedSeats.length > 0 ? selectedSeats[i].id : ''
             };
             try {
@@ -74,11 +74,7 @@ const SeatPickerPage = () => {
                 console.error(error);
             }
         }
-        if (bookingInfo.tripType === 'khứ hồi') {
-            navigate('/round-trip-seats');
-        } else {
-            navigate('/payment');
-        }
+        navigate('/payment');
     };
 
     // Đánh dấu các cột A, B, C, D, E, F
@@ -136,4 +132,4 @@ const SeatPickerPage = () => {
     );
 };
 
-export default SeatPickerPage;
+export default RoundTripSeatPickerPage;
