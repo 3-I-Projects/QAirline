@@ -143,26 +143,10 @@
   object-fit: contain;
 }
 
-
-
-/* Biểu đồ Placeholder */
-.available-flights .chart-placeholder {
-  height: 200px;
-  max-width: 800px;
-  background: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #555;
-  font-size: 1.1rem;
-  margin: 20px auto;
-  border-radius: 8px;
-  margin-top: 300px;
-}
-
 /* Container danh sách chuyến bay */
 .available-flights .flight-list-container {
   padding: 20px;
+  margin-top: 300px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap; /* Cho phép các thẻ chuyển sang hàng mới nếu cần */

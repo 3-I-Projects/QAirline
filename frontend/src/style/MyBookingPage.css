@@ -24,6 +24,7 @@
 
 .my-booking p {
     text-align: start;
+    font-size: 20px;
     color: var(--text-color);}
 
 .my-booking .ticket {

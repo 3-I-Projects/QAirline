@@ -4,9 +4,10 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100%;
   font-family: var(--font-family);
-  background: linear-gradient(180deg, #1c1c1c, #50505085); 
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid transparent; 
   transition: background-color 0.3s ease, opacity 0.3s ease; 
@@ -22,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 15px 150px;
+  padding: 15px 150px 10px;
 }
 
 /* Logo */
@@ -72,7 +73,7 @@
 }
 
 #dx {
-  color: #ff3b3b;
+  color: #ff0000;
 }
 
 #dx:hover {
@@ -121,10 +122,10 @@
 }
 
 .menu-link2:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--hover-color);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  color: #000000;
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

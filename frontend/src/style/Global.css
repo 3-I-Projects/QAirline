@@ -1,25 +1,29 @@
 /* Light Theme (Default) */
 body.light {
-  --primary-color: #e9663f;
-  --secondary-color: #ff6435;
-  --text-color: #ffffff;
-  --background-page-color: #4888c8;
-  --background-color: #bc3131;
-  --background-form-color: #74d085;
-  --background-input-color: #01aaf9;
-  --border-color: #c75a39;
-  --hover-color: #ff5c2b;
+  --primary-color: #fd6832; /* Coral, nhẹ nhàng và tươi sáng */
+  --secondary-color: #ff7b47; /* Màu cam nhạt */
+  --text-color: #333; /* Đen đậm cho văn bản, dễ đọc */
+  --background-page-color: #f4f6f9; /* Màu nền sáng nhẹ */
+  --background-color: #ffffff; /* Màu nền chính sáng */
+  --background-form-color: #fefefe; /* Màu nền cho các form */
+  --background-input-color: #ffffff; /* Nền input trắng */
+  --border-color: #ddd; /* Đường viền nhạt cho các phần tử */
+  --hover-color: #ff4800; /* Màu hover tươi sáng */
+  --font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 /* Dark Theme */
+/* Dark Theme */
 body.dark {
-  --primary-color: #282c34;
-  --secondary-color: #444950;
-  --text-color: #fffefe;
-  --background-page-color: #1c1f26;
-  --background-color: #333;
-  --background-form-color: #444;
-  --background-input-color: #555;
-  --border-color: #666;
-  --hover-color: #777;
+  --primary-color: #fd5e32; 
+  --secondary-color: #ed6039; 
+  --text-color: #ecf0f1; 
+  --background-page-color: #121212; 
+  --background-color: #1e1e1e; 
+  --background-form-color: #2c3e50; 
+  --background-input-color: #333333; 
+  --border-color: #555;
+  --hover-color: #ff4800; 
+  --font-family: 'Roboto', 'Arial', sans-serif;
 }
+

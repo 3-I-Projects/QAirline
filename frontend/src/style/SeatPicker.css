@@ -1,27 +1,32 @@
-@import './Global.css';
-
+/* Seat Picker Page */
 .seat-picker-page-container {
-    padding: 20px;
-    max-width: 800px;
+    padding: 20px 30px;
+    min-height: 100vh;
     font-family: var(--font-family);
     margin: 130px auto;
     color: var(--text-color);
-    border-radius: 10px;
+    border-radius: 12px;
     background-color: var(--background-page-color);
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 1200px; /* Giới hạn độ rộng để dễ nhìn trên màn hình lớn */
 }
-
 
 /* Seat Info - Mô tả thông tin về các màu ghế */
 .seat-info {
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: var(--text-color);}
+    display: flex;
+    justify-content: space-evenly;
+    margin: 25px 0 25px 0;
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: bold;
+}
 
 .seat-info p {
-    margin: 5px 0;
+    margin: 0;
     display: flex;
     align-items: center;
+    font-size: 0.95rem;
 }
 
 .seat-info span {
@@ -30,14 +35,14 @@
 
 /* Các biểu tượng trạng thái ghế */
 .seat-icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: inline-block;
     margin-left: 5px;
 }
 
 .available-seat {
-    background-color: #4caf50; /* Màu xanh lá cho ghế khả dụng */
+    background-color: #00fbff; /* Màu  xanh cho ghế khả dụng */
     border-radius: 50%;
 }
 
@@ -55,19 +60,21 @@
 .seat-grid {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
-    width: 100%;
+    margin-bottom: 40px;
 }
 
 /* Hàng ghế */
 .seat-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-bottom: 15px;
 }
 
 /* Nhãn cột */
@@ -75,7 +82,7 @@
     font-weight: bold;
     font-size: 18px;
     text-align: center;
-    color: #000;
+    color: var(--text-color);
 }
 
 /* Ghế */
@@ -84,12 +91,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    position: relative;
+    flex-direction: column;
 }
 
+.seat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
 
 /* Ghế khả dụng */
 .seat.available .seat-body {
-    fill: #4caf50; /* Màu xanh lá cho ghế khả dụng */
+    fill: #00fbff; /* Màu cam cho ghế khả dụng */
 }
 
 /* Ghế đã chọn */
@@ -108,26 +122,74 @@
 
 /* X trong ghế không khả dụng */
 .seat.unavailable text {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
 }
 
+/* Màu sắc cho các hạng ghế (chỉ phần thân ghế) */
+.first-class .seat-body {
+    fill: #e2574d; /* Màu đỏ cho hạng nhất */
+}
+
+.business-class .seat-body {
+    fill: #e7a94a; /* Màu cam cho hạng thương gia */
+}
+
+.premium-class .seat-body {
+    fill: #8857dc; /* Màu tím cho hạng cao cấp */
+}
+
+.economy-class .seat-body {
+    fill: #60e789; /* Màu xanh lá cho hạng phổ thông */
+}
+
 /* Nút tiếp tục */
-.seat-picker-page-container .submit {
-    border-radius: 10px;
+.submit {
+    border-radius: 12px;
     color: var(--text-color);
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px 20px;
+    margin: 20px 0;
     background-color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    max-width: 250px; /* Giới hạn chiều rộng */
+    margin: 30px auto;
 }
 
-/* .seat-picker-page-container .submit:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-} */
+.submit:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05);
+}
+
+.submit:active {
+    transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .seat-picker-page-container {
+        padding: 15px 20px;
+    }
+
+    .seat-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .seat-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .submit {
+        width: 100%;
+    }
+}
