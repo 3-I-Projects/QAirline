@@ -193,7 +193,6 @@ const CustomerDetailPage = () => {
       <button className="submit-button" onClick={handleSubmit}>
         Gửi Thông Tin
       </button>
-      <Footer />
       <Toaster />
     </div>
   );

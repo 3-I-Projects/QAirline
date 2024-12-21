@@ -145,7 +145,6 @@ const RoundTripSeatPickerPage = () => {
                 <button onClick={onClick} className="submit">Tiếp tục</button>
                 <Toaster />
             </div>
-            <Footer />
         </div>
     );
 };
