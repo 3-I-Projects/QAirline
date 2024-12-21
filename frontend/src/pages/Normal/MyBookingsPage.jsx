@@ -26,8 +26,6 @@ const MyBookingsPage = () => {
     }, []);
 
     return (
-<<<<<<< HEAD
-        <>
             <div className='my-booking'>
                 <div className='menu'>
                     <Menu />
@@ -43,7 +41,6 @@ const MyBookingsPage = () => {
                         <div className="no-bookings">Bạn chưa đặt vé nào</div>
                     )}
                 </div>
-=======
         <div className='my-booking'>
             <div className='menu'>
                 <Menu />
@@ -59,11 +56,11 @@ const MyBookingsPage = () => {
                     <div className="no-bookings">Bạn chưa đặt vé nào</div>
                 )}
             </div>
->>>>>>> refs/remotes/origin/main
 
             </div>
             {/* <Footer /> */}
-        </>
+            <Footer />
+        </div>
     );
 };
 
