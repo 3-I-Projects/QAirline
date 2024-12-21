@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../style/AnnouncementSection.css'
+import Background from '../Background';
 
 
-const AnnouncementSection = () => {
+const AnnouncementsSection = () => {
 	const [announcements, setAnnouncements] = useState([]);
 	const fetchAnnouncements = async () => {
 		try {
@@ -10,7 +11,6 @@ const AnnouncementSection = () => {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
 				},
 			});
 			const res = await response.json();
@@ -24,20 +24,17 @@ const AnnouncementSection = () => {
 		fetchAnnouncements();
 	}, []);
 
-	const thumbnailStyle = {
-		width: '100px',
-		height: '100px',
-	};
-
 	return (
-		<div className='container'>
+		<div className='announcements-section-container'>
 			<h1>Announcements</h1>
-			<div style={{ display: 'flex', flexDirection: 'row' }}>
+			<div className='all-announcements-container'>
 				{announcements.map((announcement) => (
-					<div key={announcement.id}>
-						<img src={announcement.thumbnail} alt="" style={thumbnailStyle}/>
-						<h3>{announcement.title}</h3>
-						<p>{announcement.body}</p>
+					<div key={announcement.id} style={{margin: '10px', width: '200px', height: '300px'}}>
+						<img src={announcement.thumbnail} style={{width: '100%', height: '200px'}} />
+						<div style={{backgroundColor: '#79D7BE', padding: '10px', width: '100%', height: '100px'}}>
+							<h3>{announcement.title}</h3>
+							<p>{announcement.body}</p>
+						</div>
 					</div>
 				))}
 			</div>
@@ -45,4 +42,4 @@ const AnnouncementSection = () => {
 	)
 }
 
-export default AnnouncementSection
+export default AnnouncementsSection
