@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+:root {
+	--primary-color: #fd6832;
+	--secondary-color: #ff7b47;
+	--hover-color: #ff4800;
+	--font-family: 'Roboto', 'Arial', sans-serif;
+	--border-color: #ddd; /* Đường viền nhạt cho các phần tử */
+}
+>>>>>>> 7902eba89cf0efbf01fb3d1429ebf1d78671e993
 
 /* admin global styling */
 form {

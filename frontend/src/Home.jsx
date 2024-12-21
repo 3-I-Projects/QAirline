@@ -4,6 +4,10 @@ import './style/Home.css';
 import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
+<<<<<<< HEAD
+=======
+import Footer from './components/Footer';
+>>>>>>> 7902eba89cf0efbf01fb3d1429ebf1d78671e993
 import AnnouncementsSection from './components/AnnouncementsSection';
 import DiscountsSection from './components/DiscountsSection';
 import NewsSection from './components/NewsSection';
@@ -38,7 +42,11 @@ function Home() {
       <div className="content">
         <FeatureCard />
       </div>
+<<<<<<< HEAD
 
+=======
+      <Footer />
+>>>>>>> 7902eba89cf0efbf01fb3d1429ebf1d78671e993
         <AnnouncementsSection />
         <DiscountsSection />
         <NewsSection />
