@@ -26,32 +26,11 @@ const MyBookingsPage = () => {
     }, []);
 
     return (
-<<<<<<< HEAD
-        <>
-=======
->>>>>>> 7902eba89cf0efbf01fb3d1429ebf1d78671e993
-            <div className='my-booking'>
-                <div className='menu'>
-                    <Menu />
-                </div>
-                <div className="booking-container">
-                    <h1>Các vé của tôi</h1>
-                    <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
-                    {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
-                        userInfo.booked_tickets.map(ticket => (
-                            <Ticket key={ticket} id={ticket} />
-                        ))
-                    ) : (
-                        <div className="no-bookings">Bạn chưa đặt vé nào</div>
-                    )}
-                </div>
-<<<<<<< HEAD
-=======
         <div className='my-booking'>
             <div className='menu'>
                 <Menu />
             </div>
-            <div className="containers">
+            <div className="booking-container">
                 <h1>Các vé của tôi</h1>
                 <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
                 {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
@@ -61,9 +40,6 @@ const MyBookingsPage = () => {
                 ) : (
                     <div className="no-bookings">Bạn chưa đặt vé nào</div>
                 )}
-            </div>
->>>>>>> 7902eba89cf0efbf01fb3d1429ebf1d78671e993
-
             </div>
             {/* <Footer /> */}
             <Footer />
