@@ -6,6 +6,7 @@
   color: #ffffff; /* Màu chữ trắng nổi bật */
   padding: 20px 15px;
   text-align: center;
+  width: 100vw;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   border-top: 3px solid #e0431a; /* Viền trên màu cam đậm hơn */
 }
