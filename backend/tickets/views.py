@@ -28,6 +28,8 @@ class TicketList(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
 
     def get(self, request, *args, **kwargs):
+        for flight in Flight.objects.all():
+            purge_unpaid_tickets(flight)
         return self.list(request, *args, **kwargs)
 
     @transaction.atomic
@@ -90,6 +92,8 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
         ticket = Ticket.objects.get(pk=kwargs['pk'])
+        flight = ticket.flight
+        purge_unpaid_tickets(flight)
         if ticket.status == 'Cancelled':
             return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         ticket.status = 'Paid'
@@ -102,6 +106,8 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, pk, *args, **kwargs):
         ticket = Ticket.objects.get(pk=pk)
+        flight = ticket.flight
+        purge_unpaid_tickets(flight)
         if ticket.status == 'Cancelled':
             return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         ticket.status = 'Paid'
