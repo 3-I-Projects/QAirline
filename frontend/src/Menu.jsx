@@ -64,8 +64,8 @@ const Menu = () => {
   <div className="menu-container">
     {/* Logo */}
     <Link to="/home">
-      <img src="/images/cr7.1.jpg" alt="Logo" className="logo-image" />
-    </Link>
+      <img src="/images/lolllogo.webp" alt="Logo" className="logo-image" />
+    </Link>   
 
     {/* Menu bên phải */}
     <div className="menu-right">

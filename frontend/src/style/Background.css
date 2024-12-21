@@ -20,29 +20,19 @@
   
   /* Background Images */
   .bg1 {
-    background-image: url('/images/cr715.png');
+    background-image: url('/images/bg1.webp');
   }
   
   .bg2 {
-    background-image: url('/images/cr716.png');
+    background-image: url('/images/bg3.webp');
   }
   
   .bg3 {
-    background-image: url('/images/Cr7.jpg');
+    background-image: url('/images/bg3.webp');
   }
   
   .bg4 {
-    background-image: url('/images/cr7.12.jpg');
-  }
-  
-  .bg5 {
-    background-image: url('/images/cr717.png');
-  }
-  .bg6 {
-    background-image: url('/images/cr718.png');
-  }
-  .bg7 {
-    background-image: url('/images/cr719.png');
+    background-image: url('/images/bg4.webp');
   }
   
   .bg-container  .background-selector {
