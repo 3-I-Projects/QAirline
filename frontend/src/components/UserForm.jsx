@@ -394,10 +394,10 @@ function UserForm({ formData = {}, errors = {}, handleChange }) {
       )}
       {/* </form> */}
 
-      <div className="form-data-display">
+      {/* <div className="form-data-display">
         <h3>Thông tin nhập liệu</h3>
         <pre>{JSON.stringify(formData, null, 2)}</pre>
-      </div>
+      </div> */}
     </div>
   );
 }

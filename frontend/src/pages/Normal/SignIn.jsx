@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../style/LoginStyle.css';
 import { useAuth } from '../../context/AuthContext';
+import Menu from '../../Menu';
 
 function SignIn() {
 	const [input, setInput] = useState({
@@ -21,7 +22,7 @@ function SignIn() {
 			return;
 		}
 
-		alert('invalid input');
+		alert('Phương thức nhập không hợp lệ');
 	};
 
 	const handleInput = (e) => {
@@ -35,18 +36,22 @@ function SignIn() {
 
 	return (
 		<div className='login'>
+
+			<div className="menu">
+                <Menu />
+            </div>
 			<div className="login-container">
 				<div className="login-card">
 					{/* Header */}
 					<div className="login-header">
-						<h2 className="title">Sign In</h2>
-						<p className="description">Use your username and password to log in.</p>
+						<h2 className="title">Đăng nhập</h2>
+						<p className="description">Nhập tên người dùng và mật khẩu để đăng nhập.</p>
 					</div>
 
 					{/* Form */}
 					<form className="login-form" onSubmit={handleSubmitEvent}>
 						<div className="form-group">
-							<label htmlFor="login-username" className="input-label">Username</label>
+							<label htmlFor="login-username" className="input-label">Tên người dùng</label>
 							<input
 								id="login-username"
 								type="text"
@@ -59,7 +64,7 @@ function SignIn() {
 						</div>
 
 						<div className="form-group">
-							<label htmlFor="login-password" className="input-label">Password</label>
+							<label htmlFor="login-password" className="input-label">Mật khẩu</label>
 							<input
 								id="login-password"
 								type="password"
@@ -72,24 +77,24 @@ function SignIn() {
 						</div>
 
 						<a href="#" className="forgot-password">
-							Forgot Your Password?
+							Quên mật khẩu?
 						</a>
 
 						<button type="submit" className="action-button">
-							SIGN IN
+							Đăng nhập
 						</button>
 					</form>
 
 					{/* Footer */}
 					<div className="login-footer">
 						<p>
-							Don't have an account?{' '}
+							Chưa có tài khoản?{' '}
 							<span onClick={() => navigate('/signup')} className="toggle-link">
-								Sign Up
+								Đăng ký
 							</span>
 						</p>
 						<button onClick={() => navigate('/home')} className="action-button">
-							Go to Home
+							Trang chủ
 						</button>
 					</div>
 				</div>

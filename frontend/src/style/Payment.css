@@ -1,6 +1,20 @@
 /* Import global styles */
 @import './Global.css';
 
+.payment-page-container {
+  display: flex;
+  font-family: var(--font-family);
+  justify-content: center;
+  align-items: center;     
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f7f7f7; 
+}
+
+.payment-page-container .menu {
+  margin-bottom: 100px;
+}
+
 .payment-page {
     max-width: 500px;
     margin: 30px auto;
@@ -9,7 +23,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family);  
   }
   
   /* Header */
@@ -92,7 +106,7 @@
   }
   
   /* Pay Button */
-  .payment-form .submit-button {
+  .payment-page-container .submit-button {
     width: 100%;
     padding: 12px 0;
     font-size: 16px;
@@ -105,7 +119,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .payment-form .submit-button:hover {
+  .payment-page-container .submit-button:hover {
     background-color: var(--secondary-color);
     transform: scale(1.05);
 

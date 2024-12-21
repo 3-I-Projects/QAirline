@@ -42,6 +42,8 @@ import AnnouncementDetail from "./pages/Admin/Posts/AnnouncementDetail";
 import UserList from "./pages/Admin/Users/UserList";
 import UserDetail from "./pages/Admin/Users/UserDetail";
 import UserAdd from "./pages/Admin/Users/UserAdd";
+import RoundTripAvailableFlights from "./RoundTripAvailableFlights";
+import RoundTripSeatPickerPage from "./pages/Normal/RoundTripSeatPickerPage";
 
 import AnnouncementAdd from "./pages/Admin/Posts/AnnouncementAdd";
 import DiscountAdd from "./pages/Admin/Posts/DiscountAdd";
@@ -69,9 +71,11 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/flights" element={<AvailableFlights />} />
+              <Route path="/round-trip-flights" element={<RoundTripAvailableFlights />} />
               <Route path="/home" element={<Home />} />
               <Route path="/detail" element={<CustomerDetailPage />} />
               <Route path="/seats" element={<SeatPickerPage />} />
+              <Route path="/round-trip-seats" element={<RoundTripSeatPickerPage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/user" element={<UserProfile />} />
               <Route path="/my-bookings" element={<MyBookingsPage />} />

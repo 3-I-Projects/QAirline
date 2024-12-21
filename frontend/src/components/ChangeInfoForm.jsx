@@ -17,9 +17,9 @@ const ChangeInfoForm = ({ name, value, onChange, handleSubmit }) => {
         <>
             <label>
                 {name}:
-                <input type="text" value={value} onChange={onChange} />
+                <input className='user-infor-edit' type="text" value={value} onChange={onChange} />
             </label>
-            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={handleSubmit}>Hoàn thành</button>
         </>
     );
 };

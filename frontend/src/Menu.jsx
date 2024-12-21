@@ -4,6 +4,7 @@ import "./style/MenuStyle.css";
 
 const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuHidden, setIsMenuHidden] = useState(false);
 
   // Kiểm tra xem người dùng đã đăng nhập chưa
   useEffect(() => {
@@ -21,13 +22,37 @@ const Menu = () => {
     setIsLoggedIn(false);
   };
 
+  useEffect(() => {
+    let lastScrollPosition = 0;
+
+    const handleScroll = () => {
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (currentScrollPosition > 50 && currentScrollPosition > lastScrollPosition) {
+        // Người dùng cuộn xuống, ẩn menu
+        setIsMenuHidden(true);
+      } else if (currentScrollPosition <= lastScrollPosition) {
+        // Người dùng cuộn lên, hiển thị menu
+        setIsMenuHidden(false);
+      }
+
+      lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition; // Ngăn giá trị cuộn âm
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
+
   return (
-    <header className="menu-header">
+    <header className={`menu-header ${isMenuHidden ? "hidden" : ""}`}>
       <div className="menu-container">
         {/* Logo */}
-        <div className="logo">
-          <img src="/images/cr7.1.jpg" alt="Logo" className="logo-image" />
-        </div>
+          <Link to="/home">
+            <img src="/images/cr7.1.jpg" alt="Logo" className="logo-image" />
+          </Link>
 
         {/* Menu bên phải */}
         <div className="menu-right">
@@ -66,7 +91,7 @@ const Menu = () => {
                 <Link to="/trip-info" className="menu-link2">Thông Tin Hành Trình</Link>
               </li>
               <li className="menu-item">
-                <Link to="/user" className="menu-link2">User</Link>
+                <Link to="/user" className="menu-link2">Tài khoản</Link>
               </li>
             </ul>
           </div>

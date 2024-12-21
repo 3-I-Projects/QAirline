@@ -11,6 +11,10 @@
   color: #333;
 }
 
+.login .menu {
+  margin-bottom: 100px;
+}
+
 .login-container {
   width: 400px;
   background: #ffffff74;

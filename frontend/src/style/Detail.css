@@ -11,6 +11,21 @@
     font-family: var( --font-family);
 }
 
+.detail .select-customer select {
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.detail .select-customer .a {
+    margin: 10px 0;;
+}
+
+.detail .menu {
+    margin-bottom: 100px;
+}
+
 .detail input {
     width: 100%;
     padding: 8px;

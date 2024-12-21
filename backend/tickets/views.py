@@ -15,7 +15,7 @@ from users.models import Customer
 from users.serializers import CustomUserSerializer
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
-from tickets.permissions import IsOwnerOrReadOnly
+from tickets.permissions import IsOwnerOrAdminOrReadOnly
 from users.permissions import IsAdminOrOwner
 
 from utils.utils import purge_unpaid_tickets
@@ -28,6 +28,8 @@ class TicketList(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
 
     def get(self, request, *args, **kwargs):
+        for flight in Flight.objects.all():
+            purge_unpaid_tickets(flight)
         return self.list(request, *args, **kwargs)
 
     @transaction.atomic
@@ -85,11 +87,13 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method == 'PUT':
             self.permission_classes = []
         else:
-            self.permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrOwner]
+            self.permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrAdminOrReadOnly]
         return super().get_permissions()
 
     def put(self, request, *args, **kwargs):
         ticket = Ticket.objects.get(pk=kwargs['pk'])
+        flight = ticket.flight
+        purge_unpaid_tickets(flight)
         if ticket.status == 'Cancelled':
             return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         ticket.status = 'Paid'
@@ -102,6 +106,8 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, pk, *args, **kwargs):
         ticket = Ticket.objects.get(pk=pk)
+        flight = ticket.flight
+        purge_unpaid_tickets(flight)
         if ticket.status == 'Cancelled':
             return Response({'error': 'ticket is cancelled'}, status=status.HTTP_404_NOT_FOUND)
         ticket.status = 'Paid'

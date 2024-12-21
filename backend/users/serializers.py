@@ -6,7 +6,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class CustomUserSerializer(serializers.ModelSerializer):
     booked_tickets = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    customers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # customers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    customers = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
@@ -17,6 +18,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+    def get_customers(self, obj):
+        return [{'id': customer.id, 'name': customer.first_name + ' ' + customer.last_name} for customer in obj.customers.all()]
+
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
             username=validated_data['username'],
@@ -25,12 +29,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         )
         return user
     
-    # def get_tokens(self, obj):
-    #     refresh = RefreshToken.for_user(obj)
-    #     return {
-    #         'refresh': str(refresh),
-    #         'access': str(refresh.access_token),
-    #     }
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
