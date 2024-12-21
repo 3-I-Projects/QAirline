@@ -81,7 +81,7 @@ function SignIn() {
 						</a>
 
 						<button type="submit" className="action-button">
-							Đăng ký
+							Đăng nhập
 						</button>
 					</form>
 
