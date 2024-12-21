@@ -3,6 +3,7 @@ import Ticket from '../../components/Ticket';
 import Menu from '../../Menu';
 import '../../style/MyBookingPage.css';
 import AuthContext from '../../context/AuthContext';
+import Footer from '../../components/Footer';
 
 const MyBookingsPage = () => {
     const { userInfo, setUserInfo } = useContext(AuthContext);
@@ -25,11 +26,29 @@ const MyBookingsPage = () => {
     }, []);
 
     return (
+<<<<<<< HEAD
+        <>
+            <div className='my-booking'>
+                <div className='menu'>
+                    <Menu />
+                </div>
+                <div className="container">
+                    <h1>Các vé của tôi</h1>
+                    <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
+                    {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
+                        userInfo.booked_tickets.map(ticket => (
+                            <Ticket key={ticket} id={ticket} />
+                        ))
+                    ) : (
+                        <div className="no-bookings">Bạn chưa đặt vé nào</div>
+                    )}
+                </div>
+=======
         <div className='my-booking'>
             <div className='menu'>
                 <Menu />
             </div>
-            <div className="container">
+            <div className="containers">
                 <h1>Các vé của tôi</h1>
                 <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
                 {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (
@@ -40,9 +59,11 @@ const MyBookingsPage = () => {
                     <div className="no-bookings">Bạn chưa đặt vé nào</div>
                 )}
             </div>
+>>>>>>> refs/remotes/origin/main
 
-            {/* <Ticket /> */}
-        </div>
+            </div>
+            {/* <Footer /> */}
+        </>
     );
 };
 

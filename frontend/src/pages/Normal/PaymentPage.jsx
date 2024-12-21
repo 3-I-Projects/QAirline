@@ -12,6 +12,7 @@ import AuthContext from "../../context/AuthContext";
 import visaImage from "../../assets/visa.png";
 import mastercardImage from "../../assets/mastercard.png";
 import amexImage from "../../assets/amex.png";
+import Footer from "../../components/Footer";
 
 const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -44,21 +45,6 @@ const PaymentPage = () => {
     });
 
     setTicketIds([]);
-
-    // tickets.forEach((ticket) => {
-    //   fetch("http://localhost:8000/tickets/", {
-    //     method: "PUT",
-    //     headers: headers,
-    //     body: JSON.stringify({ ticket }),
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       console.log("Success:", data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // });
     navigate("/");
   };
 
@@ -136,6 +122,7 @@ const PaymentPage = () => {
       {paymentMethod === "QR" && <PaymentQR />}
       <Toaster />
     </div>
+    <Footer />
     </div>
     
   );

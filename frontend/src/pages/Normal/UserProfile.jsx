@@ -4,6 +4,7 @@ import ChangeInfoForm from '../../components/ChangeInfoForm';
 import { useNavigate } from 'react-router-dom';
 import Menu from '../../Menu';
 import '../../style/User.css';
+import Footer from '../../components/Footer';
 
 
 const UserProfile = () => {
@@ -69,64 +70,67 @@ const UserProfile = () => {
     }
 
     return (
-        <div className='user-container'>
-            <div className='menu'>
-                <Menu />
-            </div>
-            <div className='user'>
-            <h1>Tài khoản</h1>
-            {displayUsernameForm ? (
-                <ChangeInfoForm 
+        <>
+            <div className='user-container'>
+                <div className='menu'>
+                    <Menu />
+                </div>
+                <div className='user'>
+                <h1>Tài khoản</h1>
+                {displayUsernameForm ? (
+                    <ChangeInfoForm 
                     name={'Tên tài khoản'} 
-                    value={userInfo.username} 
-                    onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })} 
-                    handleSubmit={() => submit('username', userInfo.username)}
-                />
-            ) : userInfo.username ? (
-                <div className='user-infor'>
-                    <label>Tên tài khoản:</label>
-                    <span>{userInfo.username}</span>
+                        value={userInfo.username} 
+                        onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })} 
+                        handleSubmit={() => submit('username', userInfo.username)}
+                        />
+                ) : userInfo.username ? (
+                    <div className='user-infor'>
+                        <label>Tên tài khoản:</label>
+                        <span>{userInfo.username}</span>
+                    </div>
+                ) : (
+                    <div className='user-infor'>
+                        <label>Tên tài khoản:</label>
+                        <span>Hết cíu</span>
+                    </div>
+                )}
+                <button onClick={() => setDisplayUsernameForm(!displayUsernameForm)}>Đổi tên</button>
+                {displayEmailForm ? (
+                    <ChangeInfoForm 
+                        name={'Email'} 
+                        value={userInfo.email} 
+                        onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
+                        handleSubmit={() => submit('email', userInfo.email)}
+                    />
+                ) : userInfo.email ? (
+                    <div className='user-infor'>
+                        <label>Địa chỉ email:</label>
+                        <span>{userInfo.email}</span>
+                    </div>
+                ) : (
+                    <div className='user-infor'>
+                        <label>Địa chỉ email:</label>
+                        <span>Hết cíu</span>
+                    </div>
+                )}
+                <button onClick={() => setDisplayEmailForm(!displayEmailForm)}>Đổi email</button>
+                {displayPasswordForm && (
+                    <ChangeInfoForm 
+                        name={'Mật khẩu'} 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        handleSubmit={() => submit('password', password)}
+                    />
+                )}
+                <div className='btn-container'>
+                    <button onClick={() => setDisplayPasswordForm(!displayPasswordForm)}>Đổi mật khẩu</button>
+                    <button onClick={() => navigate('/home')}>Trang chủ</button>
                 </div>
-            ) : (
-                <div className='user-infor'>
-                    <label>Tên tài khoản:</label>
-                    <span>Hết cíu</span>
                 </div>
-            )}
-            <button onClick={() => setDisplayUsernameForm(!displayUsernameForm)}>Đổi tên</button>
-            {displayEmailForm ? (
-                <ChangeInfoForm 
-                    name={'Email'} 
-                    value={userInfo.email} 
-                    onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
-                    handleSubmit={() => submit('email', userInfo.email)}
-                />
-            ) : userInfo.email ? (
-                <div className='user-infor'>
-                    <label>Địa chỉ email:</label>
-                    <span>{userInfo.email}</span>
-                </div>
-            ) : (
-                <div className='user-infor'>
-                    <label>Địa chỉ email:</label>
-                    <span>Hết cíu</span>
-                </div>
-            )}
-            <button onClick={() => setDisplayEmailForm(!displayEmailForm)}>Đổi email</button>
-            {displayPasswordForm && (
-                <ChangeInfoForm 
-                    name={'Mật khẩu'} 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    handleSubmit={() => submit('password', password)}
-                />
-            )}
-            <div className='btn-container'>
-                <button onClick={() => setDisplayPasswordForm(!displayPasswordForm)}>Đổi mật khẩu</button>
-                <button onClick={() => navigate('/home')}>Trang chủ</button>
             </div>
-            </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

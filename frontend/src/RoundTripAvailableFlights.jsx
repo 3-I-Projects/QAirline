@@ -5,6 +5,7 @@ import './style/AvailableFlights.css';
 import FlightCard from './FlightCard.jsx';
 import { BookingContext } from './context/BookingContext.jsx';
 import Menu from './Menu.jsx';
+import Footer from './components/Footer.jsx';
 
 const RoundTripAvailableFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -147,9 +148,6 @@ const RoundTripAvailableFlights = () => {
 
 
       </header>
-      <div className='chart-placeholder'>
-        <p>Biểu đồ sẽ hiện ở đây (nếu có)</p>
-      </div>
       <div className="flight-list-container">
         <h2 style={{ margin: '10px 0' }}>Chuyến bay khả dụng</h2>
         {flights.length > 0 ? (
@@ -162,6 +160,7 @@ const RoundTripAvailableFlights = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

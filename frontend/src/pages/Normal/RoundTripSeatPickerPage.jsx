@@ -5,6 +5,7 @@ import { BookingContext } from '../../context/BookingContext';
 import AuthContext from '../../context/AuthContext';
 import '../../style/SeatPicker.css';
 import Menu from '../../Menu';
+import Footer from '../../components/Footer';
 
 const RoundTripSeatPickerPage = () => {
     const navigate = useNavigate();
@@ -13,11 +14,23 @@ const RoundTripSeatPickerPage = () => {
     const [ seats, setSeats ] = useState([]); // huan dung ttin torng nay de tao giao dien chon cho ngoi
     const [ selectedSeats, setSelectedSeats ] = useState([]);
 
-    useEffect(() => {
-        // allCustomers.forEach((customer) => {
-        //     toast.success("Gửi thông tin thành công, id: " + customer.id);
-        // });
+    // Định nghĩa màu sắc cho các hạng ghế
+    const seatClassColors = {
+        '0': '#e2574d', // Hạng nhất: đỏ
+        '1': '#e7a94a', // Hạng thương gia: cam
+        '2': '#8857dc', // Hạng cao cấp: tím
+        '3': '#60e789', // Hạng phổ thông: xanh lá
+    };
 
+    // Định nghĩa tên các hạng ghế
+    const seatClassLabels = {
+        '0': 'Hạng Nhất: ',
+        '1': 'Hạng Thương Gia: ',
+        '2': 'Hạng Cao Cấp: ',
+        '3': 'Hạng Phổ Thông: ',
+    };
+
+    useEffect(() => {
         fetch(`http://localhost:8000/flights/flights/${roundTripFlight.id}/seats`)
             .then(response => {
                 if (!response.ok) {
@@ -84,13 +97,13 @@ const RoundTripSeatPickerPage = () => {
         <div className='seat-picker'>
             <Menu />
             <div className="seat-picker-page-container">
-                <h1>Chọn chỗ ngồi</h1>
+                <h1>Chọn ghế chuyến về</h1>
                 <div className="seat-info">
                     <p> Ghế khả dụng <span className="seat-icon available-seat"></span></p>
                     <p> Ghế đã chọn <span className="seat-icon selected-seat"></span></p>
                     <p> Ghế không khả dụng <span className="seat-icon unavailable-seat"></span></p>
                 </div>
-                
+
                 <div className="seat-grid">
                     {/* Hàng đầu tiên - Nhãn cột */}
                     <div className="seat-row">
@@ -107,7 +120,8 @@ const RoundTripSeatPickerPage = () => {
                                     key={seat.id}
                                     onClick={() => seat.is_available && toggleSeatSelection(seat)}
                                     className={`seat ${seat.is_available ? 'available' : 'unavailable'} ${selectedSeats.find((s) => s.id === seat.id) ? 'selected' : ''}`}
-                                    title={`Row: ${seat.row}, Column: ${seat.column}, Price: ${seat.price}`}
+                                    style={{ backgroundColor: seat.is_available ? seatClassColors[seat.seat_class] : 'gray' }}
+                                    title={`Hàng: ${seat.row}, Cột: ${seat.column}, Giá: ${seat.price}, Hạng: ${seatClassLabels[seat.seat_class]}`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="50" height="50">
                                         <rect className="seat-body" x="18" y="10" width="28" height="20" rx="4" ry="4" />
@@ -120,6 +134,9 @@ const RoundTripSeatPickerPage = () => {
                                         <rect className="seat-armrest" x="44" y="28" width="4" height="10" rx="2" ry="2" />
                                         <rect className="seat-cushion" x="20" y="32" width="24" height="8" rx="3" ry="3" />
                                     </svg>
+                                    <div className="seat-class-label">
+                                        {seatClassLabels[seat.seat_class]}{seat.price}USD
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -128,6 +145,7 @@ const RoundTripSeatPickerPage = () => {
                 <button onClick={onClick} className="submit">Tiếp tục</button>
                 <Toaster />
             </div>
+            <Footer />
         </div>
     );
 };

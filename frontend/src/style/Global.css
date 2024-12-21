@@ -1,9 +1,29 @@
-:root {
-    --primary-color: #e9663f;
-    --secondary-color: #ff6435;
-    --text-color: #ffffff;
-    --background-color: #f0f4f8;
-    --border-color: #c75a39;
-    --hover-color: #ff5c2b;
-    --font-family: Arial, sans-serif;
-  }
+/* Light Theme (Default) */
+body.light {
+  --primary-color: #fd6832; /* Coral, nhẹ nhàng và tươi sáng */
+  --secondary-color: #ff7b47; /* Màu cam nhạt */
+  --text-color: #333; /* Đen đậm cho văn bản, dễ đọc */
+  --background-page-color: #f4f6f9; /* Màu nền sáng nhẹ */
+  --background-color: #ffffff; /* Màu nền chính sáng */
+  --background-form-color: #fefefe; /* Màu nền cho các form */
+  --background-input-color: #ffffff; /* Nền input trắng */
+  --border-color: #ddd; /* Đường viền nhạt cho các phần tử */
+  --hover-color: #ff4800; /* Màu hover tươi sáng */
+  --font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+/* Dark Theme */
+/* Dark Theme */
+body.dark {
+  --primary-color: #fd5e32; 
+  --secondary-color: #ed6039; 
+  --text-color: #ecf0f1; 
+  --background-page-color: #121212; 
+  --background-color: #1e1e1e; 
+  --background-form-color: #2c3e50; 
+  --background-input-color: #333333; 
+  --border-color: #555;
+  --hover-color: #ff4800; 
+  --font-family: 'Roboto', 'Arial', sans-serif;
+}
+
