@@ -29,7 +29,7 @@ const MyBookingsPage = () => {
             <div className='menu'>
                 <Menu />
             </div>
-            <div className="container">
+            <div className="containers">
                 <h1>Các vé của tôi</h1>
                 <p>Quý khách có thể xem thông tin các vé đã đặt.</p>
                 {userInfo && userInfo.booked_tickets && userInfo.booked_tickets.length > 0 ? (

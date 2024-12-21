@@ -88,7 +88,7 @@ const SeatPickerPage = () => {
         <div className='seat-picker'>
             <Menu />
             <div className="seat-picker-page-container">
-                <h1>Chọn chỗ ngồi</h1>
+                <h1>Chọn ghế chuyến đi</h1>
                 <div className="seat-info">
                     <p> Ghế khả dụng <span className="seat-icon available-seat"></span></p>
                     <p> Ghế đã chọn <span className="seat-icon selected-seat"></span></p>

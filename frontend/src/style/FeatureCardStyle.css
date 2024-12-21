@@ -5,8 +5,9 @@
   width: 600px; /* Cố định chiều rộng */
   min-height: 400px; /* Đảm bảo chiều cao tối thiểu */
   margin: 20px auto;
+  color: var(--text-color);
   font-family: var(--font-family);
-  background: #ffffff;
+  background: var(--background-form-color);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -29,7 +30,7 @@
   flex: 1;
   text-align: center;
   padding: 12px 0;
-  color: #ffffff;
+  color: var(--text-color);
   font-weight: bold;
   cursor: pointer;
   border: none;

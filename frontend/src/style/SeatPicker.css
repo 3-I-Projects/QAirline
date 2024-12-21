@@ -5,7 +5,9 @@
     max-width: 800px;
     font-family: var(--font-family);
     margin: 130px auto;
+    color: var(--text-color);
     border-radius: 10px;
+    background-color: var(--background-page-color);
     text-align: center;
 }
 
@@ -14,8 +16,7 @@
 .seat-info {
     margin-bottom: 20px;
     font-size: 16px;
-    color: #333;
-}
+    color: var(--text-color);}
 
 .seat-info p {
     margin: 5px 0;
