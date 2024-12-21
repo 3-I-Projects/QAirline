@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
-import '../../../style/AdminGlobal.css';
 
 const AirportList = () => {
 	const [airports, setAirports] = useState([]);
