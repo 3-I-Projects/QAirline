@@ -4,9 +4,10 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100%;
   font-family: var(--font-family);
-  background: linear-gradient(180deg, #1c1c1c, #50505085); 
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid transparent; 
   transition: background-color 0.3s ease, opacity 0.3s ease; 
@@ -19,11 +20,10 @@
 /* Bố cục container của menu */
 .menu-container {
   display: flex;
-    align-items: center;
+  align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 15px 150px 10px;
 }
 
 /* Logo */
@@ -43,6 +43,7 @@
   align-items: flex-end;
   justify-content: space-between;
   height: 80px; /* Đồng nhất chiều cao với logo */
+  margin-left: auto;
 }
 
 .top-menu,
@@ -72,7 +73,7 @@
 }
 
 #dx {
-  color: #ff3b3b;
+  color: #ff0000;
 }
 
 #dx:hover {
@@ -121,9 +122,41 @@
 }
 
 .menu-link2:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--hover-color);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  color: #000000;
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-button {
+  background: var(--primary-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-button:hover {
+  background: var(--hover-color);
+  color: var(--text-color);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.theme-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

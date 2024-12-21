@@ -45,6 +45,7 @@ class DiscountCategorySerializer(serializers.ModelSerializer):
 
 
 class DiscountSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Discount
         fields = '__all__'
@@ -56,6 +57,7 @@ class InformationCategorySerializer(serializers.ModelSerializer):
 
 
 class InformationSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Information
         fields = '__all__'
@@ -68,6 +70,7 @@ class NewsCategorySerializer(serializers.ModelSerializer):
 
 
 class NewsSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = News
         fields = '__all__'

@@ -8,7 +8,8 @@
   justify-content: center;
   align-items: center;
   margin: 0;
-  color: #333;
+  background-color: var(--background-page-color);
+  color: var(--text-color);
 }
 
 .login .menu {
@@ -17,7 +18,7 @@
 
 .login-container {
   width: 400px;
-  background: #ffffff74;
+  background-color: var(--background-color);
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -31,7 +32,7 @@
   width: 100%;
   text-align: center;
   padding: 40px;
-  background-color: #fafafa;
+  background-color: var(--background-form-color);
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -62,7 +63,7 @@
 
 .input-label {
   font-size: 14px;
-  color: #ffffff;
+  color: var(--text-color);
   margin-bottom: 5px;
 }
 
@@ -74,7 +75,7 @@
   border-radius: 5px;
   color: #333;
   font-size: 14px;
-  background-color: #fff;
+  background-color: var(--background-input-color);
   transition: border-color 0.3s;
 }
 

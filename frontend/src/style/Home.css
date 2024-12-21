@@ -3,6 +3,7 @@
 .home-container {
   position: relative;
   width: 100%;
+  color: var(--text-color);
   height: 100vh;
   font-family: var(--font-family);
 }
@@ -29,5 +30,6 @@
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
+  background-color: var(--backgound-page-color);
 }
 

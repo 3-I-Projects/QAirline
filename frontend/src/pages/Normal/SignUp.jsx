@@ -36,7 +36,7 @@ function SignUp() {
         const res = await response.json();
 
         if (res) {
-          alert('Đăng nhập thành công!');
+          alert('Đăng ký thành công!');
           let inputWithoutEmail = {
             username: input.username,
             password: input.password,

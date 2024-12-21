@@ -5,8 +5,9 @@
   width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
   font-family: var(--font-family);
+  background-color: var(--background-form-color);
+  color: var(--text-color);
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -14,7 +15,7 @@
 
 .user-form-container h2 {
   text-align: center;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 20px;
 }
 
@@ -32,8 +33,7 @@
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
-  color: #555;
-}
+  color: var(--text-color);}
 
 .user-form-container input,
 .user-form-container select {
@@ -60,8 +60,7 @@
 /* Submit button styling with namespace */
 .user-form-container .submit-button {
   background-color: var(--primary-color);
-  color: #fff;
-  padding: 10px 15px;
+  color: var(--text-color);  padding: 10px 15px;
   font-size: 16px;
   border: none;
   border-radius: 4px;
@@ -73,18 +72,3 @@
   background-color: var(--secondary-color);
 }
 
-/* Form data display with namespace */
-.user-form-container .form-data-display {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #eef;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.user-form-container .form-data-display pre {
-  font-size: 14px;
-  color: #333;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
