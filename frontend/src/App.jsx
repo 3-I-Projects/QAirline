@@ -45,6 +45,11 @@ import UserAdd from "./pages/Admin/Users/UserAdd";
 import RoundTripAvailableFlights from "./RoundTripAvailableFlights";
 import RoundTripSeatPickerPage from "./pages/Normal/RoundTripSeatPickerPage";
 
+import AnnouncementAdd from "./pages/Admin/Posts/AnnouncementAdd";
+import DiscountAdd from "./pages/Admin/Posts/DiscountAdd";
+import InformationAdd from "./pages/Admin/Posts/InformationAdd";
+import NewAdd from "./pages/Admin/Posts/NewAdd";
+
 function AdminLayout() {
   return (
     <>
@@ -103,6 +108,10 @@ function App() {
                 <Route path="posts" element={<PrivateRoute />} exact>
                   <Route index element={<PostList />} />
                   <Route path="detail" element={<AnnouncementDetail />} />
+                  <Route path="addAnnouncement" element={<AnnouncementAdd />} />
+                  <Route path="addDiscount" element={<DiscountAdd />} />
+                  <Route path="addInformation" element={<InformationAdd />} />
+                  <Route path="addNew" element={<NewAdd />} />
                 </Route>
 
                 <Route path="users" element={<PrivateRoute />} exact>

@@ -4,7 +4,12 @@ import './style/Home.css';
 import Menu from './Menu';
 import FeatureCard from './FeatureCard';
 import Background from './Background';
-import AnnouncementSection from './components/AnnouncementSection';
+import AnnouncementsSection from './components/AnnouncementsSection';
+import DiscountsSection from './components/DiscountsSection';
+import NewsSection from './components/NewsSection';
+import InformationsSection from './components/InformationsSection';
+
+// import UserForm from './components/UserForm.jsx';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,9 +39,10 @@ function Home() {
         <FeatureCard />
       </div>
 
-      <div>
-        <AnnouncementSection/>
-      </div>
+        <AnnouncementsSection />
+        <DiscountsSection />
+        <NewsSection />
+        <InformationsSection />
     </div>
   );
 }
